@@ -1,0 +1,19 @@
+{
+    "name" : "blefel/bildergalerie",
+
+    "require": {
+        "twbs/bootstrap": "3.3.4",
+        "aura/session": "2.0.1",
+        "components/jquery": "2.1.4",
+        "simplon/mysql": "0.7.0",
+        "components/jqueryui": "1.11.4",
+        "components/bootstrap-switch": "dev-master",
+        "makeusabrew/bootbox": "dev-master"
+
+    },
+
+    "autoload": {
+        "classmap": ["classes/", "includes/"],
+        "exclude-from-classmap": ["includes/database"]
+    }
+}
