@@ -30,7 +30,10 @@ class Router {
     private function route() {
         $ctrlUnknown = false;
         $reqUri = $this->request->getRequestUri();
-        $queryArr = explode("/", $this->request->getRequestUri());
+        if (substr($reqUri, 0, 9) == "index.php") {
+            $reqUri = (substr($reqUri, 9, 1) == "/") ? substr($reqUri, 10) : substr($reqUri, 9);
+        }
+        $queryArr = explode("/", $reqUri);
         $controller = MvcConfig::getInstance()->getDefaultControllerName();
         $possibleAction = null;
         $action = self::appendActionMethodAppendix(MvcConfig::getInstance()->getDefaultActionName());
@@ -40,7 +43,6 @@ class Router {
             $controller = $queryArr[0];
             $possibleAction = $queryArr[1];
         }
-
 
         $controller = self::prependNamespaceAndAppendAppendix($controller);
 
