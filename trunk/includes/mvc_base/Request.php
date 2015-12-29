@@ -20,17 +20,48 @@ class Request {
     private $requestUri;
 
     /**
+     * All get parameters.
+     *
      * @var array
      */
     private $getParam;
+
+    /**
+     * All post parameters.
+     *
+     * @var array
+     */
     private $postParam;
+
+    /**
+     * Request method (get/post)
+     *
+     * @var string
+     */
     private $requestMethod;
 
-    public function __construct($requestUri, $get, $post, $requestMethod) {
+    /**
+     * Cookies.
+     *
+     * @var array
+     */
+    private $cookies;
+
+    /**
+     * Creates a new request object.
+     *
+     * @param $requestUri
+     * @param $get
+     * @param $post
+     * @param $requestMethod
+     * @param array $cookies
+     */
+    public function __construct($requestUri, $get, $post, $requestMethod, $cookies = array()) {
         $this->requestUri = substr($requestUri, strlen(MvcConfig::getInstance()->getBasePath()));
         $this->getParam = $get;
         $this->postParam = $post;
         $this->requestMethod = $requestMethod;
+        $this->cookies = $cookies;
     }
 
     /**
@@ -55,6 +86,14 @@ class Request {
     public function getRequestMethod()
     {
         return $this->requestMethod;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCookies()
+    {
+        return $this->cookies;
     }
 
     /**

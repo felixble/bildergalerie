@@ -3,12 +3,17 @@
  */
 
 $(document).ready(function () {
+    // this will be executed when the document is ready
 
     navFixedOnScroll();
     selectCurrentMenuItem();
 
 });
 
+/**
+ * Pins the navigation bar on the top of the
+ * page if the header is not in view anymore.
+ */
 function navFixedOnScroll() {
     var menu = $('#nav');
     var origOffsetY = menu.offset().top;
@@ -19,13 +24,15 @@ function navFixedOnScroll() {
         } else {
             $('#nav').removeClass('navbar-fixed-top');
         }
-
-
     }
 
     document.onscroll = scroll;
 }
 
+/**
+ * Selects the current menu item calculated
+ * by the current url.
+ */
 function selectCurrentMenuItem() {
     var path = window.location.pathname;
 
@@ -40,6 +47,7 @@ function selectCurrentMenuItem() {
     });
 
     if (!itemActivated) {
+        // we found no matching menu item, so we select the home item
         $("#home").addClass("active");
     }
 }
