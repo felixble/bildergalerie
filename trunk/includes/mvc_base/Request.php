@@ -1,6 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Request-Class containing all information
+ * concerning the client request.
+ *
  * User: Felix
  * Date: 15.12.2015
  * Time: 19:15
@@ -8,7 +10,15 @@
 
 class Request {
 
+    /**
+     * The request url containing
+     * the controller, the action
+     * and other parameters.
+     *
+     * @var string
+     */
     private $requestUri;
+
     /**
      * @var array
      */

@@ -1,6 +1,16 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Router class to determine the controller
+ * from the url and executes the chosen
+ * action.
+ * <br>
+ * URL-Format: /controller/action/parameters
+ * <br>
+ * Default Values:
+ * <li>no controller given -> default controller defined in MvcConfig</li>
+ * <li>no action given -> default action defined in MvcConfig</li>
+ * <br>
+ *
  * User: Felix
  * Date: 15.12.2015
  * Time: 19:15
@@ -8,26 +18,78 @@
 
 class Router {
 
+    /**
+     * The current request object.
+     *
+     * @var Request
+     */
     private $request;
+
+    /**
+     * The chosen controller which is
+     * responsible for the executed action.
+     *
+     * @var Controller
+     */
     private $controller;
 
-    public function __construct(Request $request) {
+
+    /**
+     * Creates a new Router which makes the
+     * routing decisions by the given
+     * {@link Request}-Object.
+     *
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
         $this->request = $request;
     }
 
-    private static function sanitizeRouterInput($input) {
+    /**
+     * Cleans the input from invalid tokens.
+     *
+     * @param $input string
+     * @return string
+     */
+    private static function sanitizeRouterInput($input)
+    {
         return ucfirst(preg_replace("/[^a-zA-Z]+/", "", $input));
     }
 
-    private static function prependNamespaceAndAppendAppendix($class) {
+    /**
+     * Converts a given input-string into
+     * a correct name of a class.
+     *
+     * @param $class string
+     * @return string
+     */
+    private static function inputToClassName($class)
+    {
         return ucfirst(self::sanitizeRouterInput($class))."Controller";
     }
 
-    private static function appendActionMethodAppendix($method) {
+    /**
+     * Appends the correct method appendix for a
+     * action-method.
+     *
+     * @param $method string
+     * @return string complete name of the action method
+     */
+    private static function appendActionMethodAppendix($method)
+    {
         return self::sanitizeRouterInput($method)."Action";
     }
 
-    private function route() {
+    /**
+     * Performs the routing algorithm and returns
+     * the {@link View} returned from the executed action.
+     *
+     * @return View {@link View} returned from the executed action.
+     * @throws Exception
+     */
+    private function route()
+    {
         $ctrlUnknown = false;
         $reqUri = $this->request->getRequestUri();
         if (substr($reqUri, 0, 9) == "index.php") {
@@ -44,11 +106,11 @@ class Router {
             $possibleAction = $queryArr[1];
         }
 
-        $controller = self::prependNamespaceAndAppendAppendix($controller);
+        $controller = self::inputToClassName($controller);
 
         // existiert der Controller?
         if (!class_exists($controller)) {
-            $controller = self::prependNamespaceAndAppendAppendix("Unknown");
+            $controller = self::inputToClassName("Unknown");
             $ctrlUnknown = true;
         }
 
@@ -82,17 +144,29 @@ class Router {
         return $view;
     }
 
-    private function exceptionHandler(\Exception $e) {
+    /**
+     * Converts the given {@link Exception} into
+     * a {@link ExceptionView} which can be displayed
+     * for the user.
+     *
+     * @param Exception $e Exception to convert into a {@link ExceptionView}
+     * @return BootstrapView
+     */
+    private function exceptionHandler(\Exception $e)
+    {
         $exceptionView = new ExceptionView();
-
-        $exceptionView->setExceptionName(get_class($e));
-        $exceptionView->setExceptionText("<code>".$e->getMessage()."</code><br>Code: ".$e->getCode()."<br> File: ".$e->getFile()."<br>Line: ".$e->getLine()."<pre>".$e->getTraceAsString()."</pre>");
-
-
+        $exceptionView->setInfosFromException($e);
         return BootstrapHelper::getContentFrameView("Error occured!", $exceptionView);
     }
 
-    public function run() {
+    /**
+     * Performs the routing algorithm and displays
+     * the applications content.
+     *
+     * @return View
+     */
+    public function run()
+    {
         try {
             return $this->route();
         } catch (\Exception $e) {
@@ -102,6 +176,14 @@ class Router {
 
     }
 
+    /**
+     * Reads the query array containing key followed
+     * by its value as a list (key1,val1,key2,val2,...)
+     * and inserts the pairs into our {@link Request}-Object.
+     *
+     * @param $queryArr
+     * @param $startIndex
+     */
     private function convertQueryArrayToGetArray($queryArr, $startIndex)
     {
         $index = $startIndex;

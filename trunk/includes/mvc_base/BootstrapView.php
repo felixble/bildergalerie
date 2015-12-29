@@ -1,6 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Base View containing the html frame
+ * necessary for a bootstrap page.
+ *
  * User: Felix
  * Date: 15.12.2015
  * Time: 23:34

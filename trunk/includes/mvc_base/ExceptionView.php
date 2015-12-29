@@ -1,6 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Default Exception View which can display
+ * an occurred error.
+ *
  * User: Felix
  * Date: 16.12.2015
  * Time: 16:50
@@ -8,7 +10,18 @@
 
 class ExceptionView extends View {
 
+    /**
+     * Name of the thrown exception.
+     *
+     * @var string
+     */
     private $exceptionName;
+
+    /**
+     * Text which should be displayed.
+     *
+     * @var string
+     */
     private $exceptionText;
 
     public function __construct() {
@@ -16,7 +29,10 @@ class ExceptionView extends View {
     }
 
     /**
-     * @return mixed
+     * Gets the name of the exception which should
+     * be displayed.
+     *
+     * @return string
      */
     public function getExceptionName()
     {
@@ -24,7 +40,10 @@ class ExceptionView extends View {
     }
 
     /**
-     * @param mixed $exceptionName
+     * Sets the name of the exception which should
+     * be displayed.
+     *
+     * @param string $exceptionName
      */
     public function setExceptionName($exceptionName)
     {
@@ -32,6 +51,12 @@ class ExceptionView extends View {
     }
 
     /**
+     * Gets the text of the exception which
+     * should be displayed.
+     * <br>
+     * This could also be a view because of the
+     * magic toString-Method.
+     *
      * @return mixed
      */
     public function getExceptionText()
@@ -40,6 +65,12 @@ class ExceptionView extends View {
     }
 
     /**
+     * Sets the text of the exception which
+     * should be displayed.
+     * <br>
+     * This could also be a view because of the
+     * magic toString-Method.
+     *
      * @param mixed $exceptionText
      */
     public function setExceptionText($exceptionText)
@@ -47,5 +78,13 @@ class ExceptionView extends View {
         $this->exceptionText = $exceptionText;
     }
 
+    /**
+     * @param $exception Exception
+     */
+    public function setInfosFromException($exception)
+    {
+        $this->setExceptionName(get_class($exception));
+        $this->setExceptionText(new ExceptionTextView($exception));
+    }
 
 }

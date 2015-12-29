@@ -1,6 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Singleton-Class containing all configuration
+ * details for this simple mvc pattern, like
+ * names for the default controller/action.
+ *
  * User: Felix
  * Date: 16.12.2015
  * Time: 00:51
@@ -20,6 +23,12 @@ class MvcConfig {
         return self::$_INSTANCE;
     }
 
+    /**
+     * Applications project path relative to
+     * the webservers' root directory.
+     *
+     * @var string|null
+     */
     private $basePath = null;
 
     private $defaultControllerName = self::_DEFAULT_CONTROLLER;
@@ -30,6 +39,14 @@ class MvcConfig {
     }
 
     /**
+     * Gets the applications project path relative
+     * to the webservers' root directory.
+     * <br>
+     * If the base path is not set it will be
+     * calculated by the path of the currently
+     * executed script (this is usually the index.php
+     * script located in the projects main directory).
+     *
      * @return string
      */
     public function getBasePath()
@@ -41,6 +58,9 @@ class MvcConfig {
     }
 
     /**
+     * Sets the applications project path relative
+     * to the webservers' root directory.
+     *
      * @param string $basePath
      */
     public function setBasePath($basePath)
@@ -49,6 +69,8 @@ class MvcConfig {
     }
 
     /**
+     * Gets the name of the default action.
+     *
      * @return string
      */
     public function getDefaultActionName()
@@ -57,6 +79,8 @@ class MvcConfig {
     }
 
     /**
+     * Sets the name of the default action.
+     *
      * @param string $defaultActionName
      */
     public function setDefaultActionName($defaultActionName)
@@ -65,6 +89,8 @@ class MvcConfig {
     }
 
     /**
+     * Gets the name of the default controller.
+     *
      * @return string
      */
     public function getDefaultControllerName()
@@ -73,6 +99,8 @@ class MvcConfig {
     }
 
     /**
+     * Sets the name of the default controller.
+     *
      * @param string $defaultControllerName
      */
     public function setDefaultControllerName($defaultControllerName)
@@ -81,7 +109,12 @@ class MvcConfig {
     }
 
 
-
+    /**
+     * Calculates the application path from the
+     * path of the script currently executed.
+     *
+     * @return string
+     */
     private static function scriptNameToBasePath() {
         $scriptName = $_SERVER["SCRIPT_NAME"];
         $pos = strripos($scriptName, "/");
