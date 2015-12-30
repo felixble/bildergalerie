@@ -6,9 +6,10 @@
  * Time: 19:30
  */
 
-class HomeController extends Controller {
+class HomeController extends BildergalerieController {
 
-    public function __construct(Request $request) {
+    public function __construct(Request $request)
+    {
         parent::__construct($request);
     }
 
