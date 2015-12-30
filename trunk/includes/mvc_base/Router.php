@@ -108,7 +108,7 @@ class Router {
 
         $controller = self::inputToClassName($controller);
 
-        // existiert der Controller?
+        // does the controller class exist?
         if (!class_exists($controller)) {
             $controller = self::inputToClassName("Unknown");
             $ctrlUnknown = true;
@@ -124,13 +124,13 @@ class Router {
         $possibleAction = self::appendActionMethodAppendix($possibleAction);
 
         if (!$ctrlUnknown && $possibleAction != null) {
-            // ermittle action & getParam-parameter
+            // what is action, what is get parameter ?
             if (method_exists($this->controller, $possibleAction)) {
-                // es gibt die methode, also ist es unsere Action
+                // the method exists, so we found our action to execute
                 $action = $possibleAction;
                 $this->convertQueryArrayToGetArray($queryArr, 2);
             } else {
-                // es handelt sich wohl um die index-Action
+                // the method does not exist, so we select the index action and pass the parameters
                 $this->convertQueryArrayToGetArray($queryArr, 1);
             }
         }
