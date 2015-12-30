@@ -6,7 +6,7 @@
  * Time: 16:20
  */
 
-class AboutController extends Controller {
+class AboutController extends BildergalerieController {
 
     public function indexAction()
     {
