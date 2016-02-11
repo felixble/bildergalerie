@@ -10,11 +10,7 @@
 class UserSessData
 {
 
-    const SESS_USER_ID = "user_id";
-    const SESS_USER_NAME = "user_name";
-    const SESS_NAME = "name";
-    const SESS_FIRST_NAME = "first_name";
-    const SESS_EMAIL = "email";
+    const SESS_USER_OBJECT = "user";
 
     /**
      * @var SessionManager
@@ -22,7 +18,7 @@ class UserSessData
     private $sess_manager;
 
     /**
-     * @var User
+     * @var IUser
      */
     private $user = null;
 
@@ -46,18 +42,12 @@ class UserSessData
     {
         $user_segment = $this->sess_manager->getUserSegment();
 
-        if (!$user_segment->get(self::SESS_USER_ID, false)) {
+        if (!$user_segment->get(self::SESS_USER_OBJECT, false)) {
             $this->user = null;
             return;
         }
 
-        $this->user = new User(
-            $user_segment->get(self::SESS_USER_ID),
-            $user_segment->get(self::SESS_USER_NAME),
-            $user_segment->get(self::SESS_NAME),
-            $user_segment->get(self::SESS_FIRST_NAME),
-            $user_segment->get(self::SESS_EMAIL)
-        );
+        $this->user = unserialize($user_segment->get(self::SESS_USER_OBJECT));
     }
 
     /**
@@ -70,18 +60,14 @@ class UserSessData
         $this->user = $user;
 
         $user_segment = $this->sess_manager->getUserSegment();
-        $user_segment->set(self::SESS_USER_ID, $user->getUserId());
-        $user_segment->set(self::SESS_USER_NAME, $user->getUsername());
-        $user_segment->set(self::SESS_NAME, $user->getName());
-        $user_segment->set(self::SESS_FIRST_NAME, $user->getFirstName());
-        $user_segment->set(self::SESS_EMAIL, $user->getEmail());
+        $user_segment->set(self::SESS_USER_OBJECT, serialize($user));
     }
 
     /**
      * Returns the user object of the user
      * currently logged in.
      *
-     * @return User
+     * @return IUser
      */
     public function getUser()
     {
