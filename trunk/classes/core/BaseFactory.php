@@ -15,6 +15,11 @@ class BaseFactory
     private $sessionManager;
 
     /**
+     * @var \Simplon\Mysql\Mysql
+     */
+    private $dbConn = null;
+
+    /**
      * BaseFactory constructor.
      *
      * @param $cookies array
@@ -27,6 +32,23 @@ class BaseFactory
     public function getSessionManager()
     {
         return $this->sessionManager;
+    }
+
+    public function getDbConnection()
+    {
+        if (null === $this->dbConn) {
+            $this->dbConn = new Simplon\Mysql\Mysql(
+                DB_HOST,
+                DB_USER,
+                DB_PASS,
+                DB_DATABASE,
+                \PDO::FETCH_ASSOC,
+                DB_CHARSET,
+                array('port' => DB_PORT)
+            );
+        }
+
+        return $this->dbConn;
     }
 
     public function getUserDAO()

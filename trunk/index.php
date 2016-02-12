@@ -1,6 +1,7 @@
 <?php
 // include the autoloader-script which is responsible to include all necessary class files
 require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/config.php';
 
 /**
  * Function to convert all php errors
