@@ -14,6 +14,5 @@ class HomeController extends BildergalerieController {
     public function indexAction()
     {
         return $this->getContentFrameView("Startseite", new HomeView());
-        //return BootstrapHelper::getContentFrameView("Startseite", new HomeView());
     }
 }
