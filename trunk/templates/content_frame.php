@@ -34,7 +34,7 @@
 
 <!-- Carousel
   ================================================== -->
-<div class="overlay"><h1><span class="hidden-xs">Hildes Bildergalerie - </span><?php echo $this->getTitle(); ?></h1></div>
+<div class="overlay"><h1><span class="hidden-xs"><?php echo $this->getPageTitle(); ?> - </span><?php echo $this->getTitle(); ?></h1></div>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -80,7 +80,7 @@
     <!-- FOOTER -->
     <footer class="modal-footer">
         <p class="pull-right"><a href="<?php echo $this->urlScrollTo(""); ?>">Back to top</a></p>
-        <p class="pull-left">&copy; 2015 Hildes Bildergalerie &middot; Designed by Felix Blechschmitt &middot; <a href="<?php echo $this->url("legalnotice"); ?>">Impressum</a> &middot; <a href="#">Login</a></p>
+        <p class="pull-left">&copy; 2015 <?php echo $this->getPageTitle(); ?> &middot; Designed by Felix Blechschmitt &middot; <a href="<?php echo $this->url("legalnotice"); ?>">Impressum</a> &middot; <a href="#">Login</a></p>
     </footer>
 
 </div>

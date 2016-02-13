@@ -16,6 +16,6 @@ class UnknownController extends BildergalerieController {
         $exceptionView->setExceptionName("Page not available (404)");
         $exceptionView->setExceptionText("Diese Seite ist leider nicht verfügbar.");
 
-        return BootstrapHelper::getContentFrameView("Error occured!", $exceptionView);
+        return $this->getContentFrameView("Error occured!", $exceptionView);
     }
 }

@@ -77,10 +77,10 @@ class BootstrapView extends View {
         $baseView = new BootstrapView();
         $baseView->setTitle($title);
 
-        $bodyContent = new Content_frameView($title);
-        $bodyContent->setContent($content);
+        //$bodyContent = new Content_frameView($title, $title);
+        //$bodyContent->setContent($content);
 
-        $baseView->setBodyContent($bodyContent);
+        $baseView->setBodyContent($content);
 
         return $baseView;
     }

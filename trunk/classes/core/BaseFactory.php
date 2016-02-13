@@ -56,11 +56,19 @@ class BaseFactory
 
         return $this->dbConn;
     }
+    /**
+     * @return MandantManager
+     */
+    public function getMandantManager()
+    {
+        return $this->mandantManager;
+    }
 
     public function getUserDAO()
     {
         return new UserPseudoDAO();
         //throw new NotImplementedException("#getUserDAO() in BaseFactory not yet implemented.");
     }
+
 
 }

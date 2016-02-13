@@ -23,13 +23,20 @@ class MandantManager
      */
     private $mandant;
 
+    /**
+     * @var SessionManager
+     */
+    private $sessManager;
+
     public function __construct(Request $request, \Simplon\Mysql\Mysql $dbConn)
     {
+        $this->sessManager = new SessionManager($request->getCookies());
+
         $mandant = null;
         $mandantId = $this->getMandantFromRequest($request);
 
         if (null == $mandantId) { // the request does not contain the mandant
-            $mandant = $this->getMandantFromCookies($request);
+            $mandant = $this->getMandantFromCookies();
         }
 
         if (null == $mandantId && null == $mandant) {
@@ -43,6 +50,7 @@ class MandantManager
             }
         }
 
+        $this->setMandant($mandant);
     }
 
     /**
@@ -63,13 +71,11 @@ class MandantManager
      * Returns the mandant saved in the cookies or
      * {@code null} if not given.
      *
-     * @param Request $request
      * @return Mandant|null
      */
-    private function getMandantFromCookies(Request $request)
+    private function getMandantFromCookies()
     {
-        $sessionManager = new SessionManager($request->getCookies());
-        $segment = $sessionManager->getMandantSegment();
+        $segment = $this->sessManager->getMandantSegment();
 
         $mandantString = $segment->get(self::MANDANT_KEY);
         if ($mandantString != null) {
@@ -90,6 +96,19 @@ class MandantManager
     {
         $mandantDAO = new MandantDAO($dbConn);
         return $mandantDAO->queryDefaultMandantForDomain($domain);
+    }
+
+    /**
+     * Set the mandant attribute and stores the
+     * mandant in the session.
+     *
+     * @param Mandant $mandant
+     */
+    private function setMandant($mandant)
+    {
+        $segment = $this->sessManager->getMandantSegment();
+        $segment->set(self::MANDANT_KEY, serialize($mandant));
+        $this->mandant = $mandant;
     }
 
 

@@ -10,6 +10,6 @@ class AboutController extends BildergalerieController {
 
     public function indexAction()
     {
-        return BootstrapHelper::getContentFrameView("Die Künstlerin", new AboutView());
+        return $this->getContentFrameView("Die Künstlerin", new AboutView());
     }
 }

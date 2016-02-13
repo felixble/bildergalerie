@@ -9,16 +9,27 @@
 class Content_frameView extends View {
 
     private $title;
+    private $pageTitle;
     private $content;
 
-    public function __construct($title) {
+    public function __construct($pageTitle, $title) {
         parent::__construct();
+        $this->pageTitle = $pageTitle;
         $this->title = $title;
     }
 
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Returns the global page title of
+     * the current mandant.
+     */
+    public function getPageTitle()
+    {
+        return $this->pageTitle;
     }
 
     public function setContent($content)
