@@ -16,10 +16,19 @@ abstract class Controller {
      * Creates a new Controller.
      * A controller will only be instantiated
      * by the {@link Router}-Class.
+     */
+    public function __construct()
+    {
+    }
+
+    /**
+     * After building the Request-Object
+     * it will be passed to the controller.
      *
      * @param Request $request
      */
-    public function __construct(Request $request) {
+    public function onCreate(Request $request)
+    {
         $this->request = $request;
     }
 

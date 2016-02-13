@@ -9,6 +9,7 @@
 class SessionManager
 {
     const USER_SEGMENT = "Bildergalerie_User_Information";
+    const MANDANT_SEGMENT = "Bildergalerie_Mandant_Information";
 
     /**
      * Holds the session object.
@@ -27,8 +28,14 @@ class SessionManager
         $this->session = $sess_factory->newInstance($cookies);
     }
 
-    public function getUserSegment() {
+    public function getUserSegment()
+    {
         return $this->session->getSegment(self::USER_SEGMENT);
+    }
+
+    public function getMandantSegment()
+    {
+        return $this->session->getSegment(self::MANDANT_SEGMENT);
     }
 
 

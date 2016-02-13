@@ -79,8 +79,8 @@
 
     <!-- FOOTER -->
     <footer class="modal-footer">
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p class="pull-left">&copy; 2015 Hildes Bildergalerie &middot; Designed by Felix Blechschmitt &middot; <a href="#">Impressum</a> &middot; <a href="#">Login</a></p>
+        <p class="pull-right"><a href="<?php echo $this->urlScrollTo(""); ?>">Back to top</a></p>
+        <p class="pull-left">&copy; 2015 Hildes Bildergalerie &middot; Designed by Felix Blechschmitt &middot; <a href="<?php echo $this->url("legalnotice"); ?>">Impressum</a> &middot; <a href="#">Login</a></p>
     </footer>
 
 </div>

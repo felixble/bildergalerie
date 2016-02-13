@@ -13,6 +13,7 @@ class MandantDAO
 
     const COL_MANDANT_ID = "mandant_id";
     const COL_PAGE_TITLE = "page_title";
+    const COL_DOAMIN = "domain";
 
     /**
      * @var Simplon\Mysql\Manager\SqlManager
@@ -66,6 +67,20 @@ class MandantDAO
 
         $sqlBuilder->setTableName(self::TABLE_NAME);
         return $sqlBuilder;
+    }
+
+    public function queryDefaultMandantForDomain($domain)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery(sprintf('SELECT * FROM %s WHERE %s = :domain', self::TABLE_NAME, self::COL_DOAMIN))
+            ->setConditions(array('domain' => $domain));
+
+        $row = $this->sqlManager->fetchRow($sqlBuilder);
+
+        if ($this->sqlManager->getRowCount()) {
+            return new Mandant($row[self::COL_MANDANT_ID], $row[self::COL_PAGE_TITLE]);
+        }
+        return null;
     }
 
 }

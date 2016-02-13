@@ -8,11 +8,6 @@
 
 class HomeController extends BildergalerieController {
 
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-    }
-
     /**
      * @return BootstrapView
      */

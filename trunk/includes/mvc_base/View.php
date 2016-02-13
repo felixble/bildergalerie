@@ -149,4 +149,9 @@ class View {
         return $url;
     }
 
+    public function urlScrollTo($id)
+    {
+        return substr($_SERVER['REQUEST_URI'], strlen(MvcConfig::getInstance()->getBasePath())) . "#" . $id;
+    }
+
 } 

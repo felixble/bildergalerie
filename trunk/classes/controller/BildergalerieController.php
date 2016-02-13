@@ -12,10 +12,10 @@ abstract class BildergalerieController extends Controller
 
     protected $baseFactory;
 
-    public function __construct(Request $request)
+    public function onCreate(Request $request)
     {
-        parent::__construct($request);
-        $this->baseFactory = new BaseFactory($request->getCookies());;
+        parent::onCreate($request);
+        $this->baseFactory = new BaseFactory($request);
     }
 
 }

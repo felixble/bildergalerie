@@ -15,6 +15,11 @@ class BaseFactory
     private $sessionManager;
 
     /**
+     * @var MandantManager
+     */
+    private $mandantManager;
+
+    /**
      * @var \Simplon\Mysql\Mysql
      */
     private $dbConn = null;
@@ -22,11 +27,12 @@ class BaseFactory
     /**
      * BaseFactory constructor.
      *
-     * @param $cookies array
+     * @param Request $request
      */
-    public function __construct($cookies)
+    public function __construct(Request $request)
     {
-        $this->sessionManager = new SessionManager($cookies);
+        $this->sessionManager = new SessionManager($request->getCookies());
+        $this->mandantManager = new MandantManager($request, $this->getDbConnection());
     }
 
     public function getSessionManager()

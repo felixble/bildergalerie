@@ -114,7 +114,7 @@ class Router {
             $ctrlUnknown = true;
         }
 
-        $this->controller = new $controller($this->request);
+        $this->controller = new $controller();
 
         if (!$this->controller instanceof Controller) {
             throw new Exception("Invalid Controller");
@@ -134,6 +134,8 @@ class Router {
                 $this->convertQueryArrayToGetArray($queryArr, 1);
             }
         }
+
+        $this->controller->onCreate($this->request);
 
         $view = $this->controller->$action();
 
