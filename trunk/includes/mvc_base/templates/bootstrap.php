@@ -15,9 +15,11 @@
     <link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <?php
-    echo HtmlHelper::linkCSS("resources/css/carousel.css");
-    if (null != $this->getCSS()) {
-        echo HtmlHelper::linkCSS("resources/css/" . $this->getCSS());
+    //echo HtmlHelper::linkCSS("resources/css/carousel.css");
+    if (null != $this->getCSS() && is_array($this->getCSS())) {
+        foreach ($this->getCSS() as $css) {
+            echo HtmlHelper::linkCSS("resources/css/" . $css);
+        }
     }
 
     echo $this->getAdditionalHeader();

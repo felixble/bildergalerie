@@ -11,6 +11,7 @@ class Content_frameView extends View {
     private $title;
     private $pageTitle;
     private $content;
+    private $showCarousel = true;
 
     public function __construct($pageTitle, $title) {
         parent::__construct();
@@ -42,9 +43,21 @@ class Content_frameView extends View {
         return $this->content;
     }
 
-    public function getActiveMenuItem()
+    public function getCustomCSS()
     {
-        // TODO: vielleicht besser clientseitig ermitteln?
-        return "home";
+        return "carousel.css";
+    }
+
+    public function showCarousel()
+    {
+        return $this->showCarousel;
+    }
+
+    /**
+     * @param mixed $showCarousel
+     */
+    public function setShowCarousel($showCarousel)
+    {
+        $this->showCarousel = $showCarousel;
     }
 }

@@ -47,11 +47,25 @@ body {
     text-align:center;
 }
 
+.overlay-inverse {
+    color: #000;
+}
+
+.overlay-only-header {
+    top: 100px;
+}
+
 /* Carousel base class */
 .carousel {
   height: 500px;
   margin-bottom: 60px;
 }
+
+.carousel-only-header {
+    height: 230px;
+    background-color: #EEEEEE;
+}
+
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
   z-index: 10;

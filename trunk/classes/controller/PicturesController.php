@@ -3,10 +3,10 @@
 /**
  * Created by PhpStorm.
  * User: Felix
- * Date: 13.02.2016
- * Time: 23:57
+ * Date: 14.02.2016
+ * Time: 16:44
  */
-class AuthController extends BildergalerieController
+class PicturesController extends BildergalerieController
 {
 
     /**
@@ -20,12 +20,11 @@ class AuthController extends BildergalerieController
      */
     public function indexAction()
     {
-        return $this->loginAction();
+        // TODO: Implement indexAction() method.
     }
 
-    public function loginAction()
+    public function createAction()
     {
-        $view = BootstrapView::getContentFrameView("Login", new LoginView());
-        return $view;
+        return $this->getContentFrameView("Bild hinzufügen", new Picture_formView(), false);
     }
 }

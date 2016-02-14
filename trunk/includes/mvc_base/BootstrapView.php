@@ -10,8 +10,6 @@
 
 class BootstrapView extends View {
 
-    const TITLE_PREFIX = "Hildes Bildergalerie - ";
-
     private $title;
 
     private $css = null;
@@ -30,13 +28,29 @@ class BootstrapView extends View {
 
     public function getTitle()
     {
-        return self::TITLE_PREFIX . $this->title;
+        return $this->title;
     }
 
     public function setTitle($title) {
         $this->title = $title;
     }
 
+    public function addCSS($css)
+    {
+        if (null == $this->css) {
+            $this->css = array();
+        }
+
+        if (is_array($css)) {
+            $this->css = array_merge($this->css, $css);
+        } else {
+            $this->css[] = $css;
+        }
+    }
+
+    /**
+     * @return array
+     */
     public function getCSS()
     {
         return $this->css;
@@ -65,6 +79,10 @@ class BootstrapView extends View {
     public function setBodyContent($bodyContent)
     {
         $this->bodyContent = $bodyContent;
+        if (($bodyContent instanceof View) && ( null != $bodyContent->getCustomCSS() )) {
+            // the bodyContent provides a custom css file
+            $this->addCSS($bodyContent->getCustomCSS());
+        }
     }
 
     public function getContentPastJs()
@@ -76,9 +94,6 @@ class BootstrapView extends View {
     {
         $baseView = new BootstrapView();
         $baseView->setTitle($title);
-
-        //$bodyContent = new Content_frameView($title, $title);
-        //$bodyContent->setContent($content);
 
         $baseView->setBodyContent($content);
 

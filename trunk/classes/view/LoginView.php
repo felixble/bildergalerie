@@ -8,4 +8,10 @@
  */
 class LoginView extends View
 {
+
+    public function getCustomCSS()
+    {
+        return "login.css";
+    }
+
 }

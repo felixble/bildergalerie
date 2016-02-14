@@ -154,4 +154,12 @@ class View {
         return substr($_SERVER['REQUEST_URI'], strlen(MvcConfig::getInstance()->getBasePath())) . "#" . $id;
     }
 
+    /**
+     * Returns the custom css file of the view.
+     *
+     * @return string|array|null
+     */
+    public function getCustomCSS() { return null; }
+
+
 } 

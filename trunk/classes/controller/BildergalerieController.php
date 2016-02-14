@@ -21,7 +21,7 @@ abstract class BildergalerieController extends Controller
         $this->baseFactory = new BaseFactory($request);
     }
 
-    public function getContentFrameView($title, $content)
+    public function getContentFrameView($title, $content, $showCarousel = true)
     {
         $titlePrefix = $this->baseFactory->getMandantManager()->getMandant()->getPageTitle();
 
@@ -29,6 +29,7 @@ abstract class BildergalerieController extends Controller
 
         $contentView = new Content_frameView($titlePrefix, $title);
         $contentView->setContent($content);
+        $contentView->setShowCarousel($showCarousel);
 
         $view = BootstrapView::getContentFrameView($fullTitle, $contentView);
         $view->setJS("global.js");

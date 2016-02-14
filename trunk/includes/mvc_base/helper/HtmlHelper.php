@@ -13,7 +13,7 @@ class HtmlHelper {
     /**
      * Builds a link-tag to include a css file.
      *
-     * @param $path path to the css file.
+     * @param $path string path to the css file.
      * @return string
      */
     public static function linkCSS($path)
@@ -25,7 +25,7 @@ class HtmlHelper {
      * Builds a script-tag to include a
      * javascript file.
      *
-     * @param $path path to the js file.
+     * @param $path string path to the js file.
      * @return string
      */
     public static function scriptJS($path)
