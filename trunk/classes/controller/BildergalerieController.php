@@ -15,10 +15,10 @@ abstract class BildergalerieController extends Controller
      */
     protected $baseFactory;
 
-    public function onCreate(Request $request)
+    public function onCreate(Router $router)
     {
-        parent::onCreate($request);
-        $this->baseFactory = new BaseFactory($request);
+        parent::onCreate($router);
+        $this->baseFactory = new BaseFactory($router->getRequest());
     }
 
     public function getContentFrameView($title, $content, $showCarousel = true)

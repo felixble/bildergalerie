@@ -17,6 +17,7 @@
  */
 
 class Router {
+    const MAX_REROUTE_COUNT = 10;
 
     /**
      * The current request object.
@@ -32,6 +33,19 @@ class Router {
      * @var Controller
      */
     private $controller;
+
+    /**
+     * The chosen action which will
+     * be shown.
+     *
+     * @var string
+     */
+    private $action;
+
+    /**
+     * @var array
+     */
+    private $reRouteStack;
 
 
     /**
@@ -114,9 +128,10 @@ class Router {
             $ctrlUnknown = true;
         }
 
-        $this->controller = new $controller();
+        $controllerName = $controller;
+        $controller = new $controller();
 
-        if (!$this->controller instanceof Controller) {
+        if (!$controller instanceof Controller) {
             throw new Exception("Invalid Controller");
         }
 
@@ -125,7 +140,7 @@ class Router {
 
         if (!$ctrlUnknown && $possibleAction != null) {
             // what is action, what is get parameter ?
-            if (method_exists($this->controller, $possibleAction)) {
+            if (method_exists($controller, $possibleAction)) {
                 // the method exists, so we found our action to execute
                 $action = $possibleAction;
                 $this->convertQueryArrayToGetArray($queryArr, 2);
@@ -135,9 +150,46 @@ class Router {
             }
         }
 
-        $this->controller->onCreate($this->request);
+        $this->setControllerAndAction($controllerName, $action, $controller);
+    }
 
-        $view = $this->controller->$action();
+    private function setControllerAndAction($controllerName, $actionName, $controller = null)
+    {
+        $this->reRouteStack[] = array("Controller" => $controllerName, "Action" => $actionName);
+
+        if (null == $controller) { // controller is not instantiated right now
+            $controller = new $controllerName();
+
+            if (!$controller instanceof Controller) {
+                throw new Exception("Invalid Controller");
+            }
+        }
+        $this->controller = $controller;
+
+        $this->controller->onCreate($this);
+        $this->action = $actionName;
+
+        if (!method_exists($this->controller, $this->action)) {
+            throw new \Exception("Invalid Action!");
+        }
+    }
+
+    private function performReRouting(ReRouteRequestException $e)
+    {
+        $this->setControllerAndAction($e->getController(), $e->getAction());
+    }
+
+    /**
+     * Runs the controller and displays the view of
+     * the action.
+     *
+     * @return View
+     * @throws Exception
+     */
+    private function runController()
+    {
+        $actionName = $this->action;
+        $view = $this->controller->$actionName();
 
         if (!($view instanceof View)) {
             throw new Exception("Invalid View - did you forgot to return the view?");
@@ -171,12 +223,38 @@ class Router {
     public function run()
     {
         try {
-            return $this->route();
+            $this->route();
+
+            while (!$this->maxReRouteCount()) {
+                try {
+                    return $this->runController();
+                } catch (ReRouteRequestException $e) {
+                    $this->performReRouting($e);
+                }
+            }
+
+            // TODO: Exception dafür erstellen!
+            throw new Exception("ReRoutingException");
         } catch (\Exception $e) {
             header("HTTP/1.1 500 Internal Server Error");
             return $this->exceptionHandler($e);
         }
 
+    }
+
+    public function reRouteTo($controller, $action)
+    {
+        throw new ReRouteRequestException(
+            self::inputToClassName($controller),
+            self::appendActionMethodAppendix($action)
+        );
+    }
+
+    public function rewindAndRestartRouting()
+    {
+        $start_controller = $this->reRouteStack[0]["Controller"];
+        $start_action = $this->reRouteStack[0]["Action"];
+        throw new ReRouteRequestException($start_controller, $start_action);
     }
 
     /**
@@ -195,6 +273,16 @@ class Router {
             $this->request->addGetParam($queryArr[$index], $val);
             $index += 2;
         }
+    }
+
+    private function maxReRouteCount()
+    {
+        return (count($this->reRouteStack) > self::MAX_REROUTE_COUNT);
+    }
+
+    public function getRequest()
+    {
+        return $this->request;
     }
 
 } 

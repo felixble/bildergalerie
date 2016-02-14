@@ -10,7 +10,10 @@
  */
 abstract class Controller {
 
-    private $request;
+    /**
+     * @var Router
+     */
+    private $router;
 
     /**
      * Creates a new Controller.
@@ -23,13 +26,13 @@ abstract class Controller {
 
     /**
      * After building the Request-Object
-     * it will be passed to the controller.
+     * the Router will be passed to the controller.
      *
-     * @param Request $request
+     * @param Router $router
      */
-    public function onCreate(Request $request)
+    public function onCreate(Router $router)
     {
-        $this->request = $request;
+        $this->router = $router;
     }
 
     /**
@@ -37,7 +40,15 @@ abstract class Controller {
      */
     public function getRequest()
     {
-        return $this->request;
+        return $this->router->getRequest();
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter()
+    {
+        return $this->router;
     }
 
     /**

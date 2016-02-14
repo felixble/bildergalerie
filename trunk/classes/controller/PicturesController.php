@@ -21,6 +21,8 @@ class PicturesController extends BildergalerieController
     public function indexAction()
     {
         // TODO: Implement indexAction() method.
+        $test = 5;
+        $this->getRouter()->reRouteTo("home", "index");
     }
 
     public function createAction()
