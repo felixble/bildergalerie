@@ -150,6 +150,7 @@ class Router {
             }
         }
 
+        $this->onRequestBuilt($this->request);
         $this->setControllerAndAction($controllerName, $action, $controller);
     }
 
@@ -188,6 +189,8 @@ class Router {
      */
     private function runController()
     {
+        $this->preRunController($this->controller, $this->action);
+
         $actionName = $this->action;
         $view = $this->controller->$actionName();
 
@@ -233,8 +236,7 @@ class Router {
                 }
             }
 
-            // TODO: Exception dafür erstellen!
-            throw new Exception("ReRoutingException");
+            throw new ReRoutingException($this->reRouteStack);
         } catch (\Exception $e) {
             header("HTTP/1.1 500 Internal Server Error");
             return $this->exceptionHandler($e);
@@ -283,6 +285,27 @@ class Router {
     public function getRequest()
     {
         return $this->request;
+    }
+
+    /**
+     * This method will be invoked the moment before
+     * the action of the controller will be executed.
+     *
+     * @param $controller Controller Controller which will be run
+     * @param $action string action which will be executed
+     */
+    protected function preRunController(Controller $controller, $action)
+    {
+    }
+
+    /**
+     * Method will be called the moment the request
+     * is completely built.
+     *
+     * @param $request Request
+     */
+    protected function onRequestBuilt(Request $request)
+    {
     }
 
 } 

@@ -74,6 +74,10 @@ class UserSessData
         return $this->user;
     }
 
+    public function destroySession()
+    {
+        $this->sess_manager->getUserSegment()->clear();
+    }
 
 
 }

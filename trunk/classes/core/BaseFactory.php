@@ -64,6 +64,14 @@ class BaseFactory
         return $this->mandantManager;
     }
 
+    /**
+     * @return Authenticator
+     */
+    public function getAuthenticator()
+    {
+        return new Authenticator($this->getUserDAO(), $this->getSessionManager());
+    }
+
     public function getUserDAO()
     {
         return new UserPseudoDAO();

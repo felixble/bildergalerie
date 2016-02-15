@@ -15,10 +15,24 @@ abstract class BildergalerieController extends Controller
      */
     protected $baseFactory;
 
+    /**
+     * @var ControllerAnnotationParser
+     */
+    private $annotationParser;
+
+    public function __construct()
+    {
+        $this->annotationParser = new ControllerAnnotationParser($this);
+    }
+
     public function onCreate(Router $router)
     {
         parent::onCreate($router);
-        $this->baseFactory = new BaseFactory($router->getRequest());
+        if ($router instanceof AppRouter) {
+            $this->baseFactory = $router->getBaseFactory();
+        } else {
+            throw new IllegalStateException("Router must be an instance of AppRouter.");
+        }
     }
 
     public function getContentFrameView($title, $content, $showCarousel = true)
@@ -33,8 +47,19 @@ abstract class BildergalerieController extends Controller
 
         $view = BootstrapView::getContentFrameView($fullTitle, $contentView);
         $view->setJS("global.js");
+        if ($content instanceof View) {
+            $view->addCSS($content->getCustomCSS());
+        }
 
         return $view;
+    }
+
+    /**
+     * @return ControllerAnnotationParser
+     */
+    public function getAnnotationParser()
+    {
+        return $this->annotationParser;
     }
 
 }

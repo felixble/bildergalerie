@@ -20,6 +20,6 @@ class UserPseudoDAO implements IUserDAO
      */
     public function getValidUser($user, $pass)
     {
-        return new User("4711", $user, "Mustermann", "Max", "max@mustermann.de");
+        return new User(new Mandant(47), "4711", $user, "Mustermann", "Max", "max@mustermann.de");
     }
 }

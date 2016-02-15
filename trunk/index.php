@@ -27,7 +27,7 @@ $request = new Request($_SERVER["REQUEST_URI"], $_GET, $_POST, $_SERVER["REQUEST
 
 // create a new Router-Object which is responsible to determine the correct controller and action-method
 // from the given request.
-$router = new Router($request);
+$router = new AppRouter($request);
 
 // print the return value from the executed action, which is the desired view.
 echo $router->run();

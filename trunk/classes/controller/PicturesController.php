@@ -21,10 +21,13 @@ class PicturesController extends BildergalerieController
     public function indexAction()
     {
         // TODO: Implement indexAction() method.
-        $test = 5;
         $this->getRouter()->reRouteTo("home", "index");
     }
 
+    /**
+     * @return BootstrapView
+     * @AuthRequired
+     */
     public function createAction()
     {
         return $this->getContentFrameView("Bild hinzufügen", new Picture_formView(), false);

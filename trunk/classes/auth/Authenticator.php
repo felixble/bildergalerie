@@ -9,8 +9,6 @@
 class Authenticator
 {
 
-    private $isAuthenticated = false;
-
     /**
      * @var IUserDAO
      */
@@ -39,7 +37,7 @@ class Authenticator
     private function isAuthenticatedViaSession()
     {
         $sessUser = $this->userSessData->getUser();
-        $this->isAuthenticated = (null != $sessUser);
+        return (null != $sessUser);
     }
 
     public function authenticate($user, $pass)
@@ -62,7 +60,12 @@ class Authenticator
      */
     public function isAuthenticated()
     {
-        return $this->isAuthenticated;
+        return $this->isAuthenticatedViaSession();
+    }
+
+    public function logout()
+    {
+        $this->userSessData->destroySession();
     }
 
     /**
