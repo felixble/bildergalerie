@@ -43,6 +43,6 @@ class AuthController extends BildergalerieController
     public function logoutAction()
     {
         $this->baseFactory->getAuthenticator()->logout();
-        $this->getRouter()->reRouteTo("home", "index");
+        $this->getRouter()->reLocateTo();
     }
 }

@@ -47,6 +47,33 @@ class Router {
      */
     private $reRouteStack;
 
+    /**
+     * Builds the url to relocate to a different
+     * action.
+     *
+     * @param string|null $controller
+     * @param string $action
+     * @param array $params
+     * @return string
+     */
+    public static function getUrl($controller = null, $action = "", $params = array())
+    {
+        if (null == $controller ) {
+            $controller = MvcConfig::getInstance()->getDefaultControllerName();
+        }
+        if (!empty($action)) {
+            $action = "/" . $action;
+        }
+
+        $url = $controller . $action;
+
+        foreach($params as $key => $val) {
+            $url .= "/" . $key . "/" . $val;
+        }
+
+        return $url;
+    }
+
 
     /**
      * Creates a new Router which makes the
@@ -242,6 +269,25 @@ class Router {
             return $this->exceptionHandler($e);
         }
 
+    }
+
+    public function reLocateTo($controller = null, $action = "")
+    {
+        // mod_rewrite workaround ...
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $virtualPath = substr($requestUri, strlen(MvcConfig::getInstance()->getBasePath()));
+        $count = count(explode("/", $virtualPath));
+        $prefix = "";
+        if ($count > 1) { // 2 -> ../ as prefix
+            while ($count > 1) {
+                $prefix .= "../";
+                $count--;
+            }
+        }
+
+        $url = $prefix . self::getUrl($controller, $action);
+        header('Location: ' . $url, true, 303);
+        exit;
     }
 
     public function reRouteTo($controller, $action)

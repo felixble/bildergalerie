@@ -133,20 +133,7 @@ class View {
      */
     public function url($controller = null, $action = "", $params = array())
     {
-        if (null == $controller ) {
-            $controller = MvcConfig::getInstance()->getDefaultControllerName();
-        }
-        if (!empty($action)) {
-            $action = "/" . $action;
-        }
-
-        $url = $controller . $action;
-
-        foreach($params as $key => $val) {
-            $url .= "/" . $key . "/" . $val;
-        }
-
-        return $url;
+        return Router::getUrl($controller, $action, $params);
     }
 
     public function urlScrollTo($id)

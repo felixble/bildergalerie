@@ -12,4 +12,5 @@ class AboutController extends BildergalerieController {
     {
         return $this->getContentFrameView("Die Künstlerin", new AboutView());
     }
+
 }

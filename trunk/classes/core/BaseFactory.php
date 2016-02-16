@@ -74,8 +74,7 @@ class BaseFactory
 
     public function getUserDAO()
     {
-        return new UserPseudoDAO();
-        //throw new NotImplementedException("#getUserDAO() in BaseFactory not yet implemented.");
+        return new UserDAO($this->dbConn, $this->getMandantManager()->getMandant());
     }
 
 

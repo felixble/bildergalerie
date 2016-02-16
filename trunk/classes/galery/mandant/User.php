@@ -24,21 +24,25 @@ class User implements IUser
     /**
      * User constructor.
      *
-     * @param $mandant
-     * @param $userId
-     * @param $username
-     * @param $last_name
-     * @param $first_name
-     * @param $email
+     * @param Mandant $mandant
+     * @param $userId string
+     * @param $username string
+     * @param $last_name string
+     * @param $first_name string
+     * @param $email string
+     * @param null|string $lastlogin
+     * @param null|string $registeredDate
      */
-    public function __construct(Mandant $mandant, $userId, $username, $last_name, $first_name, $email)
-    {
+    public function __construct(Mandant $mandant, $userId, $username, $last_name, $first_name, $email,
+                                $lastlogin = null, $registeredDate = null
+    ) {
         $this->mandant = $mandant;
         $this->userId = $userId;
         $this->username = $username;
         $this->last_name = $last_name;
         $this->first_name = $first_name;
         $this->email = $email;
+        // TODO: lastlogin / registeredDate
     }
 
     /**
