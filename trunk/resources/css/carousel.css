@@ -46,6 +46,15 @@ body {
     width:100%;
     text-align:center;
 }
+/*
+.overlay h1 > span {
+  background-color: rgba(128, 128, 128, 0.5);
+  padding: 5px;
+}*/
+
+.overlay-inverse h1 > span {
+  background-color: transparent;
+}
 
 .overlay-inverse {
     color: #000;
@@ -87,10 +96,10 @@ body {
 .carousel-inner > .item > .header-image {
     width:100%;
     height: 100%;
-    background-position: 50% 65%;
     background-size: cover;
 }
-
+/* 
+    background-position: 50% 10%; */
 
 /* MARKETING CONTENT
 -------------------------------------------------- */

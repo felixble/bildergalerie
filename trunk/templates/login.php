@@ -6,11 +6,11 @@
         <input type="text" id="inputUser" name="inputUser" class="form-control" placeholder="Benutzername" required autofocus />
         <label for="inputPassword" class="sr-only">Passwort</label>
         <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Passwort" required />
-        <div class="checkbox">
+        <!--<div class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me"> Logindaten 4 Wochen merken
             </label>
-        </div>
+        </div>-->
         <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit_login">Anmelden</button>
         <a href="<?php echo $this->url(); ?>" class="btn btn-lg btn-danger btn-block">Abbrechen</a>
     </form>

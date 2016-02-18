@@ -35,7 +35,7 @@
 <!-- Carousel
   ================================================== -->
 <div class="overlay <?php echo ($this->showCarousel()) ? "" : "overlay-inverse overlay-only-header"; ?>">
-    <h1><span class="hidden-xs"><?php echo $this->getPageTitle(); ?> - </span><?php echo $this->getTitle(); ?></h1>
+    <h1><span><span class="hidden-xs"><?php echo $this->getPageTitle(); ?> - </span><?php echo $this->getTitle(); ?></span></h1>
 </div>
 
 <?php if ($this->showCarousel()): ?>
@@ -44,13 +44,25 @@
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+            <li data-target="#myCarousel" data-slide-to="4"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <div class="header-image" style="background-image: url('resources/img/header.JPG');"></div>
+                <div class="header-image" style="background-image: url('resources/img/hilde_1.JPG'); background-position: 50% 50%;"></div>
             </div>
             <div class="item">
-                <div class="header-image" style="background-image: url('resources/img/header2.JPG');"></div>
+                <div class="header-image" style="background-image: url('resources/img/hilde_2.JPG'); background-position: 50% 65%;"></div>
+            </div>
+            <div class="item">
+                <div class="header-image" style="background-image: url('resources/img/hilde_3.JPG'); background-position: 50% 65%;"></div>
+            </div>
+            <div class="item ">
+                <div class="header-image" style="background-image: url('resources/img/hilde_4.JPG'); background-position: 50% 10%;"></div>
+            </div>
+            <div class="item">
+                <div class="header-image" style="background-image: url('resources/img/hilde_5.JPG'); background-position: 50% 65%;"></div>
             </div>
         </div>
         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
