@@ -221,7 +221,7 @@ class Router {
         $actionName = $this->action;
         $view = $this->controller->$actionName();
 
-        if (!($view instanceof View)) {
+        if (!$this->isJsonResponse() && !($view instanceof View)) {
             throw new Exception("Invalid View - did you forgot to return the view?");
         }
 

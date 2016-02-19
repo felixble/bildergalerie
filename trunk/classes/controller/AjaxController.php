@@ -26,4 +26,13 @@ class AjaxController extends BildergalerieController
     {
         throw new UnsupportedAjaxCall();
     }
+
+    public function uploadAction()
+    {
+        $resultArray = array(
+            "status"    => "OK"
+        );
+
+        return json_encode($resultArray);
+    }
 }
