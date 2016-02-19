@@ -5,6 +5,7 @@
         <form enctype="multipart/form-data">
             <input type="file" id="uploadFile" name="uploadFile">
         </form>
+        <img style="display: none;" src="" id="uploadPreview" width="200">
     </div>
 
 
@@ -36,6 +37,7 @@
             </div>
             <button type="submit" class="btn btn-success" id="add_pic_submit" name="add_pic_submit" disabled>Speichern</button>
             <input type="hidden" name="filePath" id="filePath">
+            <input type="text" name="thumbPath" id="thumbPath">
         </form>
 
 

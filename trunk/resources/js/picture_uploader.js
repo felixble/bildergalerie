@@ -3,7 +3,7 @@
  */
 
 $("#uploadFile").change(function() {
-    setFilePath("");
+    setFilePath("", "");
 
     var file_data = $('#uploadFile').prop('files')[0];
     var formData = new FormData();
@@ -16,14 +16,32 @@ $("#uploadFile").change(function() {
             var json = $.parseJSON(result);
 
             if (json.status == "OK") {
-                setFilePath(json.filePath);
+                uploadSuccessful(json.filePath, json.thumbPath);
             }
         }
     );
 });
 
+function uploadSuccessful(filePath, thumbPath) {
+    setFilePath(filePath, thumbPath); // if thumbPath is null, we should not set it.
 
-function setFilePath(filePath) {
+    if (thumbPath == null) { // but we want to show the file in the preview, tough.
+        thumbPath = filePath;
+    }
+
+    $('#uploadFile').hide();
+    var uploadPreview = $('#uploadPreview');
+
+    uploadPreview.attr('src', thumbPath);
+    uploadPreview.show();
+}
+
+
+function setFilePath(filePath, thumbPath) {
+    if (thumbPath == null) {
+        thumbPath = "";
+    }
+    $('#thumbPath').val(thumbPath);
     var filePathEl = $('#filePath');
     filePathEl.val(filePath);
     $('#add_pic_submit').prop('disabled', !filePathEl.val());

@@ -33,14 +33,11 @@ class AjaxController extends BildergalerieController
             "status"    => "ERR"
         );
 
-        // TODO: Check if file exists
-        $file = $this->getRequest()->getFiles()["uploadFile"];
-        $tmpFile = $file['tmp_name'];
-        $fileName = $file['name'];
-
-        if (!exif_imagetype($tmpFile)) {
-            throw new FileIsNotAnImage($fileName);
+        if (!array_key_exists("uploadFile", $this->getRequest()->getFiles())) {
+            throw new IllegalArgumentException("Uploaded file not given.");
         }
+
+        $file = $this->getRequest()->getFiles()["uploadFile"];
 
         $mandantId = $this->baseFactory->getMandantManager()->getMandant()->getMandantId();
 
@@ -49,17 +46,13 @@ class AjaxController extends BildergalerieController
             mkdir($dirName);
         }
 
-        $newFilePath = $dirName . "/" . $fileName;
-
-        if (is_file($newFilePath)) {
-            throw new FileAlreadyExists($fileName);
-        }
-
-        if (@move_uploaded_file($tmpFile, $newFilePath)) {
+        $picUploader = new PictureUploader($file, $dirName);
+        if ($picUploader->uploadFile()) {
+            // pic upload was successful
             $resultArray["status"] = "OK";
-            $resultArray["filePath"] = $newFilePath;
+            $resultArray["filePath"] = $picUploader->getUploadedFilePath();
+            $resultArray["thumbPath"] = $picUploader->getThumbFilePath();
         }
-
 
         return json_encode($resultArray);
     }
