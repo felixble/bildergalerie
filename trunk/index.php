@@ -23,7 +23,7 @@ set_error_handler("exception_error_handler", E_ALL);
 
 // build the request object containing the request uri, all get and post parameters together
 // with the cookies array
-$request = new Request($_SERVER["REQUEST_URI"], $_GET, $_POST, $_SERVER["REQUEST_METHOD"], $_COOKIE);
+$request = new Request($_SERVER["REQUEST_URI"], $_GET, $_POST, $_SERVER["REQUEST_METHOD"], $_COOKIE, $_FILES);
 
 // create a new Router-Object which is responsible to determine the correct controller and action-method
 // from the given request.

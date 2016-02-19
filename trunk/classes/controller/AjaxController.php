@@ -30,8 +30,36 @@ class AjaxController extends BildergalerieController
     public function uploadAction()
     {
         $resultArray = array(
-            "status"    => "OK"
+            "status"    => "ERR"
         );
+
+        // TODO: Check if file exists
+        $file = $this->getRequest()->getFiles()["uploadFile"];
+        $tmpFile = $file['tmp_name'];
+        $fileName = $file['name'];
+
+        if (!exif_imagetype($tmpFile)) {
+            throw new FileIsNotAnImage($fileName);
+        }
+
+        $mandantId = $this->baseFactory->getMandantManager()->getMandant()->getMandantId();
+
+        $dirName = "uploads/" . $mandantId;
+        if (!is_dir($dirName)) {
+            mkdir($dirName);
+        }
+
+        $newFilePath = $dirName . "/" . $fileName;
+
+        if (is_file($newFilePath)) {
+            throw new FileAlreadyExists($fileName);
+        }
+
+        if (@move_uploaded_file($tmpFile, $newFilePath)) {
+            $resultArray["status"] = "OK";
+            $resultArray["filePath"] = $newFilePath;
+        }
+
 
         return json_encode($resultArray);
     }

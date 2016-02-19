@@ -48,6 +48,13 @@ class Request {
     private $cookies;
 
     /**
+     * Files.
+     *
+     * @var array
+     */
+    private $files;
+
+    /**
      * Creates a new request object.
      *
      * @param $requestUri
@@ -55,13 +62,16 @@ class Request {
      * @param $post
      * @param $requestMethod
      * @param array $cookies
+     * @param array $files
      */
-    public function __construct($requestUri, $get, $post, $requestMethod, $cookies = array()) {
+    public function __construct($requestUri, $get, $post, $requestMethod, $cookies = [], $files = [])
+    {
         $this->requestUri = substr($requestUri, strlen(MvcConfig::getInstance()->getBasePath()));
         $this->getParam = $get;
         $this->postParam = $post;
         $this->requestMethod = $requestMethod;
         $this->cookies = $cookies;
+        $this->files = $files;
     }
 
     /**
@@ -94,6 +104,14 @@ class Request {
     public function getCookies()
     {
         return $this->cookies;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFiles()
+    {
+        return $this->files;
     }
 
     /**

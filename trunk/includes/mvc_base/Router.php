@@ -278,8 +278,11 @@ class Router {
 
             throw new ReRoutingException($this->reRouteStack);
         } catch (\Exception $e) {
+            if ($this->isJsonResponse()) {
+                return $this->exceptionHandler($e, true);
+            }
             header("HTTP/1.1 500 Internal Server Error");
-            return $this->exceptionHandler($e, $this->isJsonResponse());
+            return $this->exceptionHandler($e, false);
         }
 
     }
