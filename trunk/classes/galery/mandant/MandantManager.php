@@ -28,9 +28,9 @@ class MandantManager
      */
     private $sessManager;
 
-    public function __construct(Request $request, \Simplon\Mysql\Mysql $dbConn)
+    public function __construct(Request $request, \Simplon\Mysql\Mysql $dbConn, $sessManager)
     {
-        $this->sessManager = new SessionManager($request->getCookies());
+        $this->sessManager = $sessManager;
 
         $mandant = null;
         $mandantId = $this->getMandantFromRequest($request);

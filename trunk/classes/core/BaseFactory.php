@@ -32,7 +32,7 @@ class BaseFactory
     public function __construct(Request $request)
     {
         $this->sessionManager = new SessionManager($request->getCookies());
-        $this->mandantManager = new MandantManager($request, $this->getDbConnection());
+        $this->mandantManager = new MandantManager($request, $this->getDbConnection(), $this->getSessionManager());
     }
 
     public function getSessionManager()
