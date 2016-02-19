@@ -15,14 +15,9 @@ abstract class BildergalerieController extends Controller
      */
     protected $baseFactory;
 
-    /**
-     * @var ControllerAnnotationParser
-     */
-    private $annotationParser;
-
     public function __construct()
     {
-        $this->annotationParser = new ControllerAnnotationParser($this);
+        parent::__construct();
     }
 
     public function onCreate(Router $router)
@@ -52,14 +47,6 @@ abstract class BildergalerieController extends Controller
         }
 
         return $view;
-    }
-
-    /**
-     * @return ControllerAnnotationParser
-     */
-    public function getAnnotationParser()
-    {
-        return $this->annotationParser;
     }
 
 }

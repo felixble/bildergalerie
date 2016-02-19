@@ -317,16 +317,16 @@
         },
         {
             "name": "crodas/class-info",
-            "version": "v0.2.0",
+            "version": "v0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crodas/ClassInfo.git",
-                "reference": "141f9680d99f93152a28b4d29ecdc669e0da708f"
+                "reference": "b0d23d92263c1c2ca68677a7e72ee2486176e40d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crodas/ClassInfo/zipball/141f9680d99f93152a28b4d29ecdc669e0da708f",
-                "reference": "141f9680d99f93152a28b4d29ecdc669e0da708f",
+                "url": "https://api.github.com/repos/crodas/ClassInfo/zipball/b0d23d92263c1c2ca68677a7e72ee2486176e40d",
+                "reference": "b0d23d92263c1c2ca68677a7e72ee2486176e40d",
                 "shasum": ""
             },
             "require": {
@@ -349,7 +349,7 @@
                 }
             ],
             "description": "Get classes and functions defined in a given file",
-            "time": "2015-12-29 12:15:23"
+            "time": "2016-02-18 19:18:19"
         },
         {
             "name": "crodas/file-util",

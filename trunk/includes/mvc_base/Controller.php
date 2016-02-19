@@ -16,12 +16,18 @@ abstract class Controller {
     private $router;
 
     /**
+     * @var ControllerAnnotationParser
+     */
+    private $annotationParser;
+
+    /**
      * Creates a new Controller.
      * A controller will only be instantiated
      * by the {@link Router}-Class.
      */
     public function __construct()
     {
+        $this->annotationParser = new ControllerAnnotationParser($this);
     }
 
     /**
@@ -49,6 +55,14 @@ abstract class Controller {
     public function getRouter()
     {
         return $this->router;
+    }
+
+    /**
+     * @return ControllerAnnotationParser
+     */
+    public function getAnnotationParser()
+    {
+        return $this->annotationParser;
     }
 
     /**

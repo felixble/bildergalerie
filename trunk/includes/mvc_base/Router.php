@@ -236,8 +236,21 @@ class Router {
      * @param Exception $e Exception to convert into a {@link ExceptionView}
      * @return BootstrapView
      */
-    private function exceptionHandler(\Exception $e)
+    private function exceptionHandler(\Exception $e, $jsonResponse = false)
     {
+        if ($jsonResponse) {
+            $jsonArr = array(
+                "status"    => "ERR",
+                "err"       => get_class($e),
+                "errCode"   => $e->getCode(),
+                "errMsg"    => $e->getMessage(),
+                "errFile"   => $e->getFile(),
+                "errLine"   => $e->getLine()
+            );
+
+            return json_encode($jsonArr);
+        }
+
         $exceptionView = new ExceptionView();
         $exceptionView->setInfosFromException($e);
         // TODO: Show bildergalerie page wrapper (content_frame) !
@@ -266,7 +279,7 @@ class Router {
             throw new ReRoutingException($this->reRouteStack);
         } catch (\Exception $e) {
             header("HTTP/1.1 500 Internal Server Error");
-            return $this->exceptionHandler($e);
+            return $this->exceptionHandler($e, $this->isJsonResponse());
         }
 
     }
@@ -352,6 +365,15 @@ class Router {
      */
     protected function onRequestBuilt(Request $request)
     {
+    }
+
+    private function isJsonResponse()
+    {
+        if (null != $this->controller && $this->controller instanceof Controller) {
+            $annotations = $this->controller->getAnnotationParser()->getAnnotations();
+            return $annotations->has("JsonResponse");
+        }
+        return false;
     }
 
 } 
