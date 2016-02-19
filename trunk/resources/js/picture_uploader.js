@@ -17,6 +17,8 @@ $("#uploadFile").change(function() {
 
             if (json.status == "OK") {
                 uploadSuccessful(json.filePath, json.thumbPath);
+            } else {
+                // TODO: tell the user about the occured error
             }
         }
     );

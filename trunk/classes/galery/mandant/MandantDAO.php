@@ -61,14 +61,6 @@ class MandantDAO
         return $this->sqlManager->delete($sqlBuilder);
     }
 
-    private function getSqlBuilder()
-    {
-        $sqlBuilder = new Simplon\Mysql\Manager\SqlQueryBuilder();
-
-        $sqlBuilder->setTableName(self::TABLE_NAME);
-        return $sqlBuilder;
-    }
-
     public function queryDefaultMandantForDomain($domain)
     {
         $sqlBuilder = $this->getSqlBuilder()
@@ -81,6 +73,14 @@ class MandantDAO
             return new Mandant($row[self::COL_MANDANT_ID], $row[self::COL_PAGE_TITLE]);
         }
         return null;
+    }
+
+    private function getSqlBuilder()
+    {
+        $sqlBuilder = new Simplon\Mysql\Manager\SqlQueryBuilder();
+
+        $sqlBuilder->setTableName(self::TABLE_NAME);
+        return $sqlBuilder;
     }
 
 }

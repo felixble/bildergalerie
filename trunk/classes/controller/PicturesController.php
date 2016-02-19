@@ -30,6 +30,15 @@ class PicturesController extends BildergalerieController
      */
     public function createAction()
     {
-        return $this->getContentFrameView("Bild hinzufügen", new Picture_formView(), false);
+        $picFormView = new Picture_formView();
+
+        // get Categories
+        $categoryDAO = new CategoryDAO(
+            $this->baseFactory->getDbConnection(),
+            $this->baseFactory->getMandantManager()->getMandant());
+
+        $picFormView->setCategories($categoryDAO->getAllCategories());
+
+        return $this->getContentFrameView("Bild hinzufügen", $picFormView, false);
     }
 }
