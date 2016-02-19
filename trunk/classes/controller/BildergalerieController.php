@@ -46,9 +46,9 @@ abstract class BildergalerieController extends Controller
         $contentView->setShowCarousel($showCarousel);
 
         $view = BootstrapView::getContentFrameView($fullTitle, $contentView);
-        $view->setJS("global.js");
         if ($content instanceof View) {
             $view->addCSS($content->getCustomCSS());
+            $view->addJS($content->getCustomJS());
         }
 
         return $view;

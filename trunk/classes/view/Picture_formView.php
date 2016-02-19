@@ -8,4 +8,11 @@
  */
 class Picture_formView extends View
 {
+
+    public function getCustomJS()
+    {
+        return "picture_uploader.js";
+    }
+
+
 }

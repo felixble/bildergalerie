@@ -148,5 +148,12 @@ class View {
      */
     public function getCustomCSS() { return null; }
 
+    /**
+     * Returns the custom js file of the view.
+     *
+     * @return string|array|null
+     */
+    public function getCustomJS() { return null; }
+
 
 } 

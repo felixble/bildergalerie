@@ -48,6 +48,19 @@ class BootstrapView extends View {
         }
     }
 
+    public function addJS($js)
+    {
+        if (null == $this->js) {
+            $this->js = array();
+        }
+
+        if (is_array($js)) {
+            $this->js = array_merge($this->js, $js);
+        } else {
+            $this->js[] = $js;
+        }
+    }
+
     /**
      * @return array
      */
@@ -66,11 +79,6 @@ class BootstrapView extends View {
         return $this->js;
     }
 
-    public function setJS($js)
-    {
-        $this->js = $js;
-    }
-
     public function getBodyContent()
     {
         return $this->bodyContent;
@@ -82,6 +90,7 @@ class BootstrapView extends View {
         if (($bodyContent instanceof View) && ( null != $bodyContent->getCustomCSS() )) {
             // the bodyContent provides a custom css file
             $this->addCSS($bodyContent->getCustomCSS());
+            $this->addJS($bodyContent->getCustomJS());
         }
     }
 

@@ -45,7 +45,12 @@ class Content_frameView extends View {
 
     public function getCustomCSS()
     {
-        return "carousel.css";
+        return array("carousel.css", "global.css");
+    }
+
+    public function getCustomJS()
+    {
+        return "global.js";
     }
 
     public function showCarousel()

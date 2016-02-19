@@ -10,7 +10,7 @@ class BootstrapHelper {
 
     public static function getContentFrameView($title, $content) {
         $view = BootstrapView::getContentFrameView($title, $content);
-        $view->setJS("global.js");
+        $view->addJS("global.js");
 
         return $view;
     }

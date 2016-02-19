@@ -15,10 +15,9 @@
     <link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <?php
-    //echo HtmlHelper::linkCSS("resources/css/carousel.css");
     if (null != $this->getCSS() && is_array($this->getCSS())) {
         foreach ($this->getCSS() as $css) {
-            echo HtmlHelper::linkCSS("resources/css/" . $css);
+            if (!empty($css)) echo HtmlHelper::linkCSS("resources/css/" . $css);
         }
     }
 
@@ -45,9 +44,12 @@
 
 
 <?php
-if (null != $this->getJS()) {
-echo HtmlHelper::scriptJS("resources/js/" . $this->getJS());
+if (null != $this->getJS() && is_array($this->getJS())) {
+    foreach ($this->getJS() as $js) {
+        if (!empty($js)) echo HtmlHelper::scriptJS("resources/js/" . $js);
+    }
 }
+
 echo $this->getContentPastJs();
 ?>
 
