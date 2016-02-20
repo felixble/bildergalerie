@@ -75,7 +75,6 @@ class CategoryDAO
         );
     }
 
-
     private function getSqlBuilder()
     {
         $sqlBuilder = new Simplon\Mysql\Manager\SqlQueryBuilder();

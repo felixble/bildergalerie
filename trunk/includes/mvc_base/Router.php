@@ -137,6 +137,13 @@ class Router {
             $reqUri = (substr($reqUri, 9, 1) == "/") ? substr($reqUri, 10) : substr($reqUri, 9);
         }
         $queryArr = explode("/", $reqUri);
+
+        // if there are normal get params the last item has the question tag
+        if (count($queryArr) > 0 && strpos($queryArr[count($queryArr)-1], "?")) {
+            $pos = strpos($queryArr[count($queryArr)-1], "?");
+            $queryArr[count($queryArr)-1] = substr($queryArr[count($queryArr)-1], 0, $pos);
+        }
+
         $controller = MvcConfig::getInstance()->getDefaultControllerName();
         $possibleAction = null;
         $action = self::appendActionMethodAppendix(MvcConfig::getInstance()->getDefaultActionName());

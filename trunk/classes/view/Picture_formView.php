@@ -17,7 +17,7 @@ class Picture_formView extends View
     }
 
     /**
-     * @return mixed
+     * @return Category[]
      */
     public function getCategories()
     {
@@ -25,7 +25,7 @@ class Picture_formView extends View
     }
 
     /**
-     * @param mixed $categories
+     * @param Category[] $categories
      */
     public function setCategories($categories)
     {

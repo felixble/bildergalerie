@@ -60,6 +60,11 @@ class Picture
     private $path;
 
     /**
+     * @var string Path to the thumb file - max. 512 chars
+     */
+    private $pathThumb;
+
+    /**
      * @var DateTime
      */
     private $producedDate;
@@ -101,15 +106,20 @@ class Picture
      * @param bool|null $pricePublic
      * @param bool|null $salable
      * @param string $path
+     * @param null $pathThumb
      * @param DateTime $producedDate
      * @param DateTime $uploadedDate
      * @param User $uploadedBy
      * @param User $owner
-     * @param Category $category
-     * @param ArtisticStyle $artisticStyle
+     * @param Category|int $category
+     * @param ArtisticStyle|int $artisticStyle
      */
-    public function __construct(Mandant $mandant, $pictureId, $title = null, $description = null, $format = null, $material = null, $price = null, $pricePublic = null, $salable = null, $path = null, DateTime $producedDate = null, DateTime $uploadedDate = null, User $uploadedBy = null, User $owner = null, Category $category = null, ArtisticStyle $artisticStyle = null)
-    {
+    public function __construct(Mandant $mandant, $pictureId, $title = null, $description = null, $format = null,
+                                $material = null, $price = null, $pricePublic = null, $salable = null, $path = null,
+                                $pathThumb = null, DateTime $producedDate = null, DateTime $uploadedDate = null,
+                                User $uploadedBy = null, User $owner = null, $category = null,
+                                $artisticStyle = null
+    ) {
         $this->mandant = $mandant;
         $this->pictureId = $pictureId;
         $this->title = $title;
@@ -120,12 +130,13 @@ class Picture
         $this->pricePublic = $pricePublic;
         $this->salable = $salable;
         $this->path = $path;
-        $this->producedDate = $producedDate;
-        $this->uploadedDate = $uploadedDate;
+        $this->pathThumb = $pathThumb;
+        $this->setProducedDate($producedDate);
+        $this->setUploadedDate($uploadedDate);
         $this->uploadedBy = $uploadedBy;
         $this->owner = $owner;
-        $this->category = $category;
-        $this->artisticStyle = $artisticStyle;
+        $this->setCategory($category);
+        $this->setArtisticStyle($artisticStyle);
     }
 
     /**
@@ -340,7 +351,11 @@ class Picture
      */
     public function setUploadedDate($uploadedDate)
     {
-        $this->uploadedDate = $uploadedDate;
+        if (null == $uploadedDate) {
+            $this->uploadedDate = new DateTime();
+        } else {
+            $this->uploadedDate = $uploadedDate;
+        }
         return $this;
     }
 
@@ -389,12 +404,22 @@ class Picture
     }
 
     /**
-     * @param Category $category
+     * @param Category|int $category
      * @return Picture
+     * @throws InvalidInputException
      */
     public function setCategory($category)
     {
-        $this->category = $category;
+        if (null == $category) {
+            throw new InvalidInputException("category");
+        }
+
+        if ($category instanceof Category) {
+            $this->category = $category;
+        } else {
+            $this->category = new Category($this->getMandant(), $category);
+        }
+
         return $this;
     }
 
@@ -407,12 +432,19 @@ class Picture
     }
 
     /**
-     * @param ArtisticStyle $artisticStyle
+     * @param ArtisticStyle|int $artisticStyle
      * @return Picture
      */
     public function setArtisticStyle($artisticStyle)
     {
-        $this->artisticStyle = $artisticStyle;
+        if (null == $artisticStyle) return $this;
+
+        if ($artisticStyle instanceof ArtisticStyle) {
+            $this->artisticStyle = $artisticStyle;
+        } else {
+            $this->artisticStyle = new ArtisticStyle($this->getMandant(), $artisticStyle);
+        }
+
         return $this;
     }
 
