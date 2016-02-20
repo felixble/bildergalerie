@@ -18,13 +18,24 @@ $("#uploadFile").change(function() {
             if (json.status == "OK") {
                 uploadSuccessful(json.filePath, json.thumbPath);
             } else {
+                uploadError(json.errMsg);
                 // TODO: tell the user about the occured error
             }
         }
     );
 });
 
+function uploadError(msg) {
+    var uploadFileInput = $("#uploadFile");
+    uploadFileInput.replaceWith(uploadFileInput.val('').clone(true));
+    $('#upload_error').css('display', 'block');
+    $('#upload_error_msg').html(msg);
+}
+
 function uploadSuccessful(filePath, thumbPath) {
+    // hide error message could be visible
+    $('#upload_error').css('display', 'none');
+
     setFilePath(filePath, thumbPath); // if thumbPath is null, we should not set it.
 
     if (thumbPath == null) { // but we want to show the file in the preview, tough.

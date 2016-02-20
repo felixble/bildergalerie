@@ -15,6 +15,6 @@ class FileAlreadyExists extends Exception
      */
     public function __construct($fileName)
     {
-        parent::__construct(sprintf("The file %s already exists.", $fileName));
+        parent::__construct(sprintf("Die Datei %s existiert bereits.", $fileName));
     }
 }

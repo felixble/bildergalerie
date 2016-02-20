@@ -3,6 +3,10 @@
 
     <div class="col-lg-4">
         <h1>Bild hochladen</h1>
+        <div id="upload_error" class="alert alert-danger ?>" style="display: none">
+            <a href="<?php echo $this->urlScrollTo(""); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Fehler!</strong> <span id="upload_error_msg"></span>
+        </div>
         <form enctype="multipart/form-data">
             <input type="file" id="uploadFile" name="uploadFile">
         </form>
