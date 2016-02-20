@@ -40,6 +40,13 @@ abstract class BildergalerieController extends Controller
         $contentView->setContent($content);
         $contentView->setShowCarousel($showCarousel);
 
+        // add alert message
+        $alertManager = $this->getAlertManager();
+        if ($alertManager->hasAlertMessage()) {
+            $contentView->setAlert($alertManager->getAlertType(), $alertManager->getAlertMessage());
+        }
+        $alertManager->reset();
+
         $view = BootstrapView::getContentFrameView($fullTitle, $contentView);
         if ($content instanceof View) {
             $view->addCSS($content->getCustomCSS());
@@ -47,6 +54,11 @@ abstract class BildergalerieController extends Controller
         }
 
         return $view;
+    }
+
+    public function getAlertManager()
+    {
+        return new AlertManager($this->baseFactory->getSessionManager());;
     }
 
 }

@@ -48,11 +48,10 @@ class PicturesController extends BildergalerieController
                 $pictureDAO->createPicture($picture);
             } catch (Exception $e) {
                 // TODO: Catch exceptions and give user feedback
-                throw $e;
             }
 
             // TODO: set success/error Messages
-
+            $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> Das Bild wurde erfolgreich hinzugefügt.");
             // redirect so the user can reload the page without sending the form again.
             $this->getRouter()->reLocateTo("pictures", "create");
         }

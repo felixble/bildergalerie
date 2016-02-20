@@ -10,6 +10,7 @@ class SessionManager
 {
     const USER_SEGMENT = "Bildergalerie_User_Information";
     const MANDANT_SEGMENT = "Bildergalerie_Mandant_Information";
+    const ALERT_SEGMENT = "Bildergalerie_Alert";
 
     /**
      * Holds the session object.
@@ -36,6 +37,14 @@ class SessionManager
     public function getMandantSegment()
     {
         return $this->session->getSegment(self::MANDANT_SEGMENT);
+    }
+
+    /**
+     * @return \Aura\Session\Segment
+     */
+    public function getAlertSegment()
+    {
+        return $this->session->getSegment(self::ALERT_SEGMENT);
     }
 
 

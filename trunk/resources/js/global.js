@@ -7,8 +7,17 @@ $(document).ready(function () {
 
     navFixedOnScroll();
     selectCurrentMenuItem();
+    autoScrollToId();
 
 });
+
+function autoScrollToId() {
+    var scrollToEl = $('.scrollTo').first();
+    if (null == scrollToEl) return;
+    $('html, body').animate({
+        scrollTop: scrollToEl.offset().top
+    }, 1000);
+}
 
 /**
  * Pins the navigation bar on the top of the

@@ -34,7 +34,12 @@
 
 <!-- Carousel
   ================================================== -->
-<div class="overlay <?php echo ($this->showCarousel()) ? "" : "overlay-inverse overlay-only-header"; ?>">
+<div
+    class="
+    overlay
+    <?php echo ( ($this->showCarousel()) ? "" : "overlay-inverse overlay-only-header " )
+        . ( ($this->showAlert() && $this->showCarousel()) ? "scrollTo" : "" ); ?>"
+>
     <h1><span><span class="hidden-xs"><?php echo $this->getPageTitle(); ?> - </span><?php echo $this->getTitle(); ?></span></h1>
 </div>
 
@@ -78,7 +83,13 @@
     <div id="myCarousel" class="carousel carousel-only-header"></div>
 <?php endif; ?>
 
+
 <div class="container main-content">
+    <?php if ($this->showAlert()): ?>
+    <div class="alert <?php echo $this->getAlertType(); ?>">
+        <?php echo $this->getAlertMessage(); ?>
+    </div>
+    <?php endif; ?>
 
     <?php echo $this->getContent(); ?>
 

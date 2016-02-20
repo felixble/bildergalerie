@@ -43,6 +43,7 @@ class AuthController extends BildergalerieController
     public function logoutAction()
     {
         $this->baseFactory->getAuthenticator()->logout();
+        $this->getAlertManager()->setSuccessMessage("Auf Wiedersehen!");
         $this->getRouter()->reLocateTo();
     }
 }

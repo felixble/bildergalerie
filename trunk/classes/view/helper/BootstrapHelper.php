@@ -8,6 +8,8 @@
 
 class BootstrapHelper {
 
+    public static $ALERT_SUCCESS = "alert-success";
+
     public static function getContentFrameView($title, $content) {
         $view = BootstrapView::getContentFrameView($title, $content);
         $view->addJS("global.js");
