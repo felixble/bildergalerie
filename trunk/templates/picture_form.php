@@ -10,7 +10,10 @@
         <form enctype="multipart/form-data">
             <input type="file" id="uploadFile" name="uploadFile">
         </form>
-        <img style="display: none;" src="" id="uploadPreview" width="200">
+        <div style="display: inline-block;">
+            <img style="display: none;" src="" id="uploadPreview" width="200">
+            <div class="text-center" id="upload_file_name"></div>
+        </div>
     </div>
 
 
@@ -43,7 +46,7 @@
                 <textarea class="form-control" rows="5" id="description" name="description"></textarea>
             </div>
             <input type="submit" class="btn btn-success" id="add_pic_submit" name="add_pic_submit" value="Speichern" disabled>
-            <input type="text" name="picPathId" id="picPathId">
+            <input type="hidden" name="picPathId" id="picPathId">
         </form>
 
     </div>

@@ -60,7 +60,6 @@ class AjaxController extends BildergalerieController
         }
 
         // picture upload was successful, now we save the path in our database
-        $picPathId = "";
         try {
             $picPathDAO = new PicturePathDAO($this->baseFactory->getDbConnection(), $mandant);
 
@@ -79,6 +78,7 @@ class AjaxController extends BildergalerieController
         $resultArray["status"] = "OK";
         $resultArray["picPathId"] = $picPathId;
         $resultArray["filePath"] = $picUploader->getUploadedFilePath();
+        $resultArray["fileName"] = $file["name"];
         $resultArray["thumbPath"] = $picUploader->getThumbFilePath();
         return json_encode($resultArray);
     }

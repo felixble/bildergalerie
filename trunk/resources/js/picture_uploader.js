@@ -14,7 +14,7 @@ $("#uploadFile").change(function() {
             var json = $.parseJSON(result);
 
             if (json.status == "OK") {
-                uploadSuccessful(json.filePath, json.thumbPath, json.picPathId);
+                uploadSuccessful(json.filePath, json.thumbPath, json.picPathId, json.fileName);
             } else {
                 console.log(result);
                 uploadError(json.errMsg);
@@ -30,7 +30,7 @@ function uploadError(msg) {
     $('#upload_error_msg').html(msg);
 }
 
-function uploadSuccessful(filePath, thumbPath, picPathId) {
+function uploadSuccessful(filePath, thumbPath, picPathId, fileName) {
     if (thumbPath == null) {
         thumbPath = filePath;
     }
@@ -41,12 +41,14 @@ function uploadSuccessful(filePath, thumbPath, picPathId) {
     setPicPathId(picPathId);
 
     $('#uploadFile').hide();
+
+    $('#upload_file_name').html(fileName);
+
     var uploadPreview = $('#uploadPreview');
 
     uploadPreview.attr('src', thumbPath);
     uploadPreview.show();
 }
-
 
 function setPicPathId(picPathId) {
     var picPathEl = $('#picPathId');
