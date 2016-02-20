@@ -14,6 +14,7 @@ class MandantDAO
     const COL_MANDANT_ID = "mandant_id";
     const COL_PAGE_TITLE = "page_title";
     const COL_DOAMIN = "domain";
+    const COL_GALERY_BRAND = "galery_brand";
 
     /**
      * @var Simplon\Mysql\Manager\SqlManager
@@ -70,9 +71,21 @@ class MandantDAO
         $row = $this->sqlManager->fetchRow($sqlBuilder);
 
         if ($this->sqlManager->getRowCount()) {
-            return new Mandant($row[self::COL_MANDANT_ID], $row[self::COL_PAGE_TITLE]);
+            return $this->row2object($row);
         }
         return null;
+    }
+
+    /**
+     * Converts a table row array into its object
+     * representation.
+     *
+     * @param $row array
+     * @return Mandant
+     */
+    private function row2object($row)
+    {
+        return new Mandant($row[self::COL_MANDANT_ID], $row[self::COL_PAGE_TITLE], $row[self::COL_GALERY_BRAND]);
     }
 
     private function getSqlBuilder()

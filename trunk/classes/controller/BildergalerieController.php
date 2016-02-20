@@ -32,11 +32,12 @@ abstract class BildergalerieController extends Controller
 
     public function getContentFrameView($title, $content, $showCarousel = true)
     {
-        $titlePrefix = $this->baseFactory->getMandantManager()->getMandant()->getPageTitle();
+        $mandant = $this->baseFactory->getMandantManager()->getMandant();
+        $titlePrefix = $mandant->getPageTitle();
 
         $fullTitle = $titlePrefix . " - " . $title;
 
-        $contentView = new Content_frameView($titlePrefix, $title);
+        $contentView = new Content_frameView($titlePrefix, $title, $mandant->getGaleryBrand());
         $contentView->setContent($content);
         $contentView->setShowCarousel($showCarousel);
 

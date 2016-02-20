@@ -20,14 +20,22 @@ class Mandant
     private $pageTitle;
 
     /**
+     * @var string
+     */
+    private $galeryBrand;
+
+
+    /**
      * Mandant constructor.
      * @param int|null $mandantId
      * @param string|null $pageTitle
+     * @param string|null $galeryBrand
      */
-    public function __construct($mandantId, $pageTitle = null)
+    public function __construct($mandantId, $pageTitle = null, $galeryBrand = null)
     {
         $this->mandantId = $mandantId;
         $this->pageTitle = $pageTitle;
+        $this->galeryBrand = $galeryBrand;
     }
 
     /**
@@ -66,6 +74,10 @@ class Mandant
         return $this;
     }
 
+    public function getGaleryBrand()
+    {
+        return $this->galeryBrand;
+    }
 
 
 }

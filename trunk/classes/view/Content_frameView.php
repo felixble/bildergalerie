@@ -16,12 +16,14 @@ class Content_frameView extends View {
     private $alertType;
     private $alertMessage;
     private $currentUser = null;
+    private $galeryBrand;
 
 
-    public function __construct($pageTitle, $title) {
+    public function __construct($pageTitle, $title, $galeryBrand) {
         parent::__construct();
         $this->pageTitle = $pageTitle;
         $this->title = $title;
+        $this->galeryBrand = $galeryBrand;
     }
 
     public function getTitle()
@@ -107,5 +109,18 @@ class Content_frameView extends View {
     public function setCurrentUser($currentUser)
     {
         $this->currentUser = $currentUser;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGaleryBrand()
+    {
+        return $this->galeryBrand;
+    }
+
+    public function isUserLoggedIn()
+    {
+        return (null != $this->getCurrentUser());
     }
 }

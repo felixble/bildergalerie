@@ -8,22 +8,36 @@
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
+                        <span class="sr-only">Navigation ausklappen</span>
                         <!-- Three spans responsible for the three horizontal lines to toggle the navigation bar on mobile devices -->
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="">Hilde Blechschmitt</a>
+                    <a class="navbar-brand" href=""><?php echo $this->getGaleryBrand(); ?></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="auto_activate" id="home"><a href="<?php echo $this->url(); ?>">Startseite</a></li>
                         <li class="auto_activate" id="about"><a href="<?php echo $this->url("about"); ?>">Die Künstlerin</a></li>
                         <li class="auto_activate" id="news"><a href="<?php echo $this->url("news"); ?>">News</a></li>
-                        <li class="auto_activate" id="pictures"><a href="<?php echo $this->url("pictures"); ?>">Gemälde</a></li>
+                        <li class="auto_activate dropdown" id="pictures">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">
+                                Gemälde <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="auto_activate only-on-index" id="pictures"><a href="<?php echo $this->url("pictures"); ?>">Übersicht</a></li>
+                                <?php if ($this->isUserLoggedIn()): ?>
+                                <li class="auto_activate" id="pictures/create"><a href="<?php echo $this->url("pictures", "create"); ?>">Hinzufügen</a></li>
+                                <?php endif; ?>
+                            </ul>
+                        </li>
                         <li class="auto_activate" id="contact"><a href="<?php echo $this->url("contact"); ?>">Kontakt</a></li>
                         <li class="auto_activate" id="legalnotice"><a href="<?php echo $this->url("legalnotice"); ?>">Impressum</a></li>
+                        <?php if ($this->isUserLoggedIn()): ?>
+                            <li class="auto_activate" id="backend"><a href="<?php echo $this->url("backend"); ?>">Backend</a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -101,7 +115,7 @@
             &copy; 2015 <?php echo $this->getPageTitle(); ?> &middot;
             Designed by Felix Blechschmitt &middot;
             <a href="<?php echo $this->url("legalnotice"); ?>">Impressum</a> &middot;
-            <?php if ($this->getCurrentUser() == null): ?>
+            <?php if (!$this->isUserLoggedIn()): ?>
                 <a href="<?php echo $this->url("backend"); ?>">Login</a>
             <?php else: ?>
                 <a href="<?php echo $this->url("auth", "logout"); ?>">Logout <?php echo $this->getCurrentUser()->getUsername(); ?></a>

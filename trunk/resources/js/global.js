@@ -13,7 +13,8 @@ $(document).ready(function () {
 
 function autoScrollToId() {
     var scrollToEl = $('.scrollTo').first();
-    if (null == scrollToEl) return;
+
+    if (null == scrollToEl.offset()) return;
     $('html, body').animate({
         scrollTop: scrollToEl.offset().top
     }, 1000);
@@ -47,11 +48,22 @@ function selectCurrentMenuItem() {
 
     var itemActivated = false;
     $(".auto_activate").each(function() {
-        var index = path.indexOf($(this).attr('id'));
+        var currentId = $(this).attr('id');
+        var index = path.indexOf(currentId);
+
         if (index > -1) { // url contains item id
-            $(this).addClass("active");
-            itemActivated = true;
-            return false; // breaks the each-loop
+            var skip = false;
+            // only-on-index special case
+            if ($(this).hasClass("only-on-index")) {
+                var remainingPath = path.substr(index + currentId.length);
+                skip = !(remainingPath == "" || remainingPath == "/" || remainingPath.indexOf("index") > -1);
+            }
+
+            if (!skip) {
+                $(this).addClass("active");
+                itemActivated = true;
+                //return false; // breaks the each-loop
+            }
         }
     });
 
