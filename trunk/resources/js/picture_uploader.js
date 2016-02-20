@@ -3,7 +3,7 @@
  */
 
 $("#uploadFile").change(function() {
-    setFilePath("", "");
+    setPicPathId("");
 
     var file_data = $('#uploadFile').prop('files')[0];
     var formData = new FormData();
@@ -11,15 +11,13 @@ $("#uploadFile").change(function() {
     uploadFile(
         formData,
         function (result) {
-            console.log(result);
-
             var json = $.parseJSON(result);
 
             if (json.status == "OK") {
-                uploadSuccessful(json.filePath, json.thumbPath);
+                uploadSuccessful(json.filePath, json.thumbPath, json.picPathId);
             } else {
+                console.log(result);
                 uploadError(json.errMsg);
-                // TODO: tell the user about the occured error
             }
         }
     );
@@ -32,15 +30,15 @@ function uploadError(msg) {
     $('#upload_error_msg').html(msg);
 }
 
-function uploadSuccessful(filePath, thumbPath) {
-    // hide error message could be visible
-    $('#upload_error').css('display', 'none');
-
-    setFilePath(filePath, thumbPath); // if thumbPath is null, we should not set it.
-
-    if (thumbPath == null) { // but we want to show the file in the preview, tough.
+function uploadSuccessful(filePath, thumbPath, picPathId) {
+    if (thumbPath == null) {
         thumbPath = filePath;
     }
+
+    // hide error message which could be visible
+    $('#upload_error').css('display', 'none');
+
+    setPicPathId(picPathId);
 
     $('#uploadFile').hide();
     var uploadPreview = $('#uploadPreview');
@@ -50,14 +48,10 @@ function uploadSuccessful(filePath, thumbPath) {
 }
 
 
-function setFilePath(filePath, thumbPath) {
-    if (thumbPath == null) {
-        thumbPath = "";
-    }
-    $('#thumbPath').val(thumbPath);
-    var filePathEl = $('#filePath');
-    filePathEl.val(filePath);
-    $('#add_pic_submit').prop('disabled', !filePathEl.val());
+function setPicPathId(picPathId) {
+    var picPathEl = $('#picPathId');
+    picPathEl.val(picPathId);
+    $('#add_pic_submit').prop('disabled', !picPathEl.val());
 }
 
 function uploadFile(formData, success) {

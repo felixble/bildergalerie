@@ -69,7 +69,7 @@ class PictureUploader
                 $this->thumbFilePath = $this->createThumbnail($thumbWidth);
             } catch (Exception $e) {
                 // we could not create a thumbnail, whatever...
-                // TODO: should we delete the original file as well or should we resign the thumb
+                // TODO: should we delete the original file as well or should we resign the thumb ?!
             }
         }
 
@@ -85,7 +85,7 @@ class PictureUploader
     private function createThumbnail($thumbWidth)
     {
         // load image and get image size
-        $img = imagecreatefromjpeg($this->uploadedFilePath . "Ü");
+        $img = imagecreatefromjpeg($this->uploadedFilePath);
         $width = imagesx( $img );
         $height = imagesy( $img );
 
@@ -125,6 +125,17 @@ class PictureUploader
     public function getThumbFilePath()
     {
         return $this->thumbFilePath;
+    }
+
+    public function deleteUploadedFiles()
+    {
+        $this->deleteFile($this->getUploadedFilePath());
+        $this->deleteFile($this->getThumbFilePath());
+    }
+
+    private function deleteFile($path)
+    {
+        if (null != $path) unlink($path);
     }
 
 }

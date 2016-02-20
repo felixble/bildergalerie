@@ -6,7 +6,7 @@
  * Date: 16.02.2016
  * Time: 13:01
  */
-class UserDAO implements IUserDAO
+class UserDAO extends BaseMultiClientDAO implements IUserDAO
 {
 
     const TABLE_NAME = "galery_user";
@@ -24,22 +24,9 @@ class UserDAO implements IUserDAO
 
     const PASSWORD_PEPPER = "G=}W9+=T";
 
-    /**
-     * @var Simplon\Mysql\Manager\SqlManager
-     */
-    private $sqlManager;
-
-    /**
-     * Current mandant
-     *
-     * @var Mandant
-     */
-    private $mandant;
-
     public function __construct(Simplon\Mysql\Mysql $dbConn, Mandant $mandant)
     {
-        $this->sqlManager = new \Simplon\Mysql\Manager\SqlManager($dbConn);
-        $this->mandant = $mandant;
+        parent::__construct($dbConn, $mandant);
     }
 
     /**
@@ -86,11 +73,11 @@ class UserDAO implements IUserDAO
         return $pass == $passUserHash;
     }
 
-    private function getSqlBuilder()
+    /**
+     * @return string table name.
+     */
+    protected function getTableName()
     {
-        $sqlBuilder = new Simplon\Mysql\Manager\SqlQueryBuilder();
-
-        $sqlBuilder->setTableName(self::TABLE_NAME);
-        return $sqlBuilder;
+        return self::TABLE_NAME;
     }
 }

@@ -6,7 +6,7 @@
  * Date: 19.02.16
  * Time: 20:16
  */
-class CategoryDAO
+class CategoryDAO extends BaseMultiClientDAO
 {
 
     const TABLE_NAME = "galery_categories";
@@ -16,26 +16,13 @@ class CategoryDAO
     const COL_CATEGORY_DESCRIPTION = "description";
 
     /**
-     * @var Simplon\Mysql\Manager\SqlManager
-     */
-    private $sqlManager;
-
-    /**
-     * Current mandant
-     *
-     * @var Mandant
-     */
-    private $mandant;
-
-    /**
      * CategoryDAO constructor.
      * @param \Simplon\Mysql\Mysql $dbConn
      * @param Mandant $mandant
      */
     public function __construct(Simplon\Mysql\Mysql $dbConn, Mandant $mandant)
     {
-        $this->sqlManager = new \Simplon\Mysql\Manager\SqlManager($dbConn);
-        $this->mandant = $mandant;
+        parent::__construct($dbConn, $mandant);
     }
 
     /**
@@ -75,12 +62,11 @@ class CategoryDAO
         );
     }
 
-    private function getSqlBuilder()
+    /**
+     * @return string table name.
+     */
+    protected function getTableName()
     {
-        $sqlBuilder = new Simplon\Mysql\Manager\SqlQueryBuilder();
-
-        $sqlBuilder->setTableName(self::TABLE_NAME);
-        return $sqlBuilder;
+        return self::TABLE_NAME;
     }
-
 }

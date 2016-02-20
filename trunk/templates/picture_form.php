@@ -43,8 +43,7 @@
                 <textarea class="form-control" rows="5" id="description" name="description"></textarea>
             </div>
             <input type="submit" class="btn btn-success" id="add_pic_submit" name="add_pic_submit" value="Speichern" disabled>
-            <input type="hidden" name="filePath" id="filePath">
-            <input type="hidden" name="thumbPath" id="thumbPath">
+            <input type="text" name="picPathId" id="picPathId">
         </form>
 
     </div>

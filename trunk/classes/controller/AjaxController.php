@@ -27,10 +27,17 @@ class AjaxController extends BildergalerieController
         throw new UnsupportedAjaxCall();
     }
 
+    /**
+     * @return string
+     * @throws Exception
+     * @throws FileAlreadyExists
+     * @throws IllegalArgumentException
+     */
     public function uploadAction()
     {
         $resultArray = array(
-            "status"    => "ERR"
+            "status"    => "ERR",
+            "errMsg"   => "Das Bild konnte nicht gespeichert werden."
         );
 
         if (!array_key_exists("uploadFile", $this->getRequest()->getFiles())) {
@@ -39,21 +46,40 @@ class AjaxController extends BildergalerieController
 
         $file = $this->getRequest()->getFiles()["uploadFile"];
 
-        $mandantId = $this->baseFactory->getMandantManager()->getMandant()->getMandantId();
+        $mandant = $this->baseFactory->getMandantManager()->getMandant();
 
-        $dirName = "uploads/" . $mandantId;
+        $dirName = "uploads/" . $mandant->getMandantId();
         if (!is_dir($dirName)) {
             mkdir($dirName);
         }
 
         $picUploader = new PictureUploader($file, $dirName);
-        if ($picUploader->uploadFile()) {
-            // pic upload was successful
-            $resultArray["status"] = "OK";
-            $resultArray["filePath"] = $picUploader->getUploadedFilePath();
-            $resultArray["thumbPath"] = $picUploader->getThumbFilePath();
+        if (!$picUploader->uploadFile()) {
+            // upload failed so we return the default error message
+            return json_encode($resultArray);
         }
 
+        // picture upload was successful, now we save the path in our database
+        $picPathId = "";
+        try {
+            $picPathDAO = new PicturePathDAO($this->baseFactory->getDbConnection(), $mandant);
+
+            $picturePath = new PicturePath($mandant, /* id will be created */
+                null, $picUploader->getUploadedFilePath(),
+                $picUploader->getThumbFilePath(), $this->baseFactory->getAuthenticator()->getLoggedInUser());
+
+            $picPathId = $picPathDAO->createPicturePath($picturePath);
+        } catch (Exception $e) {
+            // if anything goes wrong, we must delete the uploaded file
+            $picUploader->deleteUploadedFiles();
+            throw $e;
+        }
+
+
+        $resultArray["status"] = "OK";
+        $resultArray["picPathId"] = $picPathId;
+        $resultArray["filePath"] = $picUploader->getUploadedFilePath();
+        $resultArray["thumbPath"] = $picUploader->getThumbFilePath();
         return json_encode($resultArray);
     }
 }

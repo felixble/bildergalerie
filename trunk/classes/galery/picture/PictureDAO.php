@@ -6,13 +6,14 @@
  * Date: 19.02.16
  * Time: 22:55
  */
-class PictureDAO
+class PictureDAO extends BaseMultiClientDAO
 {
 
     const TABLE_NAME = "galery_pictures";
 
     const COL_MANDANT_ID = "mandant_id";
     const COL_PICTURE_ID = "pic_id";
+    const COL_PATH_ID = "path_id";
     const COL_CATEGORY_ID = "category_id";
     const COL_STYLE_ID = "style_id";
     const COL_UID_UPLOADED_BY = "uid_uploaded_by";
@@ -24,22 +25,8 @@ class PictureDAO
     const COL_PRICE = "price";
     const COL_PRICE_PUBLIC = "price_public";
     const COL_SALABLE = "salable";
-    const COL_PATH = "path";
-    const COL_PATH_THUMB = "path_thumb";
     const COL_DATE_PRODUCED = "date_produced";
-    const COL_DATE_UPLOADED = "date_uploaded";
-
-    /**
-     * @var Simplon\Mysql\Manager\SqlManager
-     */
-    private $sqlManager;
-
-    /**
-     * Current mandant
-     *
-     * @var Mandant
-     */
-    private $mandant;
+    const COL_DATE_CREATED = "date_created";
 
     /**
      * PictureDAO constructor.
@@ -48,14 +35,14 @@ class PictureDAO
      */
     public function __construct(Simplon\Mysql\Mysql $dbConn, Mandant $mandant)
     {
-        $this->sqlManager = new \Simplon\Mysql\Manager\SqlManager($dbConn);
-        $this->mandant = $mandant;
+        parent::__construct($dbConn, $mandant);
     }
 
     public function createPicture(Picture $picture)
     {
         $data = array(
             self::COL_MANDANT_ID        => $this->mandant->getMandantId(),
+            self::COL_PATH_ID           => $picture->getPath()->getId(),
             self::COL_CATEGORY_ID       => $picture->getCategory()->getCategoryId(),
             self::COL_UID_UPLOADED_BY   => $picture->getUploadedBy()->getUserId(),
             self::COL_UID_OWNDER        => $picture->getOwner()->getUserId(),
@@ -64,18 +51,14 @@ class PictureDAO
             self::COL_MATERIAL          => $picture->getMaterial()
         );
 
-        $sqlBuilder = $this->getSqlBuilder()->setData($data);
-
-        return $this->sqlManager->insert($sqlBuilder);
+        return $this->create($data);
     }
 
-
-    private function getSqlBuilder()
+    /**
+     * @return string table name.
+     */
+    protected function getTableName()
     {
-        $sqlBuilder = new Simplon\Mysql\Manager\SqlQueryBuilder();
-
-        $sqlBuilder->setTableName(self::TABLE_NAME);
-        return $sqlBuilder;
+        return self::TABLE_NAME;
     }
-
 }

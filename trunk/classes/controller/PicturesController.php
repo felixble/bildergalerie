@@ -40,8 +40,7 @@ class PicturesController extends BildergalerieController
 
             try {
                 $picture = new Picture($mandant, null, $post["title"], $post["description"], null, $post["material"],
-                    null, null, null, $post["filePath"], $post["thumbPath"], null, null, $uploadedBy, $owner,
-                    $post["category"], null);
+                    null, null, null, $post["picPathId"], null, null, $uploadedBy, $owner, $post["category"], null);
 
                 // store the new picture in the database
                 $pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $mandant);

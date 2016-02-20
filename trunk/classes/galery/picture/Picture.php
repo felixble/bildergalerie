@@ -55,14 +55,9 @@ class Picture
     private $salable;
 
     /**
-     * @var string Path to the file - max. 512 chars
+     * @var PicturePath
      */
     private $path;
-
-    /**
-     * @var string Path to the thumb file - max. 512 chars
-     */
-    private $pathThumb;
 
     /**
      * @var DateTime
@@ -72,7 +67,7 @@ class Picture
     /**
      * @var DateTime
      */
-    private $uploadedDate;
+    private $createdDate;
 
     /**
      * @var User
@@ -105,18 +100,18 @@ class Picture
      * @param float $price
      * @param bool|null $pricePublic
      * @param bool|null $salable
-     * @param string $path
-     * @param null $pathThumb
+     * @param PicturePath|int $path
      * @param DateTime $producedDate
-     * @param DateTime $uploadedDate
+     * @param DateTime $createdDate
      * @param User $uploadedBy
      * @param User $owner
      * @param Category|int $category
      * @param ArtisticStyle|int $artisticStyle
+     * @throws InvalidInputException
      */
     public function __construct(Mandant $mandant, $pictureId, $title = null, $description = null, $format = null,
-                                $material = null, $price = null, $pricePublic = null, $salable = null, $path = null,
-                                $pathThumb = null, DateTime $producedDate = null, DateTime $uploadedDate = null,
+                                $material = null, $price = null, $pricePublic = null, $salable = null,
+                                $path = null, DateTime $producedDate = null, DateTime $createdDate = null,
                                 User $uploadedBy = null, User $owner = null, $category = null,
                                 $artisticStyle = null
     ) {
@@ -129,10 +124,9 @@ class Picture
         $this->price = $price;
         $this->pricePublic = $pricePublic;
         $this->salable = $salable;
-        $this->path = $path;
-        $this->pathThumb = $pathThumb;
+        $this->setPath($path);
         $this->setProducedDate($producedDate);
-        $this->setUploadedDate($uploadedDate);
+        $this->setCreatedDate($createdDate);
         $this->uploadedBy = $uploadedBy;
         $this->owner = $owner;
         $this->setCategory($category);
@@ -302,7 +296,7 @@ class Picture
     }
 
     /**
-     * @return string
+     * @return PicturePath
      */
     public function getPath()
     {
@@ -310,12 +304,16 @@ class Picture
     }
 
     /**
-     * @param string $path
+     * @param PicturePath|int $path
      * @return Picture
      */
     public function setPath($path)
     {
-        $this->path = $path;
+        if ($path instanceof PicturePath) {
+            $this->path = $path;
+        } else {
+            $this->path = new PicturePath($this->mandant, $path);
+        }
         return $this;
     }
 
@@ -340,21 +338,21 @@ class Picture
     /**
      * @return DateTime
      */
-    public function getUploadedDate()
+    public function getCreatedDate()
     {
-        return $this->uploadedDate;
+        return $this->createdDate;
     }
 
     /**
-     * @param DateTime $uploadedDate
+     * @param DateTime $createdDate
      * @return Picture
      */
-    public function setUploadedDate($uploadedDate)
+    public function setCreatedDate($createdDate)
     {
-        if (null == $uploadedDate) {
-            $this->uploadedDate = new DateTime();
+        if (null == $createdDate) {
+            $this->createdDate = new DateTime();
         } else {
-            $this->uploadedDate = $uploadedDate;
+            $this->createdDate = $createdDate;
         }
         return $this;
     }
