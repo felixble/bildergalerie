@@ -32,8 +32,10 @@ class AppRouter extends Router
     {
         parent::preRunController($controller, $action);
         if ($controller instanceof BildergalerieController) {
-            $annotations = $controller->getAnnotationParser()->getAnnotationsForMethod($action);
-            if ($annotations->has("AuthRequired") && !$this->isUserLoggedIn()) {
+            $controllerAnnotations = $controller->getAnnotationParser()->getAnnotations();
+            $actionAnnotations = $controller->getAnnotationParser()->getAnnotationsForMethod($action);
+            $isAuthRequired = ($controllerAnnotations->has("AuthRequired") || $actionAnnotations->has("AuthRequired"));
+            if ($isAuthRequired && !$this->isUserLoggedIn()) {
                 $this->reRouteTo("auth", "login");
             }
         } else {

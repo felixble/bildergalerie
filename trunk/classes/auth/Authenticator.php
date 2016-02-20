@@ -71,7 +71,7 @@ class Authenticator
     /**
      * Gets the authenticated user.
      *
-     * @return User current user or {@code null}, iff there
+     * @return User current user or null, iff there
      *          is no user currently authenticated.
      */
     public function getLoggedInUser()

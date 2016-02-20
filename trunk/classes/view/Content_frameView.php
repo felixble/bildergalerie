@@ -15,6 +15,7 @@ class Content_frameView extends View {
     private $showAlert = false;
     private $alertType;
     private $alertMessage;
+    private $currentUser = null;
 
 
     public function __construct($pageTitle, $title) {
@@ -90,5 +91,21 @@ class Content_frameView extends View {
     public function getAlertMessage()
     {
         return $this->alertMessage;
+    }
+
+    /**
+     * @return User
+     */
+    public function getCurrentUser()
+    {
+        return $this->currentUser;
+    }
+
+    /**
+     * @param User $currentUser
+     */
+    public function setCurrentUser($currentUser)
+    {
+        $this->currentUser = $currentUser;
     }
 }

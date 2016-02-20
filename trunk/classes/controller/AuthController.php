@@ -30,6 +30,7 @@ class AuthController extends BildergalerieController
             $pass = $this->getRequest()->getPostParam()["inputPassword"];
             $authenticated = $this->baseFactory->getAuthenticator()->authenticate($username, $pass);
             if ($authenticated) {
+                $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> Willkommen zurück!");
                 $this->getRouter()->rewindAndRestartRouting();
             } else {
                 // TODO: Fehlermeldung!

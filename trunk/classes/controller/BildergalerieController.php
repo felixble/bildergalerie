@@ -47,6 +47,9 @@ abstract class BildergalerieController extends Controller
         }
         $alertManager->reset();
 
+        // add current user, iff available
+        $contentView->setCurrentUser($this->baseFactory->getAuthenticator()->getLoggedInUser());
+
         $view = BootstrapView::getContentFrameView($fullTitle, $contentView);
         if ($content instanceof View) {
             $view->addCSS($content->getCustomCSS());

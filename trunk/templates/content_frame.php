@@ -87,6 +87,7 @@
 <div class="container main-content">
     <?php if ($this->showAlert()): ?>
     <div class="alert <?php echo $this->getAlertType(); ?>">
+        <a href="<?php echo $this->urlScrollTo(""); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <?php echo $this->getAlertMessage(); ?>
     </div>
     <?php endif; ?>
@@ -96,7 +97,16 @@
     <!-- FOOTER -->
     <footer class="modal-footer">
         <p class="pull-right"><a href="<?php echo $this->urlScrollTo(""); ?>">Back to top</a></p>
-        <p class="pull-left">&copy; 2015 <?php echo $this->getPageTitle(); ?> &middot; Designed by Felix Blechschmitt &middot; <a href="<?php echo $this->url("legalnotice"); ?>">Impressum</a> &middot; <a href="<?php echo $this->url("auth", "login"); ?>">Login</a></p>
+        <p class="pull-left">
+            &copy; 2015 <?php echo $this->getPageTitle(); ?> &middot;
+            Designed by Felix Blechschmitt &middot;
+            <a href="<?php echo $this->url("legalnotice"); ?>">Impressum</a> &middot;
+            <?php if ($this->getCurrentUser() == null): ?>
+                <a href="<?php echo $this->url("backend"); ?>">Login</a>
+            <?php else: ?>
+                <a href="<?php echo $this->url("auth", "logout"); ?>">Logout <?php echo $this->getCurrentUser()->getUsername(); ?></a>
+            <?php endif; ?>
+        </p>
     </footer>
 
 </div>

@@ -12,7 +12,7 @@
             </label>
         </div>-->
         <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit_login">Anmelden</button>
-        <a href="<?php echo $this->url(); ?>" class="btn btn-lg btn-danger btn-block">Abbrechen</a>
     </form>
+    <div class="text-center"> <a href="<?php echo $this->url(); ?>">Abbrechen</a></div>
 
 </div>
