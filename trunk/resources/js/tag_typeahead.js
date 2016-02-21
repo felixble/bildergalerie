@@ -9,7 +9,7 @@ var tags = new Bloodhound({
     prefetch: {
         url: 'ajax/getTags',
         filter: function(list) {
-            return $.map(list, function(tag) {
+            return $.map(list, function(tag) { // TODO: tags with spaces are not working ?!
                 return { name: tag }; });
         }
     }

@@ -85,7 +85,17 @@ class AjaxController extends BildergalerieController
 
     public function getTagsAction()
     {
-        $tags = array("Anika", "Felix", "Hilde", "Christoph", "Albert", "Coralie");
-        return json_encode($tags);
+        $tagDAO = new TagDAO(
+            $this->baseFactory->getDbConnection(), $this->baseFactory->getMandantManager()->getMandant());
+
+        $tags = $tagDAO->queryForAll();
+
+        $tagsArr = array();
+
+        foreach ($tags as $tag) {
+            $tagsArr[] = $tag->getTagName();
+        }
+
+        return json_encode($tagsArr);
     }
 }

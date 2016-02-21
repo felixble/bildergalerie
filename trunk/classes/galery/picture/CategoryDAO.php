@@ -36,13 +36,13 @@ class CategoryDAO extends BaseMultiClientDAO
             ->setConditions(array("m_id" => $this->mandant->getMandantId()));
 
         $rows = $this->sqlManager->fetchRowMany($sqlBuilder);
+        $result = array();
         if ($this->sqlManager->getRowCount()) {
-            $result = array();
             foreach ($rows as $row) {
                 $result[] = $this->row2Category($row);
             }
-            return $result;
         }
+        return $result;
     }
 
     /**

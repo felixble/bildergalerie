@@ -90,6 +90,11 @@ class Picture
     private $artisticStyle;
 
     /**
+     * @var Tag[]
+     */
+    private $tags;
+
+    /**
      * Picture constructor.
      * @param Mandant $mandant
      * @param int|null $pictureId
@@ -107,13 +112,14 @@ class Picture
      * @param User $owner
      * @param Category|int $category
      * @param ArtisticStyle|int $artisticStyle
+     * @param null|string[]|Tag[] $tags
      * @throws InvalidInputException
      */
     public function __construct(Mandant $mandant, $pictureId, $title = null, $description = null, $format = null,
                                 $material = null, $price = null, $pricePublic = null, $salable = null,
                                 $path = null, DateTime $producedDate = null, DateTime $createdDate = null,
                                 User $uploadedBy = null, User $owner = null, $category = null,
-                                $artisticStyle = null
+                                $artisticStyle = null, $tags = null
     ) {
         $this->mandant = $mandant;
         $this->pictureId = $pictureId;
@@ -131,6 +137,7 @@ class Picture
         $this->owner = $owner;
         $this->setCategory($category);
         $this->setArtisticStyle($artisticStyle);
+        $this->setTags($tags);
     }
 
     /**
@@ -446,6 +453,30 @@ class Picture
         return $this;
     }
 
+    public function getTags()
+    {
+        if (null == $this->tags) return array();
+        return $this->tags;
+    }
+
+    /**
+     * @param $tags string[]|Tag[]
+     */
+    private function setTags($tags)
+    {
+        if (null == $tags || count($tags) == 0) return;
+
+        if ($tags[0] instanceof Tag) {
+            $this->tags = $tags;
+        } else {
+            // convert tag name array to tag object
+            $this->tags = array();
+            foreach ($tags as $tag) {
+                $this->tags[] = new Tag($this->mandant, null, $tag);
+            }
+        }
+
+    }
 
 
 }

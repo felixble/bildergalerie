@@ -18,7 +18,7 @@ class PicturePathDAO extends BaseMultiClientDAO
     const COL_DATE_UPLOADED = "date_uploaded";
 
     /**
-     * PictureDAO constructor.
+     * PicturePathDAO constructor.
      * @param \Simplon\Mysql\Mysql $dbConn
      * @param Mandant $mandant
      */

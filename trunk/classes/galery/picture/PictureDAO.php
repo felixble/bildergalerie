@@ -29,6 +29,11 @@ class PictureDAO extends BaseMultiClientDAO
     const COL_DATE_CREATED = "date_created";
 
     /**
+     * @var PicTagMapDAO
+     */
+    private $picTagMapDAO;
+
+    /**
      * PictureDAO constructor.
      * @param \Simplon\Mysql\Mysql $dbConn
      * @param Mandant $mandant
@@ -36,6 +41,7 @@ class PictureDAO extends BaseMultiClientDAO
     public function __construct(Simplon\Mysql\Mysql $dbConn, Mandant $mandant)
     {
         parent::__construct($dbConn, $mandant);
+        $this->picTagMapDAO = new PicTagMapDAO($dbConn, $mandant);
     }
 
     public function createPicture(Picture $picture)
@@ -51,7 +57,14 @@ class PictureDAO extends BaseMultiClientDAO
             self::COL_MATERIAL          => $picture->getMaterial()
         );
 
-        return $this->create($data);
+        $picId = $this->create($data);
+
+        if ($picId) {
+            // the pic was created successfully, so we can insert the tags too.
+            $this->picTagMapDAO->createEntries($picId, $picture->getTags());
+        }
+
+        return $picId;
     }
 
     /**

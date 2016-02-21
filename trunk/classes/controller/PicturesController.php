@@ -38,14 +38,10 @@ class PicturesController extends BildergalerieController
             $uploadedBy = $this->baseFactory->getAuthenticator()->getLoggedInUser();
             $owner = $uploadedBy;
 
-            /**
-             * @var string[]
-             */
-            $tags = $post["tags"];
-
             try {
                 $picture = new Picture($mandant, null, $post["title"], $post["description"], null, $post["material"],
-                    null, null, null, $post["picPathId"], null, null, $uploadedBy, $owner, $post["category"], null);
+                    null, null, null, $post["picPathId"], null, null, $uploadedBy, $owner, $post["category"], null,
+                    $post["tags"]);
 
                 // store the new picture in the database
                 $pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $mandant);
