@@ -14,6 +14,10 @@
             <img style="display: none;" src="" id="uploadPreview" width="200">
             <div class="text-center" id="upload_file_name"></div>
         </div>
+        <div class="form-group">
+            <label for="tags">Tags</label>
+            <select multiple data-role="tagsinput" id="tags" name="tags" class="test"></select>
+        </div>
     </div>
 
 
@@ -27,7 +31,7 @@
                 <input type="text" class="form-control" id="title" name="title"/>
             </div>
             <div class="form-group">
-                <label for="category">Kategorie:</label>
+                <label for="category">Kategorie</label>
                 <select class="form-control" name="category" id="category">
                     <option value="-1">-- Bitte wählen --</option>
                     <?php
@@ -38,11 +42,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="material">Material:</label>
+                <label for="material">Material</label>
                 <input type="text" class="form-control" id="material" name="material"/>
             </div>
             <div class="form-group">
-                <label for="description">Beschreibung:</label>
+                <label for="description">Beschreibung</label>
                 <textarea class="form-control" rows="5" id="description" name="description"></textarea>
             </div>
             <input type="submit" class="btn btn-success" id="add_pic_submit" name="add_pic_submit" value="Speichern" disabled>

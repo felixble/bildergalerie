@@ -13,7 +13,13 @@ class Picture_formView extends View
 
     public function getCustomJS()
     {
-        return "picture_uploader.js";
+        return array("libs/typeahead.bundle.min.js", "picture_uploader.js", "libs/bootstrap-tagsinput.js",
+            "tag_typeahead.js");
+    }
+
+    public function getCustomCSS()
+    {
+        return "libs/bootstrap-tagsinput.css";
     }
 
     /**

@@ -82,4 +82,10 @@ class AjaxController extends BildergalerieController
         $resultArray["thumbPath"] = $picUploader->getThumbFilePath();
         return json_encode($resultArray);
     }
+
+    public function getTagsAction()
+    {
+        $tags = array("Anika", "Felix", "Hilde", "Christoph", "Albert", "Coralie");
+        return json_encode($tags);
+    }
 }

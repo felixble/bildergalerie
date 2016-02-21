@@ -2,7 +2,7 @@
     "name" : "blefel/bildergalerie",
 
     "require": {
-        "twbs/bootstrap": "3.3.4",
+        "twbs/bootstrap": "3.3.5",
         "aura/session": "2.0.1",
         "components/jquery": "2.1.4",
         "simplon/mysql": "0.7.0",
