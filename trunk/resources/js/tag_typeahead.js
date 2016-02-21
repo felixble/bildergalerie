@@ -3,24 +3,24 @@
  */
 
 
-var citynames = new Bloodhound({
+var tags = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
         url: 'ajax/getTags',
         filter: function(list) {
-            return $.map(list, function(cityname) {
-                return { name: cityname }; });
+            return $.map(list, function(tag) {
+                return { name: tag }; });
         }
     }
 });
-citynames.initialize();
+tags.initialize();
 
 $('.test').tagsinput({
     typeaheadjs: {
-        name: 'citynames',
+        name: 'tags',
         displayKey: 'name',
         valueKey: 'name',
-        source: citynames.ttAdapter()
+        source: tags.ttAdapter()
     }
 });

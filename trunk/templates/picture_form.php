@@ -15,7 +15,7 @@
             <div class="text-center" id="upload_file_name"></div>
         </div>
         <div class="form-group">
-            <label for="tags">Tags</label>
+            <label for="tags">Schlagwörter, damit das Bild besser gefunden wird</label>
             <select multiple data-role="tagsinput" id="tags" name="tags" class="test"></select>
         </div>
     </div>
