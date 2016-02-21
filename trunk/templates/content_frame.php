@@ -69,19 +69,19 @@
         </ol>
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <div class="header-image" style="background-image: url('resources/img/hilde_1.JPG'); background-position: 50% 50%;"></div>
+                <div class="header-image" style="background-image: url('resources/img/hilde_1.jpg'); background-position: 50% 50%;"></div>
             </div>
             <div class="item">
-                <div class="header-image" style="background-image: url('resources/img/hilde_2.JPG'); background-position: 50% 65%;"></div>
+                <div class="header-image" style="background-image: url('resources/img/hilde_2.jpg'); background-position: 50% 65%;"></div>
             </div>
             <div class="item">
-                <div class="header-image" style="background-image: url('resources/img/hilde_3.JPG'); background-position: 50% 65%;"></div>
+                <div class="header-image" style="background-image: url('resources/img/hilde_3.jpg'); background-position: 50% 65%;"></div>
             </div>
             <div class="item ">
-                <div class="header-image" style="background-image: url('resources/img/hilde_4.JPG'); background-position: 50% 10%;"></div>
+                <div class="header-image" style="background-image: url('resources/img/hilde_4.jpg'); background-position: 50% 10%;"></div>
             </div>
             <div class="item">
-                <div class="header-image" style="background-image: url('resources/img/hilde_5.JPG'); background-position: 50% 65%;"></div>
+                <div class="header-image" style="background-image: url('resources/img/hilde_5.jpg'); background-position: 50% 65%;"></div>
             </div>
         </div>
         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">

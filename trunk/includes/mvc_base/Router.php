@@ -245,12 +245,17 @@ class Router {
      */
     private function exceptionHandler(\Exception $e, $jsonResponse = false)
     {
+        $errMsg = "";
+        if (strpos($_SERVER['HTTP_HOST'], "localhost")) {
+            $errMsg = $e->getMessage();
+        }
+
         if ($jsonResponse) {
             $jsonArr = array(
                 "status"    => "ERR",
                 "err"       => get_class($e),
                 "errCode"   => $e->getCode(),
-                "errMsg"    => $e->getMessage(),
+                "errMsg"    => $errMsg,
                 "errFile"   => $e->getFile(),
                 "errLine"   => $e->getLine()
             );
