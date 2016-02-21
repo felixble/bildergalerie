@@ -1,22 +1,21 @@
 <?php /** @var $this Picture_formView*/ ?>
 <div class="row">
 
+    <form role="form" enctype="multipart/form-data" method="post" id="picForm">
     <div class="col-lg-4">
         <h1>Bild hochladen</h1>
         <div id="upload_error" class="alert alert-danger ?>" style="display: none">
             <a href="<?php echo $this->urlScrollTo(""); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Fehler!</strong> <span id="upload_error_msg"></span>
         </div>
-        <form enctype="multipart/form-data">
             <input type="file" id="uploadFile" name="uploadFile">
-        </form>
         <div style="display: inline-block;">
             <img style="display: none;" src="" id="uploadPreview" width="200">
             <div class="text-center" id="upload_file_name"></div>
         </div>
         <div class="form-group">
             <label for="tags">Schlagwörter, damit das Bild besser gefunden wird</label>
-            <select multiple data-role="tagsinput" id="tags" name="tags" class="test"></select>
+            <select multiple data-role="tagsinput" id="tags" name="tags[]" class="tags_typeahead"></select>
         </div>
     </div>
 
@@ -25,7 +24,6 @@
 
         <h1>Informationen hinzufügen</h1>
 
-        <form role="form" method="post">
             <div class="form-group">
                 <label for="title">Titel</label>
                 <input type="text" class="form-control" id="title" name="title"/>
@@ -51,9 +49,9 @@
             </div>
             <input type="submit" class="btn btn-success" id="add_pic_submit" name="add_pic_submit" value="Speichern" disabled>
             <input type="hidden" name="picPathId" id="picPathId">
-        </form>
 
     </div>
+    </form>
 
 </div>
 

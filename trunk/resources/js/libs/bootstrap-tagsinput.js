@@ -1,3 +1,16 @@
+
+$('form').bind('keyup keypress', function(e) {
+    var focused = $(':focus');
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) {
+        if (focused.hasClass("tt-input")) {
+            e.preventDefault();
+            return false;
+        }
+    }
+});
+
+
 (function ($) {
   "use strict";
 

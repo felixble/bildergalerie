@@ -16,7 +16,7 @@ var tags = new Bloodhound({
 });
 tags.initialize();
 
-$('.test').tagsinput({
+$('.tags_typeahead').tagsinput({
     typeaheadjs: {
         name: 'tags',
         displayKey: 'name',
