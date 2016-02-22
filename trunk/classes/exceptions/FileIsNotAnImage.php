@@ -6,7 +6,7 @@
  * Date: 19.02.16
  * Time: 09:20
  */
-class FileIsNotAnImage extends Exception
+class FileIsNotAnImage extends UserException
 {
 
     /**

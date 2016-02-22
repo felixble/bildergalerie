@@ -6,7 +6,7 @@
  * Date: 19.02.16
  * Time: 09:07
  */
-class FileAlreadyExists extends Exception
+class FileAlreadyExists extends UserException
 {
 
     /**

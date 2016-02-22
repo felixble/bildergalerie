@@ -6,7 +6,7 @@
  * Date: 20.02.16
  * Time: 10:01
  */
-class InvalidInputException extends Exception
+class InvalidInputException extends UserException
 {
 
     private $fieldName;
