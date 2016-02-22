@@ -8,14 +8,17 @@
             <a href="<?php echo $this->urlScrollTo(""); ?>" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Fehler!</strong> <span id="upload_error_msg"></span>
         </div>
-            <input type="file" id="uploadFile" name="uploadFile">
-        <div style="display: inline-block;">
-            <img style="display: none;" src="" id="uploadPreview" width="200">
-            <div class="text-center" id="upload_file_name"></div>
-        </div>
         <div class="form-group">
             <label for="tags">Schlagwörter, damit das Bild besser gefunden wird</label>
             <select multiple data-role="tagsinput" id="tags" name="tags[]" class="tags_typeahead"></select>
+        </div>
+        <div class="form-group">
+            <label for="uploadFile">Upload</label>
+            <input type="file" id="uploadFile" name="uploadFile">
+        </div>
+        <div style="display: inline-block;">
+            <img style="display: none;" src="" id="uploadPreview" width="200">
+            <div class="text-center" id="upload_file_name"></div>
         </div>
     </div>
 

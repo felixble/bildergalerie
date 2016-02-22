@@ -34,26 +34,7 @@ class PicturesController extends BildergalerieController
 
         // check if form is submitted
         if (array_key_exists("add_pic_submit", $this->getRequest()->getPostParam())) {
-            $post = $this->getRequest()->getPostParam();
-            $uploadedBy = $this->baseFactory->getAuthenticator()->getLoggedInUser();
-            $owner = $uploadedBy;
-
-            try {
-                $picture = new Picture($mandant, null, $post["title"], $post["description"], null, $post["material"],
-                    null, null, null, $post["picPathId"], null, null, $uploadedBy, $owner, $post["category"], null,
-                    $post["tags"]);
-
-                // store the new picture in the database
-                $pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $mandant);
-                $pictureDAO->createPicture($picture);
-            } catch (Exception $e) {
-                // TODO: Catch exceptions and give user feedback
-            }
-
-            // TODO: set success/error Messages
-            $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> Das Bild wurde erfolgreich hinzugefügt.");
-            // redirect so the user can reload the page without sending the form again.
-            $this->getRouter()->reLocateTo("pictures", "create");
+            $this->processCreatePicture($mandant);
         }
 
         $picFormView = new Picture_formView();
@@ -66,5 +47,34 @@ class PicturesController extends BildergalerieController
         $picFormView->setCategories($categoryDAO->getAllCategories());
 
         return $this->getContentFrameView("Bild hinzufügen", $picFormView, false);
+    }
+
+    private function processCreatePicture($mandant)
+    {
+        $post = $this->getRequest()->getPostParam();
+        $uploadedBy = $this->baseFactory->getAuthenticator()->getLoggedInUser();
+        $owner = $uploadedBy;
+
+        $success = false;
+        try {
+            // TODO: validate user input -> throw exception in setters of picture ?!
+            $picture = new Picture($mandant, null, $post["title"], $post["description"], null, $post["material"],
+                null, null, null, $post["picPathId"], null, null, $uploadedBy, $owner, $post["category"], null,
+                $post["tags"]);
+
+            // store the new picture in the database
+            $pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $mandant);
+            $pictureDAO->createPicture($picture);
+            $success = true;
+        } catch (UserException $e) {
+            $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> " . $e->getMessage());
+            // TODO: Set form values from request!
+        }
+
+        if ($success) {
+            $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> Das Bild wurde erfolgreich hinzugefügt.");
+            // redirect so the user can reload the page without sending the form again.
+            $this->getRouter()->reLocateTo("pictures", "create");
+        }
     }
 }

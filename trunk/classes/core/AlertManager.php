@@ -27,6 +27,12 @@ class AlertManager
         $this->alertSegment->set(self::KEY_ALERT_MESSAGE, $message);
     }
 
+    public function setErrorMessage($message)
+    {
+        $this->alertSegment->set(self::KEY_ALERT_TYPE, BootstrapHelper::$ALERT_ERROR);
+        $this->alertSegment->set(self::KEY_ALERT_MESSAGE, $message);
+    }
+
     public function hasAlertMessage()
     {
         return (null != $this->getAlertType());

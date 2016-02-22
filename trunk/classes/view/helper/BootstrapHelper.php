@@ -9,6 +9,7 @@
 class BootstrapHelper {
 
     public static $ALERT_SUCCESS = "alert-success";
+    public static $ALERT_ERROR = "alert-danger";
 
     public static function getContentFrameView($title, $content) {
         $view = BootstrapView::getContentFrameView($title, $content);
