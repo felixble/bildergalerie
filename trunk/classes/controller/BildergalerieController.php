@@ -30,39 +30,22 @@ abstract class BildergalerieController extends Controller
         }
     }
 
+    /**
+     * @return AppRouter
+     */
+    public function getRouter()
+    {
+        return parent::getRouter();
+    }
+
     public function getContentFrameView($title, $content, $showCarousel = true)
     {
-        $mandant = $this->baseFactory->getMandantManager()->getMandant();
-        $titlePrefix = $mandant->getPageTitle();
-
-        $fullTitle = $titlePrefix . " - " . $title;
-
-        $contentView = new Content_frameView($titlePrefix, $title, $mandant->getGaleryBrand());
-        $contentView->setContent($content);
-        $contentView->setShowCarousel($showCarousel);
-
-        // add alert message
-        $alertManager = $this->getAlertManager();
-        if ($alertManager->hasAlertMessage()) {
-            $contentView->setAlert($alertManager->getAlertType(), $alertManager->getAlertMessage());
-        }
-        $alertManager->reset();
-
-        // add current user, iff available
-        $contentView->setCurrentUser($this->baseFactory->getAuthenticator()->getLoggedInUser());
-
-        $view = BootstrapView::getContentFrameView($fullTitle, $contentView);
-        if ($content instanceof View) {
-            $view->addCSS($content->getCustomCSS());
-            $view->addJS($content->getCustomJS());
-        }
-
-        return $view;
+        return $this->getRouter()->getContentFrameView($title, $content, $showCarousel);
     }
 
     public function getAlertManager()
     {
-        return new AlertManager($this->baseFactory->getSessionManager());;
+        return $this->getRouter()->getAlertManager();
     }
 
 }

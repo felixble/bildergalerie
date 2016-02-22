@@ -25,6 +25,28 @@ class PicturesController extends BildergalerieController
     }
 
     /**
+     * Shows detail view of a picture.
+     */
+    public function picAction()
+    {
+        $picDetailView = new Picture_detailView();
+
+        // get the picture id from the request
+        $get = $this->getRequest()->getGetParam();
+        if (array_key_exists("id", $get)) { // if we have the get param id its easy...
+            $picId = $get["id"];
+        } elseif (count($this->getRequest()->getQueryParams()) > 0) { // otherwise, our first parameter key is our id
+            $picId = $this->getRequest()->getQueryParams()[0];
+        }
+
+        if (!isset($picId)) {
+            throw new SimpleUserErrorException("Das Bild wurde nicht gefunden.");
+        }
+
+        return $this->getContentFrameView("Details", $picDetailView, false); // TODO: title ??
+    }
+
+    /**
      * @return BootstrapView
      * @AuthRequired
      */

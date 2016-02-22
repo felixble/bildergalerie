@@ -44,6 +44,59 @@ class AppRouter extends Router
         }
     }
 
+    protected function exceptionHandler(\Exception $e, $jsonResponse = false)
+    {
+
+        $exceptionView = parent::exceptionHandler($e, $jsonResponse);
+        if (!$jsonResponse && $e instanceof UserException) {
+            $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> " . $e->getMessage());
+            $exceptionView = "";
+        }
+
+        try {
+            $exceptionView = $this->getContentFrameView("Error occured", $exceptionView, true);
+        } catch (Exception $e) {
+            // we could not get custom elements
+        }
+
+        return $exceptionView;
+    }
+
+    public function getContentFrameView($title, $content, $showCarousel = true)
+    {
+        $mandant = $this->baseFactory->getMandantManager()->getMandant();
+        $titlePrefix = $mandant->getPageTitle();
+
+        $fullTitle = $titlePrefix . " - " . $title;
+
+        $contentView = new Content_frameView($titlePrefix, $title, $mandant->getGaleryBrand());
+        $contentView->setContent($content);
+        $contentView->setShowCarousel($showCarousel);
+
+        // add alert message
+        $alertManager = $this->getAlertManager();
+        if ($alertManager->hasAlertMessage()) {
+            $contentView->setAlert($alertManager->getAlertType(), $alertManager->getAlertMessage());
+        }
+        $alertManager->reset();
+
+        // add current user, iff available
+        $contentView->setCurrentUser($this->baseFactory->getAuthenticator()->getLoggedInUser());
+
+        $view = BootstrapView::getContentFrameView($fullTitle, $contentView);
+        if ($content instanceof View) {
+            $view->addCSS($content->getCustomCSS());
+            $view->addJS($content->getCustomJS());
+        }
+
+        return $view;
+    }
+
+    public function getAlertManager()
+    {
+        return new AlertManager($this->baseFactory->getSessionManager());;
+    }
+
     private function isUserLoggedIn()
     {
         $auth = $this->baseFactory->getAuthenticator();

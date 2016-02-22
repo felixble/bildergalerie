@@ -136,6 +136,9 @@ class Router {
         if (substr($reqUri, 0, 9) == "index.php") {
             $reqUri = (substr($reqUri, 9, 1) == "/") ? substr($reqUri, 10) : substr($reqUri, 9);
         }
+        if (substr($reqUri, -1) == "/") {
+            $reqUri = substr($reqUri, 0, -1);
+        }
         $queryArr = explode("/", $reqUri);
 
         // if there are normal get params the last item has the question tag
@@ -244,7 +247,7 @@ class Router {
      * @param bool $jsonResponse
      * @return BootstrapView
      */
-    private function exceptionHandler(\Exception $e, $jsonResponse = false)
+    protected function exceptionHandler(\Exception $e, $jsonResponse = false)
     {
         if ($jsonResponse) {
             $jsonArr = array(
@@ -345,6 +348,7 @@ class Router {
             $this->request->addGetParam($queryArr[$index], $val);
             $index += 2;
         }
+        $this->request->setQueryParamsArray(array_slice($queryArr, $startIndex));
     }
 
     private function maxReRouteCount()

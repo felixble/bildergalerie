@@ -53,6 +53,7 @@ class Request {
      * @var array
      */
     private $files;
+    private $queryParams;
 
     /**
      * Creates a new request object.
@@ -127,5 +128,17 @@ class Request {
         $this->getParam[$key] = $val;
     }
 
+    public function setQueryParamsArray($queryParams)
+    {
+        $this->queryParams = $queryParams;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQueryParams()
+    {
+        return $this->queryParams;
+    }
 
 }
