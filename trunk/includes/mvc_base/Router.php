@@ -241,21 +241,17 @@ class Router {
      * for the user.
      *
      * @param Exception $e Exception to convert into a {@link ExceptionView}
+     * @param bool $jsonResponse
      * @return BootstrapView
      */
     private function exceptionHandler(\Exception $e, $jsonResponse = false)
     {
-        $errMsg = "";
-        if (strpos($_SERVER['HTTP_HOST'], "localhost")) {
-            $errMsg = $e->getMessage();
-        }
-
         if ($jsonResponse) {
             $jsonArr = array(
                 "status"    => "ERR",
                 "err"       => get_class($e),
                 "errCode"   => $e->getCode(),
-                "errMsg"    => $errMsg,
+                "errMsg"    => $e->getMessage(),
                 "errFile"   => $e->getFile(),
                 "errLine"   => $e->getLine()
             );

@@ -12,3 +12,4 @@ define('DB_PASS', '');
 define('DB_DATABASE', 'bildergalerie');
 define('DB_CHARSET', 'utf8');
 define('DB_PORT', 3306);
+define('IS_DEBUG', false);
