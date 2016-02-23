@@ -8,6 +8,8 @@
  */
 class PicturePath
 {
+    // TODO: we should outsource this
+    const MYSQL_DATE_TIME_FORMAT = "Y-m-d H:i:s";
 
     private $mandant;
 
@@ -34,17 +36,17 @@ class PicturePath
      * @param $path string|null
      * @param $thumbPath string|null
      * @param $uploadedBy User|null
-     * @param $uploadedDate User|null
+     * @param $uploadedDate DateTime|string|null
      */
     public function __construct(Mandant $mandant, $id = null, $path = null, $thumbPath = null, User $uploadedBy = null,
-                                User $uploadedDate = null)
+                                $uploadedDate = null)
     {
         $this->mandant = $mandant;
         $this->id = $id;
         $this->path = $path;
         $this->thumbPath = $thumbPath;
         $this->uploadedBy = $uploadedBy;
-        $this->uploadedDate = $uploadedDate;
+        $this->setUploadedDate($uploadedDate);
     }
 
     /**
@@ -151,7 +153,13 @@ class PicturePath
      */
     public function setUploadedDate($uploadedDate)
     {
-        $this->uploadedDate = $uploadedDate;
+        if (null == $uploadedDate) {
+            $this->uploadedDate = new DateTime();
+        } elseif ($uploadedDate instanceof DateTime) {
+            $this->uploadedDate = $uploadedDate;
+        } else { // convert db date to DateTime
+            $this->uploadedDate = DateTime::createFromFormat(self::MYSQL_DATE_TIME_FORMAT, $uploadedDate);
+        }
         return $this;
     }
 

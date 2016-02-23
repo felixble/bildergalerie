@@ -9,4 +9,23 @@
 class Picture_detailView extends View
 {
 
+    /**
+     * @var Picture
+     */
+    private $picture;
+
+    public function __construct(Picture $picture)
+    {
+        parent::__construct(null);
+        $this->picture = $picture;
+    }
+
+    /**
+     * @return Picture
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
 }

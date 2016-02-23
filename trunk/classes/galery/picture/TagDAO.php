@@ -67,22 +67,14 @@ class TagDAO extends BaseMultiClientDAO
             ->setQuery("SELECT * FROM galery_tag WHERE mandant_id = :mandant")
             ->setConditions(array('mandant' => $this->mandant->getMandantId()));
 
-        $rows = $this->sqlManager->fetchRowMany($sqlBuilder);
-
-        $result = array();
-        if ($this->sqlManager->getRowCount()) {
-            foreach ($rows as $row) {
-                $result[] = $this->row2object($row);
-            }
-        }
-        return $result;
+        return $this->fetchRowMany($sqlBuilder);
     }
 
     /**
      * @param $row
      * @return Tag
      */
-    private function row2object($row)
+    protected function row2Object($row)
     {
         return new Tag($this->mandant, $row[self::COL_TAG_ID], $row[self::COL_TAG_NAME]);
     }

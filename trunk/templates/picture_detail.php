@@ -1,7 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Felix
- * Date: 22.02.2016
- * Time: 19:51
- */
+<?php /** @var Picture_detailView $this */ ?>
+<div class="center-block">
+<img src="<?php echo $this->getPicture()->getPath()->getPath(); ?>" class="img-rounded img-responsive center-block" alt="Cinque Terre" width="800" />
+</div>

@@ -61,4 +61,10 @@ class PicTagMapDAO extends BaseDAO
     {
         return self::TABLE_NAME;
     }
+
+    protected function row2Object($row)
+    {
+        // The picTagMapTable does not have any object representation
+        throw new NotImplementedException("This method is not implemented because it is not necessary right now.");
+    }
 }

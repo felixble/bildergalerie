@@ -6,7 +6,7 @@
  * Date: 12.02.2016
  * Time: 15:24
  */
-class MandantDAO
+class MandantDAO extends BaseDAO
 {
 
     const TABLE_NAME = "galery_mandant";
@@ -17,17 +17,12 @@ class MandantDAO
     const COL_GALERY_BRAND = "galery_brand";
 
     /**
-     * @var Simplon\Mysql\Manager\SqlManager
-     */
-    private $sqlManager;
-
-    /**
      * MandantDAO constructor.
      * @param \Simplon\Mysql\Mysql $dbConn
      */
     public function __construct(Simplon\Mysql\Mysql $dbConn)
     {
-        $this->sqlManager = new \Simplon\Mysql\Manager\SqlManager($dbConn);
+        parent::__construct($dbConn);
     }
 
     /**
@@ -65,15 +60,10 @@ class MandantDAO
     public function queryDefaultMandantForDomain($domain)
     {
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery(sprintf('SELECT * FROM %s WHERE %s = :domain', self::TABLE_NAME, self::COL_DOAMIN))
+            ->setQuery('SELECT * FROM galery_mandant WHERE domain = :domain')
             ->setConditions(array('domain' => $domain));
 
-        $row = $this->sqlManager->fetchRow($sqlBuilder);
-
-        if ($this->sqlManager->getRowCount()) {
-            return $this->row2object($row);
-        }
-        return null;
+        return $this->fetchRow($sqlBuilder);
     }
 
     /**
@@ -83,17 +73,16 @@ class MandantDAO
      * @param $row array
      * @return Mandant
      */
-    private function row2object($row)
+    protected function row2Object($row)
     {
         return new Mandant($row[self::COL_MANDANT_ID], $row[self::COL_PAGE_TITLE], $row[self::COL_GALERY_BRAND]);
     }
 
-    private function getSqlBuilder()
+    /**
+     * @return string table name.
+     */
+    protected function getTableName()
     {
-        $sqlBuilder = new Simplon\Mysql\Manager\SqlQueryBuilder();
-
-        $sqlBuilder->setTableName(self::TABLE_NAME);
-        return $sqlBuilder;
+        // TODO: Implement getTableName() method.
     }
-
 }

@@ -46,15 +46,9 @@ class UserDAO extends BaseMultiClientDAO implements IUserDAO
 
         $row = $this->sqlManager->fetchRow($sqlBuilder);
         if ($this->sqlManager->getRowCount()) {
+            // we have to validate first because the object representation does not contain the password hash
             if ($this->isValidUser($row[self::COL_PASSWORD], $row[self::COL_SALT], $pass)) {
-                return new User(
-                    $this->mandant,
-                    $row[self::COL_USER_ID],
-                    $row[self::COL_USERNAME],
-                    $row[self::COL_LAST_NAME],
-                    $row[self::COL_FIRST_NAME],
-                    $row[self::COL_EMAIL]
-                );
+                return $this->row2Object($row);
             }
         }
 
@@ -71,6 +65,18 @@ class UserDAO extends BaseMultiClientDAO implements IUserDAO
     {
         $passUserHash = md5($passUserInput . $salt . self::PASSWORD_PEPPER);
         return $pass == $passUserHash;
+    }
+
+    protected function row2Object($row)
+    {
+        return new User(
+            $this->mandant,
+            $row[self::COL_USER_ID],
+            $row[self::COL_USERNAME],
+            $row[self::COL_LAST_NAME],
+            $row[self::COL_FIRST_NAME],
+            $row[self::COL_EMAIL]
+        );
     }
 
     /**

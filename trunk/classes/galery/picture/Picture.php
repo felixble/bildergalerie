@@ -8,6 +8,7 @@
  */
 class Picture
 {
+    const MYSQL_DATE_TIME_FORMAT = "Y-m-d H:i:s";
 
     /**
      * @var Mandant
@@ -106,8 +107,8 @@ class Picture
      * @param bool|null $pricePublic
      * @param bool|null $salable
      * @param PicturePath|int $path
-     * @param DateTime $producedDate
-     * @param DateTime $createdDate
+     * @param DateTime|string|null $producedDate
+     * @param DateTime|string|null $createdDate
      * @param User $uploadedBy
      * @param User $owner
      * @param Category|int $category
@@ -117,9 +118,8 @@ class Picture
      */
     public function __construct(Mandant $mandant, $pictureId, $title = null, $description = null, $format = null,
                                 $material = null, $price = null, $pricePublic = null, $salable = null,
-                                $path = null, DateTime $producedDate = null, DateTime $createdDate = null,
-                                User $uploadedBy = null, User $owner = null, $category = null,
-                                $artisticStyle = null, $tags = null
+                                $path = null, $producedDate = null, $createdDate = null, User $uploadedBy = null,
+                                User $owner = null, $category = null, $artisticStyle = null, $tags = null
     ) {
         $this->mandant = $mandant;
         $this->pictureId = $pictureId;
@@ -338,7 +338,11 @@ class Picture
      */
     public function setProducedDate($producedDate)
     {
-        $this->producedDate = $producedDate;
+        if (null == $producedDate ||$producedDate instanceof DateTime) {
+            $this->producedDate = $producedDate;
+        } else { // convert db date to DateTime
+            $this->producedDate = DateTime::createFromFormat(self::MYSQL_DATE_TIME_FORMAT, $producedDate);
+        }
         return $this;
     }
 
@@ -358,8 +362,10 @@ class Picture
     {
         if (null == $createdDate) {
             $this->createdDate = new DateTime();
-        } else {
+        } elseif ($createdDate instanceof DateTime) {
             $this->createdDate = $createdDate;
+        } else { // convert db date to DateTime
+            $this->createdDate = DateTime::createFromFormat(self::MYSQL_DATE_TIME_FORMAT, $createdDate);
         }
         return $this;
     }
@@ -415,9 +421,9 @@ class Picture
      */
     public function setCategory($category)
     {
-        if (null == $category) {
+        /*if (null == $category) { // TODO: we need another validation method, sometimes it is necessary to instantiate a picture object without setting the category
             throw new InvalidInputException("category");
-        }
+        }*/
 
         if ($category instanceof Category) {
             $this->category = $category;

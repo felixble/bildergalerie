@@ -47,4 +47,11 @@ class PicturePathDAO extends BaseMultiClientDAO
     {
         return self::TABLE_NAME;
     }
+
+    public function row2Object($row)
+    {
+        return new PicturePath($this->mandant, $this->getValueOrNull($row, self::COL_PIC_PATH_ID),
+            $this->getValueOrNull($row, self::COL_PATH), $this->getValueOrNull($row, self::COL_THUMB_PATH),
+            /*uploadedby*/ null, $this->getValueOrNull($row, self::COL_DATE_UPLOADED));
+    }
 }

@@ -10,6 +10,29 @@ class PicturesController extends BildergalerieController
 {
 
     /**
+     * @var PictureDAO
+     */
+    private $pictureDAO;
+
+    /**
+     * @var CategoryDAO
+     */
+    private $categoryDAO;
+
+    /**
+     * @var Mandant
+     */
+    private $mandant;
+
+    public function onCreate(Router $router)
+    {
+        parent::onCreate($router);
+        $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
+        $this->pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $this->mandant);
+        $this->categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
+    }
+
+    /**
      * Default action which will be executed
      * if no specific action is given.
      *
@@ -29,7 +52,6 @@ class PicturesController extends BildergalerieController
      */
     public function picAction()
     {
-        $picDetailView = new Picture_detailView();
 
         // get the picture id from the request
         $get = $this->getRequest()->getGetParam();
@@ -43,6 +65,11 @@ class PicturesController extends BildergalerieController
             throw new SimpleUserErrorException("Das Bild wurde nicht gefunden.");
         }
 
+        $picture = $this->pictureDAO->getPictureById($picId);
+
+
+        $picDetailView = new Picture_detailView($picture);
+
         return $this->getContentFrameView("Details", $picDetailView, false); // TODO: title ??
     }
 
@@ -52,26 +79,20 @@ class PicturesController extends BildergalerieController
      */
     public function createAction()
     {
-        $mandant = $this->baseFactory->getMandantManager()->getMandant();
-
         // check if form is submitted
         if (array_key_exists("add_pic_submit", $this->getRequest()->getPostParam())) {
-            $this->processCreatePicture($mandant);
+            $this->processCreatePicture();
         }
 
         $picFormView = new Picture_formView();
 
         // get Categories
-        $categoryDAO = new CategoryDAO(
-            $this->baseFactory->getDbConnection(),
-            $mandant);
-
-        $picFormView->setCategories($categoryDAO->getAllCategories());
+        $picFormView->setCategories($this->categoryDAO->getAllCategories());
 
         return $this->getContentFrameView("Bild hinzufügen", $picFormView, false);
     }
 
-    private function processCreatePicture($mandant)
+    private function processCreatePicture()
     {
         $post = $this->getRequest()->getPostParam();
         $uploadedBy = $this->baseFactory->getAuthenticator()->getLoggedInUser();
@@ -80,13 +101,12 @@ class PicturesController extends BildergalerieController
         $success = false;
         try {
             // TODO: validate user input -> throw exception in setters of picture ?!
-            $picture = new Picture($mandant, null, $post["title"], $post["description"], null, $post["material"],
+            $picture = new Picture($this->mandant, null, $post["title"], $post["description"], null, $post["material"],
                 null, null, null, $post["picPathId"], null, null, $uploadedBy, $owner, $post["category"], null,
                 $post["tags"]);
 
             // store the new picture in the database
-            $pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $mandant);
-            $pictureDAO->createPicture($picture);
+            $this->pictureDAO->createPicture($picture);
             $success = true;
         } catch (UserException $e) {
             $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> " . $e->getMessage());

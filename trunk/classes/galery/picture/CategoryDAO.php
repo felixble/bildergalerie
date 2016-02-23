@@ -35,14 +35,7 @@ class CategoryDAO extends BaseMultiClientDAO
             ->setQuery('SELECT * FROM galery_categories WHERE mandant_id =:m_id')
             ->setConditions(array("m_id" => $this->mandant->getMandantId()));
 
-        $rows = $this->sqlManager->fetchRowMany($sqlBuilder);
-        $result = array();
-        if ($this->sqlManager->getRowCount()) {
-            foreach ($rows as $row) {
-                $result[] = $this->row2Category($row);
-            }
-        }
-        return $result;
+        return $this->fetchRowMany($sqlBuilder);
     }
 
     /**
@@ -52,13 +45,13 @@ class CategoryDAO extends BaseMultiClientDAO
      * @param $row
      * @return Category
      */
-    private function row2Category($row)
+    protected function row2Object($row)
     {
         return new Category(
             $this->mandant,
-            $row[self::COL_CATEGORY_ID],
-            $row[self::COL_CATEGORY_NAME],
-            $row[self::COL_CATEGORY_DESCRIPTION]
+            $this->getValueOrNull($row, self::COL_CATEGORY_ID),
+            $this->getValueOrNull($row, self::COL_CATEGORY_NAME),
+            $this->getValueOrNull($row, self::COL_CATEGORY_DESCRIPTION)
         );
     }
 
