@@ -4,9 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1a84f7dc7b9c533b84e50334f2b362c2",
-    "content-hash": "8d031ba7f786969ea3d7520d9ece9749",
+    "hash": "7c3bc19ad6b2e13a26418ffa5e1a0728",
+    "content-hash": "a841c021102637a169a02b6f6e06bb27",
     "packages": [
+        {
+            "name": "1000hz/bootstrap-validator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/1000hz/bootstrap-validator",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2015-07-20 20:35:58"
+        },
         {
             "name": "aura/session",
             "version": "2.0.1",
@@ -613,7 +624,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "components/bootstrap-switch": 20,
-        "makeusabrew/bootbox": 20
+        "makeusabrew/bootbox": 20,
+        "1000hz/bootstrap-validator": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

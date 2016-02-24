@@ -14,7 +14,7 @@ class Picture_formView extends View
     public function getCustomJS()
     {
         return array("libs/typeahead.bundle.min.js", "picture_uploader.js", "libs/bootstrap-tagsinput.js",
-            "tag_typeahead.js");
+            "tag_typeahead.js", "add_category_dialog.js");
     }
 
     public function getCustomCSS()

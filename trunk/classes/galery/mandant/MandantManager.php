@@ -32,14 +32,13 @@ class MandantManager
     {
         $this->sessManager = $sessManager;
 
-        $mandant = null;
-        $mandantId = $this->getMandantFromRequest($request);
+        $mandant = $this->getMandantFromRequest($request, $dbConn);
 
-        if (null == $mandantId) { // the request does not contain the mandant
+        if (null == $mandant) { // the request does not contain the mandant
             $mandant = $this->getMandantFromCookies();
         }
 
-        if (null == $mandantId && null == $mandant) {
+        if (null == $mandant) {
             // mandant is neither stored in the cookies nor given in the request
             // so we must check the domain and load the default mandant
 
@@ -58,11 +57,14 @@ class MandantManager
      * {@code null} if not given.
      *
      * @param Request $request
-     * @return string|null mandant id
+     * @param \Simplon\Mysql\Mysql $dbConn
+     * @return null|string mandant id
      */
-    private function getMandantFromRequest(Request $request) {
+    private function getMandantFromRequest(Request $request, \Simplon\Mysql\Mysql $dbConn) {
         if (array_key_exists(self::MANDANT_KEY, $request->getGetParam())) {
-            return $request->getGetParam()[self::MANDANT_KEY];
+            $id = $request->getGetParam()[self::MANDANT_KEY];
+            $mandantDAO = new MandantDAO($dbConn);
+            return $mandantDAO->queryMandantForId($id);
         }
         return null;
     }

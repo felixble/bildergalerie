@@ -1,6 +1,21 @@
 {
     "name" : "blefel/bildergalerie",
 
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "1000hz/bootstrap-validator",
+                "version": "dev-master",
+                "source": {
+                    "url": "https://github.com/1000hz/bootstrap-validator",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+
     "require": {
         "twbs/bootstrap": "3.3.5",
         "aura/session": "2.0.1",
@@ -9,6 +24,7 @@
         "components/jqueryui": "1.11.4",
         "components/bootstrap-switch": "dev-master",
         "makeusabrew/bootbox": "dev-master",
+        "1000hz/bootstrap-validator": "dev-master",
         "crodas/notoj": "^1.2"
 
     },

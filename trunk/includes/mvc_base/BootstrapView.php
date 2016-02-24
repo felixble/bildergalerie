@@ -94,6 +94,16 @@ class BootstrapView extends View {
         }
     }
 
+    /**
+     * @param mixed $contentPastJs
+     * @return BootstrapView
+     */
+    public function setContentPastJs($contentPastJs)
+    {
+        $this->contentPastJs = $contentPastJs;
+        return $this;
+    }
+
     public function getContentPastJs()
     {
         return $this->contentPastJs;
@@ -107,5 +117,10 @@ class BootstrapView extends View {
         $baseView->setBodyContent($content);
 
         return $baseView;
+    }
+
+    public function enableJQueryUI()
+    {
+        return true;
     }
 }

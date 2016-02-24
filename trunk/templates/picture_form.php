@@ -1,7 +1,27 @@
 <?php /** @var $this Picture_formView*/ ?>
+
+<!-- Dialog Content -->
+<div id="dialog-add_category" title="Kategorie hinzufügen" style="display: none;">
+    <form role="form" method="post" data-toggle="validator">
+        <div class="form-group has-feedback">
+            <label for="category_name">Kategorie</label>
+            <input type="text" class="form-control" id="category_name" name="category_name"
+                   data-error="Füllen Sie dieses Feld aus!" required />
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group">
+            <label for="category_description">Beschreibung</label>
+            <textarea class="form-control" rows="5" id="category_description" name="description"></textarea>
+        </div>
+    </form>
+</div>
+
+
+<!-- Form Content -->
 <div class="row">
 
-    <form role="form" enctype="multipart/form-data" method="post" id="picForm">
+    <form data-toggle="validator" role="form" enctype="multipart/form-data" method="post" id="picForm">
     <div class="col-lg-4">
         <h1>Bild hochladen</h1>
         <div id="upload_error" class="alert alert-danger ?>" style="display: none">
@@ -27,12 +47,14 @@
 
         <h1>Informationen hinzufügen</h1>
 
-            <div class="form-group">
+            <div class="form-group has-feedback">
                 <label for="title">Titel</label>
-                <input type="text" class="form-control" id="title" name="title"/>
+                <input type="text" class="form-control" id="title" name="title" required/>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
             <div class="form-group">
                 <label for="category">Kategorie</label>
+                <div class="input-group">
                 <select class="form-control" name="category" id="category">
                     <option value="-1">-- Bitte wählen --</option>
                     <?php
@@ -41,10 +63,16 @@
                     }
                     ?>
                 </select>
+                <span class="input-group-btn">
+                    <button class="btn btn-success" type="button" id="add_category">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                </span>
+                </div>
             </div>
             <div class="form-group">
-                <label for="material">Material</label>
-                <input type="text" class="form-control" id="material" name="material"/>
+                <label for="material">Material/Technik</label>
+                <input type="text" class="form-control" id="material" name="material" placeholder="z.B. Acryl auf Leinwand"/>
             </div>
             <div class="form-group">
                 <label for="description">Beschreibung</label>

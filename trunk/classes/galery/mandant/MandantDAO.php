@@ -66,6 +66,15 @@ class MandantDAO extends BaseDAO
         return $this->fetchRow($sqlBuilder);
     }
 
+    public function queryMandantForId($id)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery('SELECT * FROM galery_mandant WHERE mandant_id = :id')
+            ->setConditions(array('id' => $id));
+
+        return $this->fetchRow($sqlBuilder);
+    }
+
     /**
      * Converts a table row array into its object
      * representation.

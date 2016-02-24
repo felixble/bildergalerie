@@ -46,8 +46,10 @@ class AppRouter extends Router
 
     protected function exceptionHandler(\Exception $e, $jsonResponse = false)
     {
-
         $exceptionView = parent::exceptionHandler($e, $jsonResponse);
+        if ($jsonResponse || $this->baseFactory == null) {
+            return $exceptionView;
+        }
         if (!$jsonResponse && $e instanceof UserException) {
             $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> " . $e->getMessage());
             $exceptionView = "";
@@ -88,6 +90,7 @@ class AppRouter extends Router
             $view->addCSS($content->getCustomCSS());
             $view->addJS($content->getCustomJS());
         }
+        $view->setContentPastJs(HtmlHelper::scriptJS("vendor/1000hz/bootstrap-validator/dist/validator.js"));
 
         return $view;
     }

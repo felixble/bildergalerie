@@ -11,6 +11,17 @@
 class AjaxController extends BildergalerieController
 {
 
+    /**
+     * @var Mandant
+     */
+    private $mandant;
+
+    public function onCreate(Router $router)
+    {
+        parent::onCreate($router);
+        $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
+    }
+
 
     /**
      * Default action which will be executed
@@ -46,9 +57,7 @@ class AjaxController extends BildergalerieController
 
         $file = $this->getRequest()->getFiles()["uploadFile"];
 
-        $mandant = $this->baseFactory->getMandantManager()->getMandant();
-
-        $dirName = "uploads/" . $mandant->getMandantId();
+        $dirName = "uploads/" . $this->mandant->getMandantId();
         if (!is_dir($dirName)) {
             mkdir($dirName);
         }
@@ -61,9 +70,9 @@ class AjaxController extends BildergalerieController
 
         // picture upload was successful, now we save the path in our database
         try {
-            $picPathDAO = new PicturePathDAO($this->baseFactory->getDbConnection(), $mandant);
+            $picPathDAO = new PicturePathDAO($this->baseFactory->getDbConnection(), $this->mandant);
 
-            $picturePath = new PicturePath($mandant, /* id will be created */
+            $picturePath = new PicturePath($this->mandant, /* id will be created */
                 null, $picUploader->getUploadedFilePath(),
                 $picUploader->getThumbFilePath(), $this->baseFactory->getAuthenticator()->getLoggedInUser());
 
@@ -86,7 +95,7 @@ class AjaxController extends BildergalerieController
     public function getTagsAction()
     {
         $tagDAO = new TagDAO(
-            $this->baseFactory->getDbConnection(), $this->baseFactory->getMandantManager()->getMandant());
+            $this->baseFactory->getDbConnection(), $this->mandant);
 
         $tags = $tagDAO->queryForAll();
 
@@ -97,5 +106,36 @@ class AjaxController extends BildergalerieController
         }
 
         return json_encode($tagsArr);
+    }
+
+    public function addCategoryAction()
+    {
+        $resultArray = array(
+            "status"    => "OK"
+        );
+
+        $get = $this->getRequest()->getGetParam();
+        $descr = null;
+        if (array_key_exists("name", $get)) {
+            $name = $get["name"];
+        } else {
+            throw new InvalidArgumentException("Parameter name missing.");
+        }
+        if (array_key_exists("description", $get)) {
+            $descr = $get["description"];
+        }
+
+        $category = new Category($this->mandant, null, $name, $descr);
+
+        $categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
+        $catId = $categoryDAO->createCategory($category);
+        if ($catId == false) {
+            return array("status" => "ERR", "errMsg" => "Kategorie konnte nicht angelegt werden");
+        }
+
+        $resultArray["category_id"] = $catId;
+        $resultArray["category_name"] = $name;
+
+        return json_encode($resultArray);
     }
 }

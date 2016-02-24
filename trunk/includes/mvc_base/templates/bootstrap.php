@@ -14,6 +14,11 @@
     <!-- Bootstrap -->
     <link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
+
+    <?php if($this->enableJQueryUI()): ?>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <?php endif; ?>
+
     <?php
     if (null != $this->getCSS() && is_array($this->getCSS())) {
         foreach ($this->getCSS() as $css) {
@@ -41,6 +46,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<?php if($this->enableJQueryUI()): ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<?php endif; ?>
 
 
 <?php

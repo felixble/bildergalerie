@@ -11,6 +11,7 @@ class CategoryDAO extends BaseMultiClientDAO
 
     const TABLE_NAME = "galery_categories";
 
+    const COL_MANDANT_ID = "mandant_id";
     const COL_CATEGORY_ID = "category_id";
     const COL_CATEGORY_NAME = "category_name";
     const COL_CATEGORY_DESCRIPTION = "description";
@@ -36,6 +37,23 @@ class CategoryDAO extends BaseMultiClientDAO
             ->setConditions(array("m_id" => $this->mandant->getMandantId()));
 
         return $this->fetchRowMany($sqlBuilder);
+    }
+
+    /**
+     * Creates a new category entry.
+     *
+     * @param Category $category
+     * @return bool|int
+     */
+    public function createCategory(Category $category)
+    {
+        $data = array(
+            self::COL_MANDANT_ID            => $this->mandant->getMandantId(),
+            self::COL_CATEGORY_NAME         => $category->getCategoryName(),
+            self::COL_CATEGORY_DESCRIPTION  => $category->getDescription()
+        );
+
+        return $this->create($data);
     }
 
     /**
