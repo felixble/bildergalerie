@@ -11,6 +11,7 @@ class SessionManager
     const USER_SEGMENT = "Bildergalerie_User_Information";
     const MANDANT_SEGMENT = "Bildergalerie_Mandant_Information";
     const ALERT_SEGMENT = "Bildergalerie_Alert";
+    const SESS_LIFETIME = 30 * 60; // 30 min
 
     /**
      * Holds the session object.
@@ -27,6 +28,7 @@ class SessionManager
     {
         $sess_factory = new Aura\Session\SessionFactory();
         $this->session = $sess_factory->newInstance($cookies);
+        $this->session->setCookieParams(array('lifetime' => self::SESS_LIFETIME));
     }
 
     public function getUserSegment()
