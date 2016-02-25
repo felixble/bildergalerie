@@ -27,7 +27,7 @@ class HomeController extends BildergalerieController {
         $homeView = new HomeView();
 
         $categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
-        $catTeasers = $categoryDAO->getCategoryTeasers();
+        $catTeasers = $categoryDAO->getCategoryTeasers(3);
 
         $homeView->setCategoryTeaser($catTeasers);
 

@@ -40,14 +40,15 @@ class CategoryDAO extends BaseMultiClientDAO
     }
 
 
-    public function getCategoryTeasers() {
+    public function getCategoryTeasers($limit = 3) {
         $sqlBuilder = $this->getSqlBuilder()
             ->setQuery('SELECT * FROM bildergalerie.galery_categories AS t_cat
                         LEFT JOIN
                           (SELECT pic_id, title, path_id, category_id FROM galery_pictures
                           ORDER BY RAND()) AS t_pic ON t_pic.category_id=t_cat.category_id
                         LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
-                        GROUP BY t_cat.category_id;');
+                        GROUP BY t_cat.category_id LIMIT :limit;')
+            ->setConditions(array('limit' => $limit));
 
         $rows = $this->sqlManager->fetchRowMany($sqlBuilder);
         $result = array();
