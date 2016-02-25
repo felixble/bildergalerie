@@ -1,32 +1,4 @@
 <?php /** @var HomeView $this */ ?>
-<?php
-$cat1 = new Category($this->getMandant(), null, "Musik und Tanz", "Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.");
-$cat2 = new Category($this->getMandant(), null, "Neulich im Museum", "Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.");
-$cat3 = new Category($this->getMandant(), null, "Nackt kann auch schön sein", "Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.");
-
-try {
-    $pic1 = new Picture($this->getMandant(), null, "Title", $cat1);
-    $pic1->setPath(new PicturePath($this->getMandant(), null, null, "uploads/1/hilde_1.jpg"));
-    $pic2 = new Picture($this->getMandant(), null, "Title", $cat2);
-    $pic2->setPath(new PicturePath($this->getMandant(), null, null, "uploads/1/hilde_2.jpg"));
-    $pic3 = new Picture($this->getMandant(), null, "Title", $cat3);
-    $pic3->setPath(new PicturePath($this->getMandant(), null, null, "uploads/1/hilde_3.jpg"));
-
-    /**
-     * @var CategoryTeaser[]
-     */
-    $catTeasers = array(
-        new CategoryTeaser($cat1, $pic1),
-        new CategoryTeaser($cat2, $pic2),
-        new CategoryTeaser($cat3, $pic3)
-    );
-} catch (Exception $e) {
-    print_r($e);
-
-}
-
-
-?>
 
 <!-- Three columns of text below the carousel -->
 <div class="row">
@@ -58,10 +30,10 @@ try {
 </div><!-- /.row -->
 
 
-<!-- START THE FEATURETTES -->
+<!-- Category TEASERS to introduce the most popular categories -->
 
 
-<?php $i = 0; foreach ($catTeasers as $catTeaser): /** @var CategoryTeaser $catTeaser */ ?>
+<?php $i = 0; foreach ($this->getCatTeaser() as $catTeaser): /** @var CategoryTeaser $catTeaser */ ?>
     <hr class="featurette-divider">
     <div class="row featurette">
         <div class="col-md-7 <?php if ( ($i % 2) != 0 ) echo "col-md-push-5"; ?>">
@@ -78,4 +50,4 @@ try {
 <?php $i++; endforeach; ?>
 
 
-<!-- /END THE FEATURETTES -->
+<!-- /END THE TEASERS -->

@@ -9,22 +9,29 @@
 class HomeView extends View {
 
     /**
-     * @var Mandant
+     * @var CategoryTeaser[]
      */
-    private $mandant;
+    private $catTeaser;
 
     /**
      * HomeView constructor.
-     * @param Mandant $mandant
      */
-    public function __construct(Mandant $mandant)
+    public function __construct()
     {
         parent::__construct(null);
-        $this->mandant = $mandant;
     }
 
-    public function getMandant()
+    public function setCategoryTeaser($catTeasers)
     {
-        return $this->mandant;
+        $this->catTeaser = $catTeasers;
     }
+
+    /**
+     * @return CategoryTeaser[]
+     */
+    public function getCatTeaser()
+    {
+        return $this->catTeaser;
+    }
+
 }

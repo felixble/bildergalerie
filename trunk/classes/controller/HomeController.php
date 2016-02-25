@@ -9,10 +9,28 @@
 class HomeController extends BildergalerieController {
 
     /**
+     * @var Mandant
+     */
+    private $mandant;
+
+    public function onCreate(Router $router)
+    {
+        parent::onCreate($router);
+        $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
+    }
+
+    /**
      * @return BootstrapView
      */
     public function indexAction()
     {
-        return $this->getContentFrameView("Startseite", new HomeView($this->baseFactory->getMandantManager()->getMandant()));
+        $homeView = new HomeView();
+
+        $categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
+        $catTeasers = $categoryDAO->getCategoryTeasers();
+
+        $homeView->setCategoryTeaser($catTeasers);
+
+        return $this->getContentFrameView("Startseite", $homeView);
     }
 }

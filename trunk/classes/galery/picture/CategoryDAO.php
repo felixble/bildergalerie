@@ -39,6 +39,26 @@ class CategoryDAO extends BaseMultiClientDAO
         return $this->fetchRowMany($sqlBuilder);
     }
 
+
+    public function getCategoryTeasers() {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery('SELECT * FROM bildergalerie.galery_categories AS t_cat
+                        LEFT JOIN
+                          (SELECT pic_id, title, path_id, category_id FROM galery_pictures
+                          ORDER BY RAND()) AS t_pic ON t_pic.category_id=t_cat.category_id
+                        LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
+                        GROUP BY t_cat.category_id;');
+
+        $rows = $this->sqlManager->fetchRowMany($sqlBuilder);
+        $result = array();
+        if ($this->sqlManager->getRowCount()) {
+            foreach ($rows as $row) {
+                $result[] = $this->row2Teaser($row);
+            }
+        }
+        return $result;
+    }
+
     /**
      * Creates a new category entry.
      *
@@ -79,5 +99,19 @@ class CategoryDAO extends BaseMultiClientDAO
     protected function getTableName()
     {
         return self::TABLE_NAME;
+    }
+
+    private function row2Teaser($row)
+    {
+        $category = new Category($this->mandant, $row[self::COL_CATEGORY_ID], $row[self::COL_CATEGORY_NAME],
+            $row[self::COL_CATEGORY_DESCRIPTION]);
+
+        $picture = new Picture($this->mandant, $row[PictureDAO::COL_PICTURE_ID], $row[PictureDAO::COL_TITLE], $category);
+        $picture->setPath(
+            new PicturePath($this->mandant, $row[PicturePathDAO::COL_PIC_PATH_ID],
+                $row[PicturePathDAO::COL_PATH], $row[PicturePathDAO::COL_THUMB_PATH])
+        );
+
+        return new CategoryTeaser($category, $picture);
     }
 }
