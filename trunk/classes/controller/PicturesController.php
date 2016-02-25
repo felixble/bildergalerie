@@ -43,8 +43,14 @@ class PicturesController extends BildergalerieController
      */
     public function indexAction()
     {
-        // TODO: Implement indexAction() method.
-        $this->getRouter()->reRouteTo("home", "index");
+        return $this->ausstellungenAction();
+    }
+
+    public function ausstellungenAction()
+    {
+        $ausstellungenView = new AusstellungenView();
+
+        return $this->getContentFrameView("Ausstellungen", $ausstellungenView);
     }
 
     /**
