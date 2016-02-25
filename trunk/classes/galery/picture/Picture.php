@@ -468,7 +468,7 @@ class Picture
     /**
      * @param $tags string[]|Tag[]
      */
-    private function setTags($tags)
+    public function setTags($tags)
     {
         if (null == $tags || count($tags) == 0) return;
 
