@@ -1,10 +1,10 @@
 <?php /** @var $this Picture_formView*/ ?>
 
 <!-- Dialog Content -->
-<div id="dialog-add_category" title="Kategorie hinzufügen" style="display: none;">
+<div id="dialog-add_category" title="Neue Ausstellung hinzufügen" style="display: none;">
     <form role="form" method="post" data-toggle="validator">
         <div class="form-group has-feedback">
-            <label for="category_name">Kategorie</label>
+            <label for="category_name">Titel/Thema</label>
             <input type="text" class="form-control" id="category_name" name="category_name"
                    data-error="Füllen Sie dieses Feld aus!" required />
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
@@ -53,9 +53,9 @@
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
             <div class="form-group">
-                <label for="category">Kategorie</label>
+                <label for="category">Ausstellung</label>
                 <div class="input-group">
-                <select class="form-control" name="category" id="category">
+                <select class="selectpicker form-control" name="category" id="category">
                     <option value="-1">-- Bitte wählen --</option>
                     <?php
                     foreach ($this->getCategories() as $category) {
@@ -64,7 +64,7 @@
                     ?>
                 </select>
                 <span class="input-group-btn">
-                    <button class="btn btn-success" type="button" id="add_category">
+                    <button class="btn btn-success" type="button" id="add_category" title="Neue Ausstellung hinzufügen">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </button>
                 </span>
