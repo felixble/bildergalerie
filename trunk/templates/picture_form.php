@@ -70,9 +70,10 @@
                 </span>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group has-feedback">
                 <label for="material">Material/Technik</label>
-                <input type="text" class="form-control" id="material" name="material" placeholder="z.B. Acryl auf Leinwand"/>
+                <input type="text" class="form-control" id="material" name="material" placeholder="z.B. Acryl auf Leinwand" required/>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
             <div class="form-group">
                 <label for="description">Beschreibung</label>

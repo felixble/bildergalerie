@@ -68,6 +68,11 @@ class PicturesController extends BildergalerieController
         $picture = $this->pictureDAO->getPictureById($picId);
 
 
+        if (null == $picture) {
+            throw new SimpleUserErrorException("Das Bild wurde nicht gefunden.");
+        }
+
+
         $picDetailView = new Picture_detailView($picture);
 
         return $this->getContentFrameView("Details", $picDetailView, false); // TODO: title ??
