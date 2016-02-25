@@ -16,8 +16,8 @@ $this->getPicture()->setTags(array("Foto", "Hilde", "malen", "Pinsel", "Farbpale
         ?>
     </div>
     <div class="col-lg-4">
-        <div class="panel panel-primary" style="margin-top: 20px">
-            <div class="panel-heading"> <?php echo $this->getPicture()->getTitle(); ?></div>
+        <div class="panel panel-default" style="margin-top: 20px">
+            <div class="panel-heading"><strong><?php echo $this->getPicture()->getTitle(); ?></strong></div>
             <div class="panel-body">
                 <?php if(null != $this->getPicture()->getMaterial()): ?>
                 <h4>Material/Technik</h4>
