@@ -11,7 +11,7 @@ class SessionManager
     const USER_SEGMENT = "Bildergalerie_User_Information";
     const MANDANT_SEGMENT = "Bildergalerie_Mandant_Information";
     const ALERT_SEGMENT = "Bildergalerie_Alert";
-    const SESS_LIFETIME = 30 * 60; // 30 min
+    const SESS_LIFETIME = 1800; // 30 min
 
     /**
      * Holds the session object.
