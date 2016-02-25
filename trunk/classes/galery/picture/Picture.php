@@ -100,6 +100,7 @@ class Picture
      * @param Mandant $mandant
      * @param int|null $pictureId
      * @param string $title
+     * @param Category|int $category
      * @param string $description
      * @param string $format
      * @param string $material
@@ -111,15 +112,10 @@ class Picture
      * @param DateTime|string|null $createdDate
      * @param User $uploadedBy
      * @param User $owner
-     * @param Category|int $category
      * @param ArtisticStyle|int $artisticStyle
      * @param null|string[]|Tag[] $tags
-     * @throws InvalidInputException
      */
-    public function __construct(Mandant $mandant, $pictureId, $title = null, $description = null, $format = null,
-                                $material = null, $price = null, $pricePublic = null, $salable = null,
-                                $path = null, $producedDate = null, $createdDate = null, User $uploadedBy = null,
-                                User $owner = null, $category = null, $artisticStyle = null, $tags = null
+    public function __construct(Mandant $mandant, $pictureId, $title = null, $category = null, $description = null, $format = null, $material = null, $price = null, $pricePublic = null, $salable = null, $path = null, $producedDate = null, $createdDate = null, User $uploadedBy = null, User $owner = null, $artisticStyle = null, $tags = null
     ) {
         $this->mandant = $mandant;
         $this->pictureId = $pictureId;

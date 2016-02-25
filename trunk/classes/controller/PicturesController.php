@@ -106,9 +106,7 @@ class PicturesController extends BildergalerieController
         $success = false;
         try {
             // TODO: validate user input -> throw exception in setters of picture ?!
-            $picture = new Picture($this->mandant, null, $post["title"], $post["description"], null, $post["material"],
-                null, null, null, $post["picPathId"], null, null, $uploadedBy, $owner, $post["category"], null,
-                $post["tags"]);
+            $picture = new Picture($this->mandant, null, $post["title"], $post["category"], $post["description"], null, $post["material"], null, null, null, $post["picPathId"], null, null, $uploadedBy, $owner, null, $post["tags"]);
 
             // store the new picture in the database
             $this->pictureDAO->createPicture($picture);

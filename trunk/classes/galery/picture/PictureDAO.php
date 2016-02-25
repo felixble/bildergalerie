@@ -100,13 +100,7 @@ class PictureDAO extends BaseMultiClientDAO
     protected function row2Object($row)
     {
         // create the picture object with all primitive data.
-        $picture = new Picture($this->mandant, $this->getValueOrNull($row, self::COL_PICTURE_ID),
-            $this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_DESCRIPTION),
-            $this->getValueOrNull($row, self::COL_FORMAT), $this->getValueOrNull($row, self::COL_MATERIAL),
-            $this->getValueOrNull($row, self::COL_PRICE), $this->getValueOrNull($row, self::COL_PRICE_PUBLIC),
-            $this->getValueOrNull($row, self::COL_SALABLE), /*path*/ null,
-            $this->getValueOrNull($row, self::COL_DATE_PRODUCED), $this->getValueOrNull($row, self::COL_DATE_CREATED),
-            /*uploadedBy*/ null, /*owner*/ null, /*cat*/ null, /*artstyle*/ null, /*tags*/ null);
+        $picture = new Picture($this->mandant, $this->getValueOrNull($row, self::COL_PICTURE_ID), $this->getValueOrNull($row, self::COL_TITLE), null, $this->getValueOrNull($row, self::COL_DESCRIPTION), $this->getValueOrNull($row, self::COL_FORMAT), $this->getValueOrNull($row, self::COL_MATERIAL), $this->getValueOrNull($row, self::COL_PRICE), $this->getValueOrNull($row, self::COL_PRICE_PUBLIC), $this->getValueOrNull($row, self::COL_SALABLE), null, $this->getValueOrNull($row, self::COL_DATE_PRODUCED), $this->getValueOrNull($row, self::COL_DATE_CREATED), null, null, null, null);
 
         // set all complex objects now
 

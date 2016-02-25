@@ -8,4 +8,23 @@
 
 class HomeView extends View {
 
+    /**
+     * @var Mandant
+     */
+    private $mandant;
+
+    /**
+     * HomeView constructor.
+     * @param Mandant $mandant
+     */
+    public function __construct(Mandant $mandant)
+    {
+        parent::__construct(null);
+        $this->mandant = $mandant;
+    }
+
+    public function getMandant()
+    {
+        return $this->mandant;
+    }
 }
