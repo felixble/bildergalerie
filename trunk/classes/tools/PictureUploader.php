@@ -54,7 +54,7 @@ class PictureUploader
      * @return bool
      * @throws FileAlreadyExists
      */
-    public function uploadFile($thumbWidth = 400)
+    public function uploadFile($thumbWidth = 800)
     {
         $this->uploadedFilePath = $this->destFolderPath . "/" . $this->fileName;
 

@@ -42,7 +42,7 @@
             <p class="lead"><?php echo $catTeaser->getDescription(); ?></p>
         </div>
         <div class="col-md-5 <?php if ( ($i % 2) != 0 ) echo "col-md-pull-7"; ?>">
-            <img class="featurette-image img-responsive center-block"
+            <img class="featurette-image img-responsive center-block" height="500"
                  src="<?php echo $catTeaser->getPictureThumb(); ?>"
                  alt="<?php echo $catTeaser->getTitle(); ?>">
         </div>
