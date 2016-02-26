@@ -64,7 +64,7 @@ $(function() {
         width: 500,
         modal: true,
         buttons: {
-            "Kategorie hinzufügen": addCategory,
+            "Ausstellung hinzufügen": addCategory,
             "Abbrechen": function() {
                 dialog.dialog( "close" );
             }

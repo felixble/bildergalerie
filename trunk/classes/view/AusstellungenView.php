@@ -6,7 +6,7 @@
  * Date: 25.02.16
  * Time: 23:56
  */
-class AusstellungenView
+class AusstellungenView extends View
 {
 
 
