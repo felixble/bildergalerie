@@ -43,20 +43,39 @@ class PicturesController extends BildergalerieController
      */
     public function indexAction()
     {
-        return $this->ausstellungenAction();
+        return $this->exhibitionsAction();
     }
 
-    public function ausstellungenAction()
+    /**
+     * Shows all exhibitions.
+     *
+     * @return BootstrapView
+     */
+    public function exhibitionsAction()
     {
         $categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
         $teasers = $categoryDAO->getCategoryTeasers(false);
 
-        $ausstellungenView = new AusstellungenView($teasers);
+        $ausstellungenView = new ExhibitionsView($teasers);
         return $this->getContentFrameView("Ausstellungen", $ausstellungenView);
     }
 
     /**
+     * Shows a single exhibition with all its
+     * pictures.
+     */
+    public function exhibitionAction()
+    {
+        // remember: exhibition == category
+        // first we must select the category_id from the get parameters
+
+        return $this->getContentFrameView("Ausstellung", new ExhibitionView(), true);
+    }
+
+    /**
      * Shows detail view of a picture.
+     * @return BootstrapView
+     * @throws SimpleUserErrorException
      */
     public function picAction()
     {

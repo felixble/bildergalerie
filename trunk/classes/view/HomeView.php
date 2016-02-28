@@ -9,7 +9,7 @@
 class HomeView extends View {
 
     /**
-     * @var Ausstellung_teasersView;
+     * @var Exhibition_teasersView;
      */
     private $ausstellungTeaserView;
 
@@ -23,11 +23,11 @@ class HomeView extends View {
 
     public function setCategoryTeaser($ausstellungTeaserView)
     {
-        $this->ausstellungTeaserView = new Ausstellung_teasersView($ausstellungTeaserView, /*showFirstDivider*/ true);
+        $this->ausstellungTeaserView = new Exhibition_teasersView($ausstellungTeaserView, /*showFirstDivider*/ true);
     }
 
     /**
-     * @return Ausstellung_teasersView
+     * @return Exhibition_teasersView
      */
     public function getCatTeaserView()
     {
