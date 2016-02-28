@@ -1,5 +1,9 @@
 /* Customize footer */
 
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
 footer {
     margin-top: 30px;
 }
