@@ -1,3 +1,3 @@
-<?php /** @var AusstellungenView $this */ ?>
+<?php /** @var ExhibitionsView $this */ ?>
 
 <?php echo $this->getAusstellungTeasersView(); ?>

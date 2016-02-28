@@ -8,7 +8,7 @@
  * Date: 28.02.16
  * Time: 20:42
  */
-class AusstellungView extends View
+class ExhibitionView extends View
 {
 
     public function getCustomCSS()

@@ -6,11 +6,11 @@
  * Date: 25.02.16
  * Time: 23:56
  */
-class AusstellungenView extends View
+class ExhibitionsView extends View
 {
 
     /**
-     * @var Ausstellung_teasersView
+     * @var Exhibition_teasersView
      */
     private $ausstellungTeasersView;
 
@@ -21,7 +21,7 @@ class AusstellungenView extends View
     public function __construct(array $categoryTeasers)
     {
         parent::__construct();
-        $this->ausstellungTeasersView = new Ausstellung_teasersView($categoryTeasers);
+        $this->ausstellungTeasersView = new Exhibition_teasersView($categoryTeasers);
     }
 
 

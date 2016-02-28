@@ -1,4 +1,4 @@
-<?php /** @var Ausstellung_teasersView $this */ ?>
+<?php /** @var Exhibition_teasersView $this */ ?>
 <?php $i = 0; foreach ($this->getCatTeasers() as $catTeaser): /** @var CategoryTeaser $catTeaser */ ?>
     <?php if($i != 0 || $this->showFirstDivider()): ?>
     <hr class="featurette-divider">
