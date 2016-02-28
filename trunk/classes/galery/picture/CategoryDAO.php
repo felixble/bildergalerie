@@ -67,6 +67,20 @@ class CategoryDAO extends BaseMultiClientDAO
     }
 
     /**
+     * @param $id
+     * @return Category
+     */
+    public function getCategoryById($id)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery('SELECT * FROM galery_categories WHERE category_id = :id;')
+            ->setConditions(array('id' => $id));
+
+        return $this->fetchRow($sqlBuilder);
+
+    }
+
+    /**
      * Creates a new category entry.
      *
      * @param Category $category

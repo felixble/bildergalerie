@@ -68,8 +68,22 @@ class PicturesController extends BildergalerieController
     {
         // remember: exhibition == category
         // first we must select the category_id from the get parameters
+        $exhibitionId = $this->getIdRequestParam("id");
 
-        return $this->getContentFrameView("Ausstellung", new ExhibitionView(), true);
+        if (!$exhibitionId) {
+            throw new SimpleUserErrorException("Die Ausstellung wurde nicht gefunden.");
+        }
+
+        $exhibition = $this->categoryDAO->getCategoryById($exhibitionId);
+
+        $pictures = $this->pictureDAO->getPicturesFromCategory($exhibitionId);
+
+
+        if (null == $exhibition) {
+            throw new SimpleUserErrorException("Die Ausstellung wurde nicht gefunden.");
+        }
+
+        return $this->getContentFrameView("Ausstellung", new ExhibitionView($exhibition, $pictures), true);
     }
 
     /**
@@ -79,16 +93,9 @@ class PicturesController extends BildergalerieController
      */
     public function picAction()
     {
+        $picId = $this->getIdRequestParam("id");
 
-        // get the picture id from the request
-        $get = $this->getRequest()->getGetParam();
-        if (array_key_exists("id", $get)) { // if we have the get param id its easy...
-            $picId = $get["id"];
-        } elseif (count($this->getRequest()->getQueryParams()) > 0) { // otherwise, our first parameter key is our id
-            $picId = $this->getRequest()->getQueryParams()[0];
-        }
-
-        if (!isset($picId)) {
+        if (!$picId) {
             throw new SimpleUserErrorException("Das Bild wurde nicht gefunden.");
         }
 
@@ -149,4 +156,25 @@ class PicturesController extends BildergalerieController
             $this->getRouter()->reLocateTo("pictures", "create");
         }
     }
+
+
+    /**
+     * Returns the id from the request. This may be the first parameter or
+     * value of the given key.
+     *
+     * @param $key
+     * @return bool|int ID or false if not given.
+     */
+    private function getIdRequestParam($key)
+    {
+        $get = $this->getRequest()->getGetParam();
+        if (array_key_exists($key, $get)) { // if we have the get param id its easy...
+            return $get[$key];
+        } elseif (count($this->getRequest()->getQueryParams()) > 0) { // otherwise, our first parameter key is our id
+            return $this->getRequest()->getQueryParams()[0];
+        }
+
+        return false;
+    }
+
 }

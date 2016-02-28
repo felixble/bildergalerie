@@ -1,68 +1,15 @@
-
+<?php /** @var ExhibitionView $this */ ?>
 <div class="container">
-    <h1>Masonry CSS with Bootstrap</h1>
+    <h1><?php echo $this->getExhibitionName(); ?></h1>
+    <p>
+        <?php echo $this->getExhibitionDescription(); ?>
+    </p>
     <div class="menu row">
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_1.jpg">
-            <div class="menu-category-name list-group-item">Category DANGER</div>
-        </div>
-
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_2.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_galery.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%; max-height: 100%;" src="uploads/1/hilde_1.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_1.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_galery.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_4.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_1.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_galery.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_3.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_galery.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_1.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_5.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_galery.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
-        <div class="menu-category list-group">
-            <img style="max-width: 100%" src="uploads/1/hilde_1.jpg">
-            <div class="menu-category-name list-group-item">Category</div>
-        </div>
+        <?php foreach ($this->getPictures() as $picture): ?>
+            <div class="menu-category list-group">
+                <img style="max-width: 100%" src="<?php echo $picture->getPath()->getThumbPath(); ?>">
+                <div class="menu-category-name list-group-item"><?php echo $picture->getTitle() ?></div>
+            </div>
+        <?php endforeach; ?>
     </div>
 </div>

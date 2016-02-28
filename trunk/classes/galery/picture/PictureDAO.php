@@ -16,7 +16,7 @@ class PictureDAO extends BaseMultiClientDAO
     const COL_PATH_ID = "path_id";
     const COL_CATEGORY_ID = "category_id";
     const COL_STYLE_ID = "style_id";
-    const COL_UID_UPLOADED_BY = "uid_uploaded_by";
+    const COL_UID_CREATED_BY = "uid_created_by";
     const COL_UID_OWNDER = "uid_owner";
     const COL_TITLE = "title";
     const COL_DESCRIPTION = "description";
@@ -62,7 +62,7 @@ class PictureDAO extends BaseMultiClientDAO
             self::COL_MANDANT_ID        => $this->mandant->getMandantId(),
             self::COL_PATH_ID           => $picture->getPath()->getId(),
             self::COL_CATEGORY_ID       => $picture->getCategory()->getCategoryId(),
-            self::COL_UID_UPLOADED_BY   => $picture->getUploadedBy()->getUserId(),
+            self::COL_UID_CREATED_BY   => $picture->getUploadedBy()->getUserId(),
             self::COL_UID_OWNDER        => $picture->getOwner()->getUserId(),
             self::COL_TITLE             => $picture->getTitle(),
             self::COL_DESCRIPTION       => $picture->getDescription(),
@@ -95,6 +95,18 @@ class PictureDAO extends BaseMultiClientDAO
             ->setConditions(array("id" => $picId));
 
         return $this->fetchRow($sqlBuilder);
+    }
+
+    public function getPicturesFromCategory($categoryId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery('SELECT t_pic.title, t_pic.category_id, t_path.path,t_path.thumb_path
+                        FROM galery_pictures AS t_pic
+                        LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
+                        WHERE category_id = :catId')
+            ->setConditions(array("catId" => $categoryId));
+
+        return $this->fetchRowMany($sqlBuilder);
     }
 
     protected function row2Object($row)
