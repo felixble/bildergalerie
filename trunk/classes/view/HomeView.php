@@ -9,9 +9,9 @@
 class HomeView extends View {
 
     /**
-     * @var CategoryTeaser[]
+     * @var Ausstellung_teasersView;
      */
-    private $catTeaser;
+    private $ausstellungTeaserView;
 
     /**
      * HomeView constructor.
@@ -21,17 +21,17 @@ class HomeView extends View {
         parent::__construct(null);
     }
 
-    public function setCategoryTeaser($catTeasers)
+    public function setCategoryTeaser($ausstellungTeaserView)
     {
-        $this->catTeaser = $catTeasers;
+        $this->ausstellungTeaserView = new Ausstellung_teasersView($ausstellungTeaserView, /*showFirstDivider*/ true);
     }
 
     /**
-     * @return CategoryTeaser[]
+     * @return Ausstellung_teasersView
      */
-    public function getCatTeaser()
+    public function getCatTeaserView()
     {
-        return $this->catTeaser;
+        return $this->ausstellungTeaserView;
     }
 
 }

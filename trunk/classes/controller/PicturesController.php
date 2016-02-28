@@ -48,8 +48,10 @@ class PicturesController extends BildergalerieController
 
     public function ausstellungenAction()
     {
-        $ausstellungenView = new AusstellungenView();
+        $categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
+        $teasers = $categoryDAO->getCategoryTeasers(false);
 
+        $ausstellungenView = new AusstellungenView($teasers);
         return $this->getContentFrameView("Ausstellungen", $ausstellungenView);
     }
 

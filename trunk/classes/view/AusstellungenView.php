@@ -9,9 +9,24 @@
 class AusstellungenView extends View
 {
 
-    public function getCustomCSS()
+    /**
+     * @var Ausstellung_teasersView
+     */
+    private $ausstellungTeasersView;
+
+    /**
+     * AusstellungenView constructor.
+     * @param CategoryTeaser[] $categoryTeasers
+     */
+    public function __construct(array $categoryTeasers)
     {
-        return "pinterest_style.css";
+        parent::__construct();
+        $this->ausstellungTeasersView = new Ausstellung_teasersView($categoryTeasers);
     }
 
+
+    public function getAusstellungTeasersView()
+    {
+        return $this->ausstellungTeasersView;
+    }
 }
