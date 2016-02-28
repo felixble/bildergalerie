@@ -9,5 +9,9 @@
 class AusstellungenView extends View
 {
 
+    public function getCustomCSS()
+    {
+        return "pinterest_style.css";
+    }
 
 }
