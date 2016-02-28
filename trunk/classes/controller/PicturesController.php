@@ -83,6 +83,9 @@ class PicturesController extends BildergalerieController
             throw new SimpleUserErrorException("Die Ausstellung wurde nicht gefunden.");
         }
 
+        $this->baseFactory->getSessionManager()
+            ->setBackTo(Router::getUrl("pictures", "exhibition", array("id" => $exhibitionId)));
+
         return $this->getContentFrameView("Ausstellung", new ExhibitionView($exhibition, $pictures), true);
     }
 
@@ -107,9 +110,10 @@ class PicturesController extends BildergalerieController
         }
 
 
-        $picDetailView = new Picture_detailView($picture);
+        $backTo = $this->baseFactory->getSessionManager()->getBackTo(/*refresh*/true);
+        $picDetailView = new Picture_detailView($picture, $backTo);
 
-        return $this->getContentFrameView("Details", $picDetailView, false); // TODO: title ??
+        return $this->getContentFrameView($picture->getCategory()->getCategoryName(), $picDetailView, false); // TODO: title ??
     }
 
     /**

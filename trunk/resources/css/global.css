@@ -3,3 +3,13 @@
 footer {
     margin-top: 30px;
 }
+
+
+/* on small devices the height does not matter
+ because we have only a single column */
+@media (min-width: 992px) {
+    div.exhibition_teaser_img {
+        max-height: 400px;
+        overflow: hidden;
+    }
+}

@@ -4,7 +4,9 @@ $this->getPicture()->setTags(array("Foto", "Hilde", "malen", "Pinsel", "Farbpale
 ?>
 <div class="row">
     <div class="col-lg-8">
-        <a href="#">Zurück zur Übersicht</a>
+        <?php if(null != $this->getBackTo()): ?>
+        <a href="<?php echo $this->getBackTo(); ?>">Zurück zur Übersicht</a>
+        <?php endif; ?>
         <img src="<?php echo $this->getPicture()->getPath()->getPath(); ?>"
              class="img-rounded img-responsive
               alt="<?php echo $this->getPicture()->getTitle(); ?>" width="1000" />

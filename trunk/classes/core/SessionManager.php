@@ -11,6 +11,8 @@ class SessionManager
     const USER_SEGMENT = "Bildergalerie_User_Information";
     const MANDANT_SEGMENT = "Bildergalerie_Mandant_Information";
     const ALERT_SEGMENT = "Bildergalerie_Alert";
+    const FLASH_SEGMENT = "Bildergalerie_FlashSegment";
+    const KEY_BACKTO = "backto";
     const SESS_LIFETIME = 1800; // 30 min
 
     /**
@@ -47,6 +49,26 @@ class SessionManager
     public function getAlertSegment()
     {
         return $this->session->getSegment(self::ALERT_SEGMENT);
+    }
+
+    private function getFlashSegment()
+    {
+        return $this->session->getSegment(self::FLASH_SEGMENT);
+    }
+
+    public function setBackTo($backTo)
+    {
+        $flashSegment = $this->getFlashSegment();
+        $flashSegment->setFlash("backto", $backTo);
+    }
+
+    public function getBackTo($refresh = false)
+    {
+        $backTo = $this->getFlashSegment()->getFlash("backto");
+        if ($refresh) {
+            $this->setBackTo($backTo);
+        }
+        return $backTo;
     }
 
 

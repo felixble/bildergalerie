@@ -81,7 +81,7 @@ class PictureDAO extends BaseMultiClientDAO
 
     /**
      * @param $picId
-     * @return null
+     * @return null|Picture
      */
     public function getPictureById($picId)
     {
@@ -100,7 +100,7 @@ class PictureDAO extends BaseMultiClientDAO
     public function getPicturesFromCategory($categoryId)
     {
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery('SELECT t_pic.title, t_pic.category_id, t_path.path,t_path.thumb_path
+            ->setQuery('SELECT t_pic.pic_id, t_pic.title, t_pic.category_id, t_path.path,t_path.thumb_path
                         FROM galery_pictures AS t_pic
                         LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
                         WHERE category_id = :catId')

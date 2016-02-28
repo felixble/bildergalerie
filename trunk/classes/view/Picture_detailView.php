@@ -14,10 +14,16 @@ class Picture_detailView extends View
      */
     private $picture;
 
-    public function __construct(Picture $picture)
+    /**
+     * @var null|string
+     */
+    private $backTo;
+
+    public function __construct(Picture $picture, $backTo = null)
     {
         parent::__construct(null);
         $this->picture = $picture;
+        $this->backTo = $backTo;
     }
 
     /**
@@ -26,6 +32,11 @@ class Picture_detailView extends View
     public function getPicture()
     {
         return $this->picture;
+    }
+
+    public function getBackTo()
+    {
+        return $this->backTo;
     }
 
 }
