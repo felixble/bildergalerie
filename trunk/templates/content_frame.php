@@ -112,8 +112,8 @@
     <footer class="modal-footer">
         <p class="pull-right"><a href="<?php echo $this->urlScrollTo(""); ?>">Back to top</a></p>
         <p class="pull-left">
-            &copy; 2015 <?php echo $this->getPageTitle(); ?> &middot;
-            Designed by Felix Blechschmitt &middot;
+            &copy; 2016 <?php echo $this->getPageTitle(); ?> &middot;
+            Designed by Marc Otting &amp; Felix Blechschmitt &middot;
             <a href="<?php echo $this->url("legalnotice"); ?>">Impressum</a> &middot;
             <?php if (!$this->isUserLoggedIn()): ?>
                 <a href="<?php echo $this->url("backend"); ?>">Login</a>

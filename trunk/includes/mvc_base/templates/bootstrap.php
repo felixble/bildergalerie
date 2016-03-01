@@ -16,6 +16,9 @@
 
     <!-- Custom Font TODO: make this customizable -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <!-- bootstrap-select lib (css part) TODO: customizable -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 
 
     <?php if($this->enableJQueryUI()): ?>
@@ -53,6 +56,10 @@
 <?php if($this->enableJQueryUI()): ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <?php endif; ?>
+
+<!-- bootstrap-select lib (css part) TODO: customizable -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
 
 
 <?php

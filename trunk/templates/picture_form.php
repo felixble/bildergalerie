@@ -55,19 +55,19 @@
             <div class="form-group">
                 <label for="category">Ausstellung</label>
                 <div class="input-group">
-                <select class="selectpicker form-control" name="category" id="category">
-                    <option value="-1">-- Bitte wählen --</option>
-                    <?php
-                    foreach ($this->getCategories() as $category) {
-                        echo "<option value='" . $category->getCategoryId() . "'>" . $category->getCategoryName() . "</option>";
-                    }
-                    ?>
-                </select>
-                <span class="input-group-btn">
-                    <button class="btn btn-success" type="button" id="add_category" title="Neue Ausstellung hinzufügen">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </button>
-                </span>
+                    <select class="selectpicker form-control" name="category" id="category" data-none-selected-text="-- Bitte wählen --" multiple required>
+                        <!--<option value="-1">-- Bitte wählen --</option>-->
+                        <?php
+                        foreach ($this->getCategories() as $category) {
+                            echo "<option value='" . $category->getCategoryId() . "'>" . $category->getCategoryName() . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="button" id="add_category" title="Neue Ausstellung hinzufügen">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                    </span>
                 </div>
             </div>
             <div class="form-group has-feedback">
