@@ -14,7 +14,6 @@ class PictureDAO extends BaseMultiClientDAO
     const COL_MANDANT_ID = "mandant_id";
     const COL_PICTURE_ID = "pic_id";
     const COL_PATH_ID = "path_id";
-    const COL_CATEGORY_ID = "category_id";
     const COL_STYLE_ID = "style_id";
     const COL_UID_CREATED_BY = "uid_created_by";
     const COL_UID_OWNDER = "uid_owner";
@@ -44,6 +43,11 @@ class PictureDAO extends BaseMultiClientDAO
     private $categoryDAO;
 
     /**
+     * @var PicCatMapDAO
+     */
+    private $picCatMapDAO;
+
+    /**
      * PictureDAO constructor.
      * @param \Simplon\Mysql\Mysql $dbConn
      * @param Mandant $mandant
@@ -53,6 +57,7 @@ class PictureDAO extends BaseMultiClientDAO
         parent::__construct($dbConn, $mandant);
         $this->picTagMapDAO = new PicTagMapDAO($dbConn, $mandant);
         $this->picPathDAO = new PicturePathDAO($dbConn, $mandant);
+        $this->picCatMapDAO = new PicCatMapDAO($dbConn, $mandant);
         $this->categoryDAO = new CategoryDAO($dbConn, $mandant);
     }
 
@@ -61,7 +66,6 @@ class PictureDAO extends BaseMultiClientDAO
         $data = array(
             self::COL_MANDANT_ID        => $this->mandant->getMandantId(),
             self::COL_PATH_ID           => $picture->getPath()->getId(),
-            self::COL_CATEGORY_ID       => $picture->getCategory()->getCategoryId(),
             self::COL_UID_CREATED_BY   => $picture->getUploadedBy()->getUserId(),
             self::COL_UID_OWNDER        => $picture->getOwner()->getUserId(),
             self::COL_TITLE             => $picture->getTitle(),
@@ -72,7 +76,8 @@ class PictureDAO extends BaseMultiClientDAO
         $picId = $this->create($data);
 
         if ($picId) {
-            // the pic was created successfully, so we can insert the tags too.
+            // the pic was created successfully, so we can insert the categories and tags too.
+            $this->picCatMapDAO->createEntries($picId, $picture->getCategories());
             $this->picTagMapDAO->createEntries($picId, $picture->getTags());
         }
 
@@ -87,23 +92,27 @@ class PictureDAO extends BaseMultiClientDAO
     {
         // when fetching a single picture by its id it stands to reason that we need all details of the picture.
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery('SELECT t_pic.*,t_path.path,t_path.thumb_path,t_path.date_uploaded,category_name
+            ->setQuery('SELECT t_pic.*,t_path.path,t_path.thumb_path,t_path.date_uploaded
                         FROM galery_pictures AS t_pic
                         LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
-                        LEFT JOIN galery_categories AS t_cat ON t_pic.category_id=t_cat.category_id
                         WHERE pic_id = :id;')
             ->setConditions(array("id" => $picId));
 
-        return $this->fetchRow($sqlBuilder);
+        $picture = $this->fetchRow($sqlBuilder);
+
+        // TODO: Fetch all related categories (=exhibitions)
+
+        return $picture;
     }
 
     public function getPicturesFromCategory($categoryId)
     {
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery('SELECT t_pic.pic_id, t_pic.title, t_pic.category_id, t_path.path,t_path.thumb_path
-                        FROM galery_pictures AS t_pic
+            ->setQuery('SELECT t_cat.cat_id, t_pic.pic_id, t_cat.pic_id, t_pic.title, t_path.path,t_path.thumb_path
+                        FROM galery_pic_category_map AS t_cat
+                        LEFT JOIN galery_pictures AS t_pic ON t_cat.pic_id=t_pic.pic_id
                         LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
-                        WHERE category_id = :catId')
+                        WHERE cat_id = :catId')
             ->setConditions(array("catId" => $categoryId));
 
         return $this->fetchRowMany($sqlBuilder);
@@ -112,12 +121,12 @@ class PictureDAO extends BaseMultiClientDAO
     protected function row2Object($row)
     {
         // create the picture object with all primitive data.
-        $picture = new Picture($this->mandant, $this->getValueOrNull($row, self::COL_PICTURE_ID), $this->getValueOrNull($row, self::COL_TITLE), null, $this->getValueOrNull($row, self::COL_DESCRIPTION), $this->getValueOrNull($row, self::COL_FORMAT), $this->getValueOrNull($row, self::COL_MATERIAL), $this->getValueOrNull($row, self::COL_PRICE), $this->getValueOrNull($row, self::COL_PRICE_PUBLIC), $this->getValueOrNull($row, self::COL_SALABLE), null, $this->getValueOrNull($row, self::COL_DATE_PRODUCED), $this->getValueOrNull($row, self::COL_DATE_CREATED), null, null, null, null);
+        $picture = new Picture($this->mandant, $this->getValueOrNull($row, self::COL_PICTURE_ID), $this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_DESCRIPTION), $this->getValueOrNull($row, self::COL_FORMAT), $this->getValueOrNull($row, self::COL_MATERIAL), $this->getValueOrNull($row, self::COL_PRICE), $this->getValueOrNull($row, self::COL_PRICE_PUBLIC), $this->getValueOrNull($row, self::COL_SALABLE), null, $this->getValueOrNull($row, self::COL_DATE_PRODUCED), $this->getValueOrNull($row, self::COL_DATE_CREATED), null, null, null, null);
 
         // set all complex objects now
 
         $picture->setPath($this->picPathDAO->row2Object($row));
-        $picture->setCategory($this->categoryDAO->row2Object($row));
+        //$picture->setCategory($this->categoryDAO->row2Object($row));
 
         return $picture;
     }

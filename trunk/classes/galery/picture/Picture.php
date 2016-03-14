@@ -81,9 +81,9 @@ class Picture
     private $owner;
 
     /**
-     * @var Category
+     * @var Category[]
      */
-    private $category;
+    private $categories;
 
     /**
      * @var ArtisticStyle
@@ -100,7 +100,6 @@ class Picture
      * @param Mandant $mandant
      * @param int|null $pictureId
      * @param string $title
-     * @param Category|int $category
      * @param string $description
      * @param string $format
      * @param string $material
@@ -115,7 +114,7 @@ class Picture
      * @param ArtisticStyle|int $artisticStyle
      * @param null|string[]|Tag[] $tags
      */
-    public function __construct(Mandant $mandant, $pictureId, $title = null, $category = null, $description = null, $format = null, $material = null, $price = null, $pricePublic = null, $salable = null, $path = null, $producedDate = null, $createdDate = null, User $uploadedBy = null, User $owner = null, $artisticStyle = null, $tags = null
+    public function __construct(Mandant $mandant, $pictureId, $title = null, $description = null, $format = null, $material = null, $price = null, $pricePublic = null, $salable = null, $path = null, $producedDate = null, $createdDate = null, User $uploadedBy = null, User $owner = null, $artisticStyle = null, $tags = null
     ) {
         $this->mandant = $mandant;
         $this->pictureId = $pictureId;
@@ -131,7 +130,6 @@ class Picture
         $this->setCreatedDate($createdDate);
         $this->uploadedBy = $uploadedBy;
         $this->owner = $owner;
-        $this->setCategory($category);
         $this->setArtisticStyle($artisticStyle);
         $this->setTags($tags);
     }
@@ -403,11 +401,14 @@ class Picture
     }
 
     /**
-     * @return Category
+     * @return Category[]
      */
-    public function getCategory()
+    public function getCategories()
     {
-        return $this->category;
+        if (!is_array($this->categories)) {
+            $this->categories = array();
+        }
+        return $this->categories;
     }
 
     /**
@@ -415,19 +416,28 @@ class Picture
      * @return Picture
      * @throws InvalidInputException
      */
-    public function setCategory($category)
+    public function addCategory($category)
     {
-        /*if (null == $category) { // TODO: we need another validation method, sometimes it is necessary to instantiate a picture object without setting the category
-            throw new InvalidInputException("category");
-        }*/
 
-        if ($category instanceof Category) {
-            $this->category = $category;
-        } else {
-            $this->category = new Category($this->getMandant(), $category);
+        if (!is_array($this->categories)) {
+            $this->categories = array();
         }
 
+        if ($category instanceof Category) {
+            $newCategory = $category;
+        } else {
+            $newCategory = new Category($this->getMandant(), $category);
+        }
+        $this->categories[] = $newCategory;
+
         return $this;
+    }
+
+    public function addCategories($categories)
+    {
+        foreach ($categories as $category) {
+            $this->addCategory($category);
+        }
     }
 
     /**

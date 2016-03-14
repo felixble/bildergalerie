@@ -55,7 +55,7 @@
             <div class="form-group">
                 <label for="category">Ausstellung</label>
                 <div class="input-group">
-                    <select class="selectpicker form-control" name="category" id="category" data-none-selected-text="-- Bitte wählen --" multiple required>
+                    <select class="selectpicker form-control" name="category[]" id="category" data-none-selected-text="-- Bitte wählen --" multiple required>
                         <!--<option value="-1">-- Bitte wählen --</option>-->
                         <?php
                         foreach ($this->getCategories() as $category) {

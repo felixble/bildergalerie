@@ -113,7 +113,8 @@ class PicturesController extends BildergalerieController
         $backTo = $this->baseFactory->getSessionManager()->getBackTo(/*refresh*/true);
         $picDetailView = new Picture_detailView($picture, $backTo);
 
-        return $this->getContentFrameView($picture->getCategory()->getCategoryName(), $picDetailView, false); // TODO: title ??
+        // TODO: Set main category as page title
+        return $this->getContentFrameView("", $picDetailView, false); // TODO: title ??
     }
 
     /**
@@ -144,8 +145,8 @@ class PicturesController extends BildergalerieController
         $success = false;
         try {
             // TODO: validate user input -> throw exception in setters of picture ?!
-            $picture = new Picture($this->mandant, null, $post["title"], $post["category"], $post["description"], null, $post["material"], null, null, null, $post["picPathId"], null, null, $uploadedBy, $owner, null, $post["tags"]);
-
+            $picture = new Picture($this->mandant, null, $post["title"], $post["description"], null, $post["material"], null, null, null, $post["picPathId"], null, null, $uploadedBy, $owner, null, $post["tags"]);
+            $picture->addCategories($post["category"]);
             // store the new picture in the database
             $this->pictureDAO->createPicture($picture);
             $success = true;
