@@ -98,9 +98,14 @@ class PictureDAO extends BaseMultiClientDAO
                         WHERE pic_id = :id;')
             ->setConditions(array("id" => $picId));
 
+        /** @var Picture $picture */
         $picture = $this->fetchRow($sqlBuilder);
 
         // TODO: Fetch all related categories (=exhibitions)
+
+        // Fetch all related tags
+        $tags = $this->picTagMapDAO->fetchTagsForPic($picId);
+        $picture->setTags($tags);
 
         return $picture;
     }

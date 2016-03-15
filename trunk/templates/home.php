@@ -8,7 +8,7 @@
         <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies
             vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus
             magna.</p>
-        <p><a class="btn btn-default" href="#" role="button">Ausstellungen anschauen &raquo;</a></p>
+        <p><a class="btn btn-default" href="<?php echo $this->url("pictures", "exhibitions"); ?>" role="button">Ausstellungen anschauen &raquo;</a></p>
     </div><!-- /.col-lg-4 -->
     <div class="col-sm-4">
         <img class="img-circle" src="resources/img/hilde_profile.jpg" alt="Hilde, Die Künstlerin" width="140"

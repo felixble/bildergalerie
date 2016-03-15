@@ -1,6 +1,6 @@
 <?php /** @var Picture_detailView $this */ ?>
 <?php
-$this->getPicture()->setTags(array("Foto", "Hilde", "malen", "Pinsel", "Farbpalette"));
+//$this->getPicture()->setTags(array("Foto", "Hilde", "malen", "Pinsel", "Farbpalette"));
 ?>
 <div class="row">
     <div class="col-lg-8">

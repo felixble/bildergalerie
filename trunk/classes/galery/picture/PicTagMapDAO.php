@@ -55,6 +55,25 @@ class PicTagMapDAO extends BaseDAO
     }
 
     /**
+     * Fetches all tags related to the
+     * given ID of a pictures.
+     *
+     * @param $picId int the id of the picture
+     * @return Tag[]
+     */
+    public function fetchTagsForPic($picId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery("SELECT t_map.tag_id, t_tag.tag_name
+                        FROM galery_pic_tag_map AS t_map
+                        LEFT JOIN galery_tag AS t_tag ON t_map.tag_id=t_tag.tag_id
+                        WHERE t_map.pic_id = :id;")
+            ->setConditions(array("id" => $picId));
+        // caution: we use the tagDAO-Object to fetch the rows because we want a tag array as result
+        return $this->tagDAO->fetchRowMany($sqlBuilder);
+    }
+
+    /**
      * @return string table name.
      */
     protected function getTableName()
