@@ -102,9 +102,12 @@ class PictureDAO extends BaseMultiClientDAO
         $picture = $this->fetchRow($sqlBuilder);
 
         // TODO: Fetch all related categories (=exhibitions)
+        // Fetch all related categories (=exhibitions)
+        $categories = $this->categoryDAO->getCategoriesForPic($picId);
+        $picture->addCategories($categories);
 
         // Fetch all related tags
-        $tags = $this->picTagMapDAO->fetchTagsForPic($picId);
+        $tags = $this->picTagMapDAO->getTagsForPic($picId);
         $picture->setTags($tags);
 
         return $picture;
@@ -131,7 +134,6 @@ class PictureDAO extends BaseMultiClientDAO
         // set all complex objects now
 
         $picture->setPath($this->picPathDAO->row2Object($row));
-        //$picture->setCategory($this->categoryDAO->row2Object($row));
 
         return $picture;
     }

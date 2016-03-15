@@ -71,5 +71,20 @@ class SessionManager
         return $backTo;
     }
 
+    public function setFlash($key, $value)
+    {
+        $flashSegment = $this->getFlashSegment();
+        $flashSegment->setFlash($key, $value);
+    }
+
+    public function getFlash($key, $refresh = false)
+    {
+        $value = $this->getFlashSegment()->getFlash($key);
+        if ($refresh) {
+            $this->setFlash($key, $value);
+        }
+        return $value;
+    }
+
 
 }

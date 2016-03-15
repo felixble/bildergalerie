@@ -441,6 +441,22 @@ class Picture
     }
 
     /**
+     * Returns the category object identified by the given id
+     * or null, iff not given.
+     *
+     * @param $categoryId int id of the exhibition (=category)
+     * @return Category|null
+     */
+    public function getCategoryById($categoryId)
+    {
+        foreach ($this->categories as $category) {
+            if ($categoryId == $category->getCategoryId()) {
+                return $category;
+            }
+        }
+    }
+
+    /**
      * @return ArtisticStyle
      */
     public function getArtisticStyle()

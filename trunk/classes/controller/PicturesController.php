@@ -85,6 +85,8 @@ class PicturesController extends BildergalerieController
 
         $this->baseFactory->getSessionManager()
             ->setBackTo(Router::getUrl("pictures", "exhibition", array("id" => $exhibitionId)));
+        $this->baseFactory->getSessionManager()
+            ->setFlash("currentExhibition", $exhibitionId);
 
         return $this->getContentFrameView("Ausstellung", new ExhibitionView($exhibition, $pictures), true);
     }
@@ -109,12 +111,20 @@ class PicturesController extends BildergalerieController
             throw new SimpleUserErrorException("Das Bild wurde nicht gefunden.");
         }
 
+        // currentExhibition = the exhibition where the user comes from
+        $currentExhibition = $this->baseFactory->getSessionManager()->getFlash("currentExhibition", /*refresh*/true);
+        $pageTitle = "Details";
+        if (null != $currentExhibition && is_numeric($currentExhibition)) {
+            $currentExhibitionObj = $picture->getCategoryById($currentExhibition);
+            $pageTitle = $currentExhibitionObj->getCategoryName();
+        }
+
 
         $backTo = $this->baseFactory->getSessionManager()->getBackTo(/*refresh*/true);
         $picDetailView = new Picture_detailView($picture, $backTo);
 
         // TODO: Set main category as page title
-        return $this->getContentFrameView("", $picDetailView, false); // TODO: title ??
+        return $this->getContentFrameView($pageTitle, $picDetailView, false); // TODO: title ??
     }
 
     /**

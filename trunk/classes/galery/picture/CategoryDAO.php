@@ -80,6 +80,18 @@ class CategoryDAO extends BaseMultiClientDAO
 
     }
 
+    public function getCategoriesForPic($picId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery("SELECT t_map.cat_id, t_cat.category_name, t_cat.category_id
+                        FROM galery_pic_category_map AS t_map
+                        LEFT JOIN galery_categories AS t_cat ON t_map.cat_id = t_cat.category_id
+                        WHERE t_map.pic_id = :id")
+            ->setConditions(array('id' => $picId));
+
+        return $this->fetchRowMany($sqlBuilder);
+    }
+
     /**
      * Creates a new category entry.
      *

@@ -61,7 +61,7 @@ class PicTagMapDAO extends BaseDAO
      * @param $picId int the id of the picture
      * @return Tag[]
      */
-    public function fetchTagsForPic($picId)
+    public function getTagsForPic($picId)
     {
         $sqlBuilder = $this->getSqlBuilder()
             ->setQuery("SELECT t_map.tag_id, t_tag.tag_name
