@@ -114,6 +114,7 @@ class PicturesController extends BildergalerieController
         // currentExhibition = the exhibition where the user comes from
         $currentExhibition = $this->baseFactory->getSessionManager()->getFlash("currentExhibition", /*refresh*/true);
         $pageTitle = "Details";
+        $currentExhibitionObj = null;
         if (null != $currentExhibition && is_numeric($currentExhibition)) {
             $currentExhibitionObj = $picture->getCategoryById($currentExhibition);
             $pageTitle = $currentExhibitionObj->getCategoryName();
@@ -121,7 +122,7 @@ class PicturesController extends BildergalerieController
 
 
         $backTo = $this->baseFactory->getSessionManager()->getBackTo(/*refresh*/true);
-        $picDetailView = new Picture_detailView($picture, $backTo);
+        $picDetailView = new Picture_detailView($picture, $backTo, $currentExhibitionObj);
 
         // TODO: Set main category as page title
         return $this->getContentFrameView($pageTitle, $picDetailView, false); // TODO: title ??

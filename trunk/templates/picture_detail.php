@@ -35,6 +35,16 @@
                 <h4>Beschreibung</h4>
                 <p><?php echo $this->getPicture()->getDescription(); ?></p>
                 <?php endif; ?>
+
+                <?php if(0 != count($this->getOtherCategories())): ?>
+                <h4>Ebenso ausgestellt in</h4>
+                <ul>
+                    <?php foreach ($this->getOtherCategories() as $category): ?>
+                    <li>
+                        <a href="<?php echo $this->url("pictures", "exhibition", array("id"=>$category->getCategoryId())); ?>"><?php echo $category->getCategoryName(); ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+                <?php endif; ?>
             </div>
         </div>
     </div>
