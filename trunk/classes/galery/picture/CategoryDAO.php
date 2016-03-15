@@ -100,13 +100,33 @@ class CategoryDAO extends BaseMultiClientDAO
      */
     public function createCategory(Category $category)
     {
-        $data = array(
+        $data = $this->object2Array($category);
+
+        return $this->create($data);
+    }
+
+    /**
+     * @param Category $category
+     * @return bool|null null iff nothing has been updated
+     */
+    public function updateCategory(Category $category)
+    {
+        $data = $this->object2Array($category);
+
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setConditions(array(self::COL_CATEGORY_ID => $category->getCategoryId()))
+            ->setData($data);
+
+        return $this->sqlManager->update($sqlBuilder);
+    }
+
+    protected function object2Array(Category $category)
+    {
+        return array(
             self::COL_MANDANT_ID            => $this->mandant->getMandantId(),
             self::COL_CATEGORY_NAME         => $category->getCategoryName(),
             self::COL_CATEGORY_DESCRIPTION  => $category->getDescription()
         );
-
-        return $this->create($data);
     }
 
     /**

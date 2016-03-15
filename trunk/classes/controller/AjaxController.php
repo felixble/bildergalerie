@@ -116,6 +116,7 @@ class AjaxController extends BildergalerieController
 
         $get = $this->getRequest()->getGetParam();
         $descr = null;
+        $editId = null;
         if (array_key_exists("name", $get)) {
             $name = $get["name"];
         } else {
@@ -125,16 +126,28 @@ class AjaxController extends BildergalerieController
             $descr = $get["description"];
         }
 
-        $category = new Category($this->mandant, null, $name, $descr);
+        if (array_key_exists("editId", $get)) {
+            $editId = $get["editId"];
+        }
+
+        $category = new Category($this->mandant, $editId, $name, $descr); // editId == null if we should create a new one
 
         $categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
-        $catId = $categoryDAO->createCategory($category);
+
+        if (null != $editId) {
+            $result = $categoryDAO->updateCategory($category);
+            // TODO: what shall we do with the result ?!
+            $catId = $editId;
+        } else {
+            //$catId = $categoryDAO->createCategory($category);
+        }
         if ($catId == false) {
             return array("status" => "ERR", "errMsg" => "Kategorie konnte nicht angelegt werden");
         }
 
         $resultArray["category_id"] = $catId;
         $resultArray["category_name"] = $name;
+        $resultArray["category_description"] = $descr;
 
         return json_encode($resultArray);
     }

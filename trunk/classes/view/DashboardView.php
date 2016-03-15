@@ -32,4 +32,11 @@ class DashboardView extends View
         return $this->categories;
     }
 
+
+
+    public function getCustomJS()
+    {
+        return array("add_category_dialog.js");
+    }
+
 }
