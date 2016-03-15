@@ -12,6 +12,23 @@ class BackendController extends BildergalerieController
 {
 
     /**
+     * @var Mandant
+     */
+    private $mandant;
+
+    /**
+     * @var CategoryDAO
+     */
+    private $categoryDAO;
+
+    public function onCreate(Router $router)
+    {
+        parent::onCreate($router);
+        $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
+        $this->categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
+    }
+
+    /**
      * Default action which will be executed
      * if no specific action is given.
      *
@@ -23,6 +40,14 @@ class BackendController extends BildergalerieController
     public function indexAction()
     {
         // TODO: Implement indexAction() method.
-        $this->getRouter()->reRouteTo("home", "index");
+        $this->getRouter()->reRouteTo("backend", "dashboard");
+    }
+
+    public function dashboardAction()
+    {
+        // lade alle Ausstellungen
+        $categories = $this->categoryDAO->getAllCategories();
+
+        return $this->getContentFrameView("Dashboard", new DashboardView($categories), false);
     }
 }

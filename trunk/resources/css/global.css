@@ -8,6 +8,21 @@ footer {
     margin-top: 30px;
 }
 
+.table-truncate {
+    table-layout: fixed;
+}
+
+.table-truncate td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+td.table-no-truncate {
+    white-space: normal;
+    overflow: visible;
+}
+
 
 /* on small devices the height does not matter
  because we have only a single column */
