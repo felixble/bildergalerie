@@ -44,10 +44,14 @@ $(function() {
 
 
     var ajaxAddCategory = function (name, descr, editId, success) {
+        var dataObj = {'name': name, 'description': descr};
+        if (editId != -1) {
+            dataObj.editId = editId;
+        }
         $.ajax({
             type: "get",
             url: "ajax/addCategory",
-            data: {'name': name, 'description': descr, 'editId' : editId},
+            data: dataObj,
             success: success
         });
     };
