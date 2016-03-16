@@ -139,7 +139,7 @@ class AjaxController extends BildergalerieController
             // TODO: what shall we do with the result ?!
             $catId = $editId;
         } else {
-            //$catId = $categoryDAO->createCategory($category);
+            $catId = $categoryDAO->createCategory($category);
         }
         if ($catId == false) {
             return array("status" => "ERR", "errMsg" => "Kategorie konnte nicht angelegt werden");

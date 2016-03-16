@@ -5,6 +5,9 @@
 function onSuccessPicForm(id, name, description) {
     var el = $('#category');
     var selected_arr = el.selectpicker('val');
+    if (null==selected_arr){
+        selected_arr = [];
+    }
     selected_arr.push(id);
 
     el
