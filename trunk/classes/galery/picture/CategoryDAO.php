@@ -49,7 +49,12 @@ class CategoryDAO extends BaseMultiClientDAO
      * @return array
      */
     public function getCategoryTeasers($limit = 3) {
-        $add_limit = (is_numeric($limit)) ? " LIMIT :limit" : "";
+        $add_limit = "";
+        $conditions = array("m_id" => $this->mandant->getMandantId());
+        if (is_numeric($limit)) {
+            $add_limit = " LIMIT :limit";
+            $conditions['limit'] = $limit;
+        }
         $sqlBuilder = $this->getSqlBuilder()
             ->setQuery('SELECT * FROM bildergalerie.galery_categories AS t_cat
                         LEFT JOIN
@@ -57,8 +62,9 @@ class CategoryDAO extends BaseMultiClientDAO
                             LEFT JOIN galery_pictures AS t_pic ON t_pic.pic_id=t_map.pic_id
                             ORDER BY RAND()) AS t_pic ON t_pic.cat_id=t_cat.category_id
                         LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
+                        WHERE t_cat.mandant_id =:m_id
                         GROUP BY t_cat.category_id' . $add_limit . ';')
-            ->setConditions(array('limit' => $limit));
+            ->setConditions($conditions);
 
         $rows = $this->sqlManager->fetchRowMany($sqlBuilder);
         $result = array();
