@@ -29,11 +29,7 @@
                 </a>
                 <!-- TODO: Remove exhibition -->
                 <a href=""
-                   title="Ausstellung entfernen"
-                   class="open_category_dialog"
-                   data-id="<?php echo $id; ?>"
-                   data-get-values="getEditValuesDashboard"
-                   data-on-success="onSuccessDashboard">
+                   title="Ausstellung entfernen">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </a>
             </td>
