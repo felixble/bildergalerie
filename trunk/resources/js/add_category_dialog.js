@@ -23,6 +23,13 @@ function onSuccessDashboard(id, name, description) {
 
 }
 
+function getEditValuesDashboard(id) {
+    return {
+        name: $('#exhibition_name_' + id).html(),
+        description: $('#exhibition_descr_' + id).html()
+    };
+}
+
 $(function() {
     var dialog, dialog_element, form, editCategory, saveBtnTitle, successFunction,
         catId = -1,
@@ -102,14 +109,14 @@ $(function() {
         if ($(this).attr("data-id")) {
             catId = $(this).attr("data-id");
         }
-        if ($(this).attr("data-category-name")) {
-            name.val($(this).attr("data-category-name"));
-        }
-        if ($(this).attr("data-category-description")) {
-            descr.val($(this).attr("data-category-description"));
-        }
 
-        // TODO: if we edit a second time (without realod) the data fields are not up to date...
+        // If a get-values function is provided we will call it and pre-set the form values
+        if (catId != -1 && $(this).attr("data-get-values")) {
+            var getValuesFunction = window[$(this).attr("data-get-values")];
+            var values = getValuesFunction(catId)
+            name.val(values.name);
+            descr.val(values.description);
+        }
 
         // very dirty approach...
         successFunction = window[$(this).attr("data-on-success")];

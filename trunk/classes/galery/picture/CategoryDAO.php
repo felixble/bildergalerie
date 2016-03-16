@@ -28,12 +28,16 @@ class CategoryDAO extends BaseMultiClientDAO
 
     /**
      * Returns all categories for the current mandant.
+     * Containing the number of related pictures.
      *
      * @return Category[]
      */
     public function getAllCategories() {
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery('SELECT * FROM galery_categories WHERE mandant_id =:m_id')
+            ->setQuery('SELECT t_cat.*, COUNT(t_map.pic_id) AS number_related_pictures FROM galery_categories AS t_cat
+                        LEFT JOIN galery_pic_category_map AS t_map ON t_cat.category_id=t_map.cat_id
+                        WHERE mandant_id =:m_id
+                        GROUP BY category_id')
             ->setConditions(array("m_id" => $this->mandant->getMandantId()));
 
         return $this->fetchRowMany($sqlBuilder);
@@ -138,11 +142,14 @@ class CategoryDAO extends BaseMultiClientDAO
      */
     protected function row2Object($row)
     {
+        $relatedPictures = $this->getValueOrNull($row, "number_related_pictures");
+
         return new Category(
             $this->mandant,
             $this->getValueOrNull($row, self::COL_CATEGORY_ID),
             $this->getValueOrNull($row, self::COL_CATEGORY_NAME),
-            $this->getValueOrNull($row, self::COL_CATEGORY_DESCRIPTION)
+            $this->getValueOrNull($row, self::COL_CATEGORY_DESCRIPTION),
+            $relatedPictures
         );
     }
 

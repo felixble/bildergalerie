@@ -7,7 +7,8 @@
     <thead>
         <tr>
             <th class="col-xs-3">Titel/Thema</th>
-            <th class="col-xs-8">Beschreibung</th>
+            <th class="col-xs-7">Beschreibung</th>
+            <th class="col-xs-1">#Gemälde</th>
             <th class="col-xs-1"></th>
         </tr>
     </thead>
@@ -16,14 +17,24 @@
         <tr>
             <td id="exhibition_name_<?php echo $id; ?>" class="table-no-truncate"><?php echo $category->getCategoryName(); ?></td>
             <td id="exhibition_descr_<?php echo $id; ?>"><?php echo $category->getDescription(); ?></td>
-            <td class="text-right">
+            <td class="text-center"><?php echo $category->getNumberPictures(); ?></td>
+            <td class="text-right table-no-truncate">
                 <a href=""
+                   title="Ausstellung bearbeiten"
                    class="open_category_dialog"
                     data-id="<?php echo $id; ?>"
-                    data-category-name="<?php echo $category->getCategoryName(); ?>"
-                    data-category-description="<?php echo $category->getDescription(); ?>"
+                    data-get-values="getEditValuesDashboard"
                     data-on-success="onSuccessDashboard">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </a>
+                <!-- TODO: Remove exhibition -->
+                <a href=""
+                   title="Ausstellung entfernen"
+                   class="open_category_dialog"
+                   data-id="<?php echo $id; ?>"
+                   data-get-values="getEditValuesDashboard"
+                   data-on-success="onSuccessDashboard">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </a>
             </td>
         </tr>

@@ -30,18 +30,29 @@ class Category
     private $description;
 
     /**
+     * Number of related pictures
+     * null if unknown.
+     *
+     * @var int|null
+     */
+    private $numberRelatedPictures = null;
+
+    /**
      * Category constructor.
      * @param Mandant $mandant
      * @param int|null $categoryId
      * @param string $categoryName
      * @param string $description
+     * @param null|int $numberRelatedPictures
      */
-    public function __construct(Mandant $mandant, $categoryId, $categoryName = null, $description = null)
+    public function __construct(Mandant $mandant, $categoryId, $categoryName = null, $description = null,
+                                $numberRelatedPictures = null)
     {
         $this->mandant = $mandant;
         $this->categoryId = $categoryId;
         $this->categoryName = $categoryName;
         $this->description = $description;
+        $this->numberRelatedPictures = $numberRelatedPictures;
     }
 
     /**
@@ -114,6 +125,28 @@ class Category
     {
         $this->description = $description;
         return $this;
+    }
+
+    /**
+     * Sets the number of pictures related
+     * to this category.
+     *
+     * @param int|null $numberRelatedPictures
+     */
+    public function setNumberPictures($numberRelatedPictures)
+    {
+        $this->numberRelatedPictures = $numberRelatedPictures;
+    }
+
+    /**
+     * Gets the number of pictures related
+     * to this category.
+     * @return int|null number of related pictures
+     *                  or null if unknown.
+     */
+    public function getNumberPictures()
+    {
+        return $this->numberRelatedPictures;
     }
 
 }
