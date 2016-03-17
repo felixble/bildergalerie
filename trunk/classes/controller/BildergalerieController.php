@@ -48,4 +48,19 @@ abstract class BildergalerieController extends Controller
         return $this->getRouter()->getAlertManager();
     }
 
+    /**
+     * Gets the value of the given key in
+     * the given attribute or null if the array
+     * does not contain such a key.
+     *
+     * @param $key
+     * @param $search
+     * @return null|string value of the key or null if the array
+     *                     does not contain such a key.
+     */
+    protected function getValueOrNull($key, $search)
+    {
+        return (array_key_exists($key, $search)) ? $search[$key] : null;
+    }
+
 }

@@ -153,14 +153,17 @@ class PicturesController extends BildergalerieController
         $uploadedBy = $this->baseFactory->getAuthenticator()->getLoggedInUser();
         $owner = $uploadedBy;
 
-        $tags = (array_key_exists("tags", $post)) ? $post["tags"] : null;
-        $descr = (array_key_exists("description", $post)) ? $post["description"] : null;
+        $tags = $this->getValueOrNull("tags", $post);
+        $descr = $this->getValueOrNull("description", $post);
+        $material = $this->getValueOrNull("material", $post);
+        $picPathId = $this->getValueOrNull("picPathId", $post);
+        $category = $this->getValueOrNull("category", $post);
 
         $success = false;
         try {
-            // TODO: validate user input -> throw exception in setters of picture ?!
-            $picture = new Picture($this->mandant, null, $post["title"], $descr, null, $post["material"], null, null, null, $post["picPathId"], null, null, $uploadedBy, $owner, null, $tags);
-            $picture->addCategories($post["category"]);
+            // TODO: validate user input -> throw exception in setters of picture ?! - Maybe not the best idea...
+            $picture = new Picture($this->mandant, null, $post["title"], $descr, null, $material, null, null, null, $picPathId, null, null, $uploadedBy, $owner, null, $tags);
+            $picture->addCategories($category);
             // store the new picture in the database
             $this->pictureDAO->createPicture($picture);
             $success = true;
