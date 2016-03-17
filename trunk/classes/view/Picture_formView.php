@@ -11,6 +11,27 @@ class Picture_formView extends View
 
     private $categories;
 
+    /**
+     * Picture which contains the form values
+     * to display.
+     *
+     * @var Picture
+     */
+    private $picture;
+
+    private $editMode = false;
+
+    /**
+     * Picture_formView constructor.
+     * @param bool $editMode
+     */
+    public function __construct($editMode)
+    {
+        parent::__construct();
+        $this->editMode = $editMode;
+    }
+
+
     public function getCustomJS()
     {
         return array("libs/typeahead.bundle.min.js", "picture_uploader.js", "libs/bootstrap-tagsinput.js",
@@ -37,6 +58,28 @@ class Picture_formView extends View
     {
         $this->categories = $categories;
     }
+
+    public function setPicture($currentPicture)
+    {
+        $this->picture = $currentPicture;
+    }
+
+    /**
+     * @return Picture
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEditMode()
+    {
+        return $this->editMode;
+    }
+
 
 
 

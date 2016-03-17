@@ -24,6 +24,14 @@ class PicturesController extends BildergalerieController
      */
     private $mandant;
 
+    /**
+     * Current picture which should be displayed
+     * in any way.
+     *
+     * @var Picture
+     */
+    private $currentPicture;
+
     public function onCreate(Router $router)
     {
         parent::onCreate($router);
@@ -98,14 +106,8 @@ class PicturesController extends BildergalerieController
      */
     public function picAction()
     {
-        $picId = $this->getIdRequestParam("id");
-
-        if (!$picId) {
-            throw new SimpleUserErrorException("Das Bild wurde nicht gefunden.");
-        }
-
-        $picture = $this->pictureDAO->getPictureById($picId);
-
+        $this->setCurrentPictureFromRequest();
+        $picture = $this->currentPicture;
 
         if (null == $picture) {
             throw new SimpleUserErrorException("Das Bild wurde nicht gefunden.");
@@ -128,27 +130,54 @@ class PicturesController extends BildergalerieController
         return $this->getContentFrameView($pageTitle, $picDetailView, false); // TODO: title ??
     }
 
+    public function editAction()
+    {
+        // check if form was submitted
+        if (array_key_exists("add_pic_submit", $this->getRequest()->getPostParam())) {
+            $editPicId = $this->getIdRequestParam("id", true);
+            $this->processCreatePicture($editPicId);
+        } else {
+            $this->setCurrentPictureFromRequest();
+        }
+
+        $picFormView = $this->getPictureFormView(true);
+        return $this->getContentFrameView("Bild bearbeiten", $picFormView, false);
+    }
+
     /**
      * @return BootstrapView
      * @AuthRequired
      */
     public function createAction()
     {
-        // check if form is submitted
+        // check if form was submitted
         if (array_key_exists("add_pic_submit", $this->getRequest()->getPostParam())) {
             $this->processCreatePicture();
         }
 
-        $picFormView = new Picture_formView();
-
-        // get Categories
-        $picFormView->setCategories($this->categoryDAO->getAllCategories());
+        $picFormView = $this->getPictureFormView();
 
         return $this->getContentFrameView("Bild hinzufügen", $picFormView, false);
     }
 
-    private function processCreatePicture()
+    private function getPictureFormView($createMode = false)
     {
+        $picFormView = new Picture_formView($createMode);
+
+        if (null != $this->currentPicture) {
+            $picFormView->setPicture($this->currentPicture);
+        }
+
+        // get Categories
+        $picFormView->setCategories($this->categoryDAO->getAllCategories());
+        return $picFormView;
+    }
+
+    private function processCreatePicture($editPicId = null)
+    {
+        $edit = (null != $editPicId);
+        if ($edit) return; // TODO: implement update picture data
+
         $post = $this->getRequest()->getPostParam();
         $uploadedBy = $this->baseFactory->getAuthenticator()->getLoggedInUser();
         $owner = $uploadedBy;
@@ -160,8 +189,9 @@ class PicturesController extends BildergalerieController
         $category = $this->getValueOrNull("category", $post);
 
         $success = false;
+        $picture = null;
         try {
-            // TODO: validate user input -> throw exception in setters of picture ?! - Maybe not the best idea...
+            // TODO: validate user input (-> throw exception in setters of picture ?! - Maybe not the best idea...)
             $picture = new Picture($this->mandant, null, $post["title"], $descr, null, $material, null, null, null, $picPathId, null, null, $uploadedBy, $owner, null, $tags);
             $picture->addCategories($category);
             // store the new picture in the database
@@ -170,6 +200,9 @@ class PicturesController extends BildergalerieController
         } catch (UserException $e) {
             $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> " . $e->getMessage());
             // TODO: Set form values from request!
+            if (null != $picture) {
+                $this->currentPicture = $picture;
+            }
         }
 
         if ($success) {
@@ -179,21 +212,32 @@ class PicturesController extends BildergalerieController
         }
     }
 
+    private function setCurrentPictureFromRequest()
+    {
+        $this->currentPicture = $this->pictureDAO->getPictureById($this->getIdRequestParam("id", true));
+    }
+
 
     /**
      * Returns the id from the request. This may be the first parameter or
      * value of the given key.
      *
      * @param $key
+     * @param bool $throwExceptionIfNotGiven
      * @return bool|int ID or false if not given.
+     * @throws SimpleUserErrorException
      */
-    private function getIdRequestParam($key)
+    private function getIdRequestParam($key, $throwExceptionIfNotGiven = false)
     {
         $get = $this->getRequest()->getGetParam();
         if (array_key_exists($key, $get)) { // if we have the get param id its easy...
             return $get[$key];
         } elseif (count($this->getRequest()->getQueryParams()) > 0) { // otherwise, our first parameter key is our id
             return $this->getRequest()->getQueryParams()[0];
+        }
+
+        if ($throwExceptionIfNotGiven) {
+            throw new SimpleUserErrorException("Das Bild wurde nicht gefunden.");
         }
 
         return false;

@@ -414,7 +414,6 @@ class Picture
     /**
      * @param Category|int $category
      * @return Picture
-     * @throws InvalidInputException
      */
     public function addCategory($category)
     {
@@ -454,6 +453,11 @@ class Picture
                 return $category;
             }
         }
+    }
+
+    public function hasCategory(Category $category)
+    {
+        return null != $this->getCategoryById($category->getCategoryId());
     }
 
     /**

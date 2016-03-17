@@ -1,4 +1,16 @@
-<?php /** @var $this Picture_formView*/ ?>
+<?php
+/** @var $this Picture_formView*/
+$pic = $this->getPicture();
+$title = (null == $pic) ? "" : $pic->getTitle();
+$categories = (null == $pic) ? "" : $pic->getCategories();
+$material = (null == $pic) ? "" : $pic->getMaterial();
+$description = (null == $pic) ? "" : $pic->getDescription();
+$tags = (null == $pic) ? array() : $pic->getTags();
+$picPath = (null == $pic) ? "" : $pic->getPath()->getPath();
+$picThumbPath = (null == $pic) ? "" : $pic->getPath()->getThumbPath();
+$picPathId = (null == $pic) ? ":" : $pic->getPath()->getId();
+
+?>
 
 <!-- Dialog Content -->
 <?php echo new Edit_exhibition_dialogView(); ?>
@@ -16,14 +28,18 @@
         </div>
         <div class="form-group">
             <label for="tags">Schlagwörter, damit das Bild besser gefunden wird</label>
-            <select multiple data-role="tagsinput" id="tags" name="tags[]" class="tags_typeahead"></select>
+            <select multiple data-role="tagsinput" id="tags" name="tags[]" class="tags_typeahead">
+                <?php foreach($tags as $tag): ?>
+                    <option value="<?php echo $tag->getTagName(); ?>"><?php echo $tag->getTagName(); ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
-        <div class="form-group">
+        <div class="form-group" style="display: <?php echo (!$this->isEditMode()) ? "block" : "none"; ?>;">
             <label for="uploadFile">Upload</label>
-            <input type="file" id="uploadFile" name="uploadFile">
+            <input type="file" id="uploadFile" name="uploadFile" value="<?php echo $picPath; ?>">
         </div>
         <div style="display: inline-block;">
-            <img style="display: none;" src="" id="uploadPreview" width="200">
+            <img style="display: <?php echo ($this->isEditMode()) ? "block" : "none"; ?>;" src="<?php echo $picThumbPath; ?>" id="uploadPreview" width="200">
             <div class="text-center" id="upload_file_name"></div>
         </div>
     </div>
@@ -35,7 +51,7 @@
 
             <div class="form-group has-feedback">
                 <label for="title">Titel</label>
-                <input type="text" class="form-control" id="title" name="title" required/>
+                <input type="text" class="form-control" id="title" name="title" value="<?php echo $title; ?>" required/>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
             <div class="form-group">
@@ -45,12 +61,15 @@
                         <!--<option value="-1">-- Bitte wählen --</option>-->
                         <?php
                         foreach ($this->getCategories() as $category) {
-                            echo "<option value='" . $category->getCategoryId() . "'>" . $category->getCategoryName() . "</option>";
+                            // TODO: mark chosen categories as selected..
+                            $selected = (null != $pic && $pic->hasCategory($category)) ? "selected" : "";
+                            echo "<option value='" . $category->getCategoryId() . "' $selected>" . $category->getCategoryName() . "</option>";
                         }
                         ?>
                     </select>
                     <span class="input-group-btn">
-                        <button class="btn btn-success open_category_dialog" data-on-success="onSuccessPicForm" type="button" title="Neue Ausstellung hinzufügen">
+                        <button class="btn btn-success open_category_dialog" data-on-success="onSuccessPicForm"
+                                type="button" title="Neue Ausstellung hinzufügen">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         </button>
                     </span>
@@ -58,15 +77,16 @@
             </div>
             <div class="form-group has-feedback">
                 <label for="material">Material/Technik</label>
-                <input type="text" class="form-control" id="material" name="material" placeholder="z.B. Acryl auf Leinwand" required/>
+                <input type="text" class="form-control" id="material" name="material" value="<?php echo $material ?>"
+                       placeholder="z.B. Acryl auf Leinwand" required/>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
             <div class="form-group">
                 <label for="description">Beschreibung</label>
-                <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+                <textarea class="form-control" rows="5" id="description" name="description"><?php echo $description ?></textarea>
             </div>
-            <input type="submit" class="btn btn-success" id="add_pic_submit" name="add_pic_submit" value="Speichern" disabled>
-            <input type="hidden" name="picPathId" id="picPathId">
+            <input type="submit" class="btn btn-success" id="add_pic_submit" name="add_pic_submit" value="Speichern" <?php echo ($this->isEditMode()) ? "" : "disabled"; ?>>
+            <input type="hidden" name="picPathId" id="picPathId" value="<?php echo $picPathId; ?>">
 
     </div>
     </form>

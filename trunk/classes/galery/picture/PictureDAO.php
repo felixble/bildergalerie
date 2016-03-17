@@ -92,7 +92,7 @@ class PictureDAO extends BaseMultiClientDAO
     {
         // when fetching a single picture by its id it stands to reason that we need all details of the picture.
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery('SELECT t_pic.*,t_path.path,t_path.thumb_path,t_path.date_uploaded
+            ->setQuery('SELECT t_pic.*,t_path.pic_path_id, t_path.path,t_path.thumb_path,t_path.date_uploaded
                         FROM galery_pictures AS t_pic
                         LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
                         WHERE pic_id = :id;')
