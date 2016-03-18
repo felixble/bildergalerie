@@ -71,4 +71,9 @@ class Picture_detailView extends View
         return $this->otherCategories;
     }
 
+    public function hasCurrentExhibition()
+    {
+        return null != $this->currentExhibition;
+    }
+
 }

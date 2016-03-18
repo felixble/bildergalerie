@@ -217,7 +217,7 @@ class PicturesController extends BildergalerieController
             $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> $successMsg");
             // redirect so the user can reload the page without sending the form again.
             if ($edit) {
-                $this->getRouter()->reLocateTo("pictures", "edit", array("id" => $editPicId));
+                $this->getRouter()->reLocateTo("pictures", "pic", array("id" => $editPicId));
             } else {
                 $this->getRouter()->reLocateTo("pictures", "create");
             }

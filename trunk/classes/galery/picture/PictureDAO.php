@@ -84,7 +84,14 @@ class PictureDAO extends BaseMultiClientDAO
             ->setConditions(array(self::COL_PICTURE_ID => $picture->getPictureId()))
             ->setData($data);
 
-        return $this->sqlManager->update($sqlBuilder);
+        $res = $this->sqlManager->update($sqlBuilder); // $res: bool|null, null iff nothing has been updated
+
+        if (null == $res || $res) { // data was updated successfully or nothing has been updated
+            //TODO update category map if necessary...
+            $this->picCatMapDAO->updateEntries($picture->getPictureId(), $picture->getCategories());
+        }
+
+        return $res;
     }
 
     private function object2array(Picture $picture)

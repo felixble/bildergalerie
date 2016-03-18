@@ -37,7 +37,7 @@
                 <?php endif; ?>
 
                 <?php if(0 != count($this->getOtherCategories())): ?>
-                <h4>Ebenso ausgestellt in</h4>
+                <h4><?php echo ($this->hasCurrentExhibition()) ? "Ebenso ausgestellt in" : "Ausgestellt in"; ?></h4>
                 <ul>
                     <?php foreach ($this->getOtherCategories() as $category): ?>
                     <li>

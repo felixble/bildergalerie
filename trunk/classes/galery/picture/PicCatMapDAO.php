@@ -12,7 +12,7 @@ class PicCatMapDAO extends BaseDAO
     const TABLE_NAME = "galery_pic_category_map";
 
     const COL_PIC_ID = "pic_id";
-    const COL_TAG_ID = "cat_id";
+    const COL_CAT_ID = "cat_id";
 
     /**
      * @var TagDAO
@@ -46,10 +46,34 @@ class PicCatMapDAO extends BaseDAO
     {
         $data = array(
             self::COL_PIC_ID    => $picId,
-            self::COL_TAG_ID    => $category->getCategoryId()
+            self::COL_CAT_ID    => $category->getCategoryId()
         );
 
         return $this->create($data);
+    }
+
+    public function updateEntries($picId, $categories)
+    {
+        // delete outdated existing entries
+        $this->deleteCategoriesForPic($picId);
+
+        // create new entries
+        $this->createEntries($picId, $categories);
+    }
+
+    /**
+     * Deletes all categories related to the given
+     * picture id.
+     *
+     * @param $picId
+     * @return bool
+     */
+    private function deleteCategoriesForPic($picId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setConditions(array(self::COL_PIC_ID, $picId));
+
+        return $this->sqlManager->delete($sqlBuilder);
     }
 
     /**
