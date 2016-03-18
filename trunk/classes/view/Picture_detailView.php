@@ -29,12 +29,18 @@ class Picture_detailView extends View
      */
     private $backTo;
 
-    public function __construct(Picture $picture, $backTo = null, $currentExhibition = null)
+    /**
+     * @var bool
+     */
+    private $isAuthenticated;
+
+    public function __construct(Picture $picture, $backTo = null, $currentExhibition = null, $isAuthenticated = false)
     {
         parent::__construct(null);
         $this->picture = $picture;
         $this->backTo = $backTo;
         $this->currentExhibition = $currentExhibition;
+        $this->isAuthenticated = $isAuthenticated;
     }
 
     /**
@@ -74,6 +80,11 @@ class Picture_detailView extends View
     public function hasCurrentExhibition()
     {
         return null != $this->currentExhibition;
+    }
+
+    public function isAuthenticated()
+    {
+        return $this->isAuthenticated;
     }
 
 }

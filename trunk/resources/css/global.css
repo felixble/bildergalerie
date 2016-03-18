@@ -32,3 +32,10 @@ td.table-no-truncate {
         overflow: hidden;
     }
 }
+
+@media (min-width: 1200px) {
+    .btn-lg-block {
+        display: block;
+        width: 100%;
+    }
+}

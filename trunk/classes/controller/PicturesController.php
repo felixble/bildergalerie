@@ -122,14 +122,21 @@ class PicturesController extends BildergalerieController
             $pageTitle = $currentExhibitionObj->getCategoryName();
         }
 
+        $isAuthenticated = $this->baseFactory->getAuthenticator()->isAuthenticated();
+
 
         $backTo = $this->baseFactory->getSessionManager()->getBackTo(/*refresh*/true);
-        $picDetailView = new Picture_detailView($picture, $backTo, $currentExhibitionObj);
+        $picDetailView = new Picture_detailView($picture, $backTo, $currentExhibitionObj, $isAuthenticated);
 
         // TODO: Set main category as page title
         return $this->getContentFrameView($pageTitle, $picDetailView, false); // TODO: title ??
     }
 
+    /**
+     * @return BootstrapView
+     * @throws SimpleUserErrorException
+     * @AuthRequired
+     */
     public function editAction()
     {
         // check if form was submitted
