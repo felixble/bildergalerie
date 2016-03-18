@@ -176,12 +176,13 @@ class PicturesController extends BildergalerieController
     private function processCreatePicture($editPicId = null)
     {
         $edit = (null != $editPicId);
-        if ($edit) return; // TODO: implement update picture data
+        //TODO: test update picture data
 
         $post = $this->getRequest()->getPostParam();
         $uploadedBy = $this->baseFactory->getAuthenticator()->getLoggedInUser();
         $owner = $uploadedBy;
 
+        $title = $this->getValueOrNull("title", $post);
         $tags = $this->getValueOrNull("tags", $post);
         $descr = $this->getValueOrNull("description", $post);
         $material = $this->getValueOrNull("material", $post);
@@ -191,11 +192,15 @@ class PicturesController extends BildergalerieController
         $success = false;
         $picture = null;
         try {
-            // TODO: validate user input (-> throw exception in setters of picture ?! - Maybe not the best idea...)
-            $picture = new Picture($this->mandant, null, $post["title"], $descr, null, $material, null, null, null, $picPathId, null, null, $uploadedBy, $owner, null, $tags);
+            // TODO: validate user input (-> throw exception in setters of picture ?! - Maybe not the best idea...) - maybe validate method ??
+            $picture = new Picture($this->mandant, /* null, iff create-new-pic-Mode */ $editPicId, $title, $descr, null, $material, null, null, null, $picPathId, null, null, $uploadedBy, $owner, null, $tags);
             $picture->addCategories($category);
-            // store the new picture in the database
-            $this->pictureDAO->createPicture($picture);
+            // store/update the new picture in the database
+            if ($edit) {
+                $this->pictureDAO->updatePicture($picture);
+            } else {
+                $this->pictureDAO->createPicture($picture);
+            }
             $success = true;
         } catch (UserException $e) {
             $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> " . $e->getMessage());
@@ -206,9 +211,16 @@ class PicturesController extends BildergalerieController
         }
 
         if ($success) {
-            $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> Das Bild wurde erfolgreich hinzugefügt.");
+            $successMsg = ($edit)
+                ? "Die Änderungen wurden erfolgreich gespeichert."
+                : "Das Bild wurde erfolgreich hinzugefügt.";
+            $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> $successMsg");
             // redirect so the user can reload the page without sending the form again.
-            $this->getRouter()->reLocateTo("pictures", "create");
+            if ($edit) {
+                $this->getRouter()->reLocateTo("pictures", "edit", array("id" => $editPicId));
+            } else {
+                $this->getRouter()->reLocateTo("pictures", "create");
+            }
         }
     }
 

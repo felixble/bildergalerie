@@ -298,7 +298,7 @@ class Router {
 
     }
 
-    public function reLocateTo($controller = null, $action = "")
+    public function reLocateTo($controller = null, $action = "", $params = array())
     {
         // mod_rewrite workaround ...
         $requestUri = $_SERVER['REQUEST_URI'];
@@ -312,7 +312,7 @@ class Router {
             }
         }
 
-        $url = $prefix . self::getUrl($controller, $action);
+        $url = $prefix . self::getUrl($controller, $action, $params);
         header('Location: ' . $url, true, 303);
         exit;
     }

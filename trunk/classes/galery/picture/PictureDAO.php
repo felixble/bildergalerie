@@ -63,15 +63,7 @@ class PictureDAO extends BaseMultiClientDAO
 
     public function createPicture(Picture $picture)
     {
-        $data = array(
-            self::COL_MANDANT_ID        => $this->mandant->getMandantId(),
-            self::COL_PATH_ID           => $picture->getPath()->getId(),
-            self::COL_UID_CREATED_BY   => $picture->getUploadedBy()->getUserId(),
-            self::COL_UID_OWNDER        => $picture->getOwner()->getUserId(),
-            self::COL_TITLE             => $picture->getTitle(),
-            self::COL_DESCRIPTION       => $picture->getDescription(),
-            self::COL_MATERIAL          => $picture->getMaterial()
-        );
+        $data = $this->object2array($picture);
 
         $picId = $this->create($data);
 
@@ -82,6 +74,30 @@ class PictureDAO extends BaseMultiClientDAO
         }
 
         return $picId;
+    }
+
+    public function updatePicture(Picture $picture)
+    {
+        $data = $this->object2array($picture);
+
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setConditions(array(self::COL_PICTURE_ID => $picture->getPictureId()))
+            ->setData($data);
+
+        return $this->sqlManager->update($sqlBuilder);
+    }
+
+    private function object2array(Picture $picture)
+    {
+        return array(
+            self::COL_MANDANT_ID        => $this->mandant->getMandantId(),
+            self::COL_PATH_ID           => $picture->getPath()->getId(),
+            self::COL_UID_CREATED_BY   => $picture->getUploadedBy()->getUserId(),
+            self::COL_UID_OWNDER        => $picture->getOwner()->getUserId(),
+            self::COL_TITLE             => $picture->getTitle(),
+            self::COL_DESCRIPTION       => $picture->getDescription(),
+            self::COL_MATERIAL          => $picture->getMaterial()
+        );
     }
 
     /**
