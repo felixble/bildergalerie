@@ -130,6 +130,7 @@ class PictureDAO extends BaseMultiClientDAO
 
         /** @var Picture $picture */
         $picture = $this->fetchRow($sqlBuilder);
+        if (null == $picture) return null;
 
         // TODO: Fetch all related categories (=exhibitions)
         // Fetch all related categories (=exhibitions)
@@ -145,13 +146,16 @@ class PictureDAO extends BaseMultiClientDAO
 
     public function getPicturesFromCategory($categoryId)
     {
+        $where = ($categoryId != -1) ? ' WHERE cat_id = :catId' : '';
         $sqlBuilder = $this->getSqlBuilder()
             ->setQuery('SELECT t_cat.cat_id, t_pic.pic_id, t_cat.pic_id, t_pic.title, t_path.path,t_path.thumb_path
                         FROM galery_pic_category_map AS t_cat
                         LEFT JOIN galery_pictures AS t_pic ON t_cat.pic_id=t_pic.pic_id
-                        LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
-                        WHERE cat_id = :catId')
-            ->setConditions(array("catId" => $categoryId));
+                        LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id'
+                        . $where);
+        if ($categoryId != -1) {
+            $sqlBuilder->setConditions(array("catId" => $categoryId));
+        }
 
         return $this->fetchRowMany($sqlBuilder);
     }

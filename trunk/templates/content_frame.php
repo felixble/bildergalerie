@@ -27,6 +27,7 @@
                                 Gemälde <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
+                                <li class="auto_activate only-on-index" id="exhibition"><a href="<?php echo $this->url("pictures", "exhibition"); ?>">Alle Gemälde</a></li>
                                 <li class="auto_activate only-on-index" id="pictures"><a href="<?php echo $this->url("pictures", "exhibitions"); ?>">Ausstellungen</a></li>
                                 <?php if ($this->isUserLoggedIn()): ?>
                                 <li class="auto_activate" id="pictures/create"><a href="<?php echo $this->url("pictures", "create"); ?>">Hinzufügen</a></li>

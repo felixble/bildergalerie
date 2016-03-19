@@ -20,10 +20,10 @@ class ExhibitionView extends View
 
     /**
      * ExhibitionView constructor.
-     * @param Category $exhibition
+     * @param Category|null $exhibition
      * @param $pictures Picture[]
      */
-    public function __construct(Category $exhibition, $pictures)
+    public function __construct($exhibition, $pictures)
     {
         parent::__construct();
         $this->exhibition = $exhibition;
@@ -32,11 +32,14 @@ class ExhibitionView extends View
 
     public function getExhibitionName()
     {
+        if (null == $this->exhibition) return "Alle Gemälde";
+
         return $this->exhibition->getCategoryName();
     }
 
     public function getExhibitionDescription()
     {
+        if (null == $this->exhibition) return "";
         return $this->exhibition->getDescription();
     }
 

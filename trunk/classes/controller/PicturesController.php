@@ -78,23 +78,29 @@ class PicturesController extends BildergalerieController
         // first we must select the category_id from the get parameters
         $exhibitionId = $this->getIdRequestParam("id");
 
-        if (!$exhibitionId) {
-            throw new SimpleUserErrorException("Die Ausstellung wurde nicht gefunden.");
-        }
 
-        $exhibition = $this->categoryDAO->getCategoryById($exhibitionId);
+        $exhibition = null;
+        if (!$exhibitionId) {
+            //throw new SimpleUserErrorException("Die Ausstellung wurde nicht gefunden.");
+            $exhibitionId = -1; // -1 stands for the special exhibition containing all pictures.
+        } else {
+            $exhibition = $this->categoryDAO->getCategoryById($exhibitionId);
+        }
 
         $pictures = $this->pictureDAO->getPicturesFromCategory($exhibitionId);
 
 
-        if (null == $exhibition) {
+        if (null == $exhibition && $exhibitionId != -1) {
             throw new SimpleUserErrorException("Die Ausstellung wurde nicht gefunden.");
         }
 
+        $backtoParams = ($exhibitionId == -1) ? array() : array("id" => $exhibitionId) ;
         $this->baseFactory->getSessionManager()
-            ->setBackTo(Router::getUrl("pictures", "exhibition", array("id" => $exhibitionId)));
-        $this->baseFactory->getSessionManager()
-            ->setFlash("currentExhibition", $exhibitionId);
+            ->setBackTo(Router::getUrl("pictures", "exhibition", $backtoParams));
+        if ($exhibitionId != -1) {
+            $this->baseFactory->getSessionManager()
+                ->setFlash("currentExhibition", $exhibitionId);
+        }
 
         return $this->getContentFrameView("Ausstellung", new ExhibitionView($exhibition, $pictures), true);
     }
@@ -115,7 +121,7 @@ class PicturesController extends BildergalerieController
 
         // currentExhibition = the exhibition where the user comes from
         $currentExhibition = $this->baseFactory->getSessionManager()->getFlash("currentExhibition", /*refresh*/true);
-        $pageTitle = "Details";
+        $pageTitle = "Gemälde";
         $currentExhibitionObj = null;
         if (null != $currentExhibition && is_numeric($currentExhibition)) {
             $currentExhibitionObj = $picture->getCategoryById($currentExhibition);
