@@ -88,6 +88,15 @@ class PicTagMapDAO extends BaseDAO
         return $this->sqlManager->delete($sqlBuilder);
     }
 
+    public function updateEntries($picId, $tags)
+    {
+        // delete outdated existing entries
+        $this->deleteTagsForPicId($picId);
+
+        // create new entries
+        $this->createEntries($picId, $tags);
+    }
+
     /**
      * @return string table name.
      */
