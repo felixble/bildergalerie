@@ -74,6 +74,21 @@ class PicTagMapDAO extends BaseDAO
     }
 
     /**
+     * Deletes all tags related to the
+     * given ID ofa picture
+     *
+     * @param $picId int the id of the picture
+     * @return bool
+     */
+    public function deleteTagsForPicId($picId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setConditions(array(self::COL_PIC_ID => $picId));
+
+        return $this->sqlManager->delete($sqlBuilder);
+    }
+
+    /**
      * @return string table name.
      */
     protected function getTableName()

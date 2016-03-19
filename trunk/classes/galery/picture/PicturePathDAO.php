@@ -39,6 +39,31 @@ class PicturePathDAO extends BaseMultiClientDAO
         return $this->create($data);
     }
 
+    /**
+     * @param $picPathId
+     * @return bool
+     */
+    public function deletePicturePath($picPathId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setConditions(array(self::COL_PIC_PATH_ID => $picPathId));
+
+        return $this->sqlManager->delete($sqlBuilder);
+    }
+
+    /**
+     * @param $picPathId
+     * @return PicturePath|null
+     */
+    public function getPicturePathForId($picPathId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery("SELECT * FROM galery_picture_path WHERE pic_path_id=:id")
+            ->setConditions(array("id" => $picPathId));
+
+        return $this->fetchRow($sqlBuilder);
+    }
+
 
     /**
      * @return string table name.

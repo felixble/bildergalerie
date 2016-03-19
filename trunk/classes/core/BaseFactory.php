@@ -20,7 +20,7 @@ class BaseFactory
     private $mandantManager;
 
     /**
-     * @var \Simplon\Mysql\Mysql
+     * @var GaleryMysql
      */
     private $dbConn = null;
 
@@ -40,10 +40,13 @@ class BaseFactory
         return $this->sessionManager;
     }
 
+    /**
+     * @return GaleryMysql
+     */
     public function getDbConnection()
     {
         if (null === $this->dbConn) {
-            $this->dbConn = new Simplon\Mysql\Mysql(
+            $this->dbConn = new GaleryMysql(
                 DB_HOST,
                 DB_USER,
                 DB_PASS,

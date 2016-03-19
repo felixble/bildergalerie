@@ -48,13 +48,19 @@ class PictureDAO extends BaseMultiClientDAO
     private $picCatMapDAO;
 
     /**
+     * @var GaleryMysql
+     */
+    private $dbConn;
+
+    /**
      * PictureDAO constructor.
-     * @param \Simplon\Mysql\Mysql $dbConn
+     * @param GaleryMysql $dbConn
      * @param Mandant $mandant
      */
-    public function __construct(Simplon\Mysql\Mysql $dbConn, Mandant $mandant)
+    public function __construct(GaleryMysql $dbConn, Mandant $mandant)
     {
         parent::__construct($dbConn, $mandant);
+        $this->dbConn = $dbConn;
         $this->picTagMapDAO = new PicTagMapDAO($dbConn, $mandant);
         $this->picPathDAO = new PicturePathDAO($dbConn, $mandant);
         $this->picCatMapDAO = new PicCatMapDAO($dbConn, $mandant);
@@ -87,7 +93,7 @@ class PictureDAO extends BaseMultiClientDAO
         $res = $this->sqlManager->update($sqlBuilder); // $res: bool|null, null iff nothing has been updated
 
         if (null == $res || $res) { // data was updated successfully or nothing has been updated
-            //TODO update category map if necessary...
+            //TODO update tag map if necessary...
             $this->picCatMapDAO->updateEntries($picture->getPictureId(), $picture->getCategories());
         }
 
@@ -147,6 +153,71 @@ class PictureDAO extends BaseMultiClientDAO
             ->setConditions(array("catId" => $categoryId));
 
         return $this->fetchRowMany($sqlBuilder);
+    }
+
+    public function deletePicture($picId)
+    {
+        $res = $this->dbConn->beginTransaction();
+        if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
+
+        try {
+            // first we fetch the picPathId before deleting the detail entry so we can delete the path entry as well
+            $picPathId = $this->getPicturePathForPicture($picId);
+
+            // then we delete the related entries in the tag_map table
+            $this->picTagMapDAO->deleteTagsForPicId($picId);
+            // we don't have to check the result value, if there are no tags related to the picture the result will be false
+
+            // then we delete the related entries in the category_map table
+            $this->picCatMapDAO->deleteCategoriesForPic($picId); // same as above
+
+            // then we delete the picture details
+            $res = $this->deletePictureDetails($picId);
+            if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
+
+            // then we delete the picture path entry, but first we fetch the entry to get the path to the files
+            $picPath = $this->picPathDAO->getPicturePathForId($picPathId);
+            $res = $this->picPathDAO->deletePicturePath($picPathId);
+            if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
+
+            // finally we have to delete the files (pic/thumb)
+            $filePath = $picPath->getPath();
+            if (null != $filePath && !empty($filePath)) {
+                $res = unlink($filePath);
+                if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
+            }
+            $thumbFilePath = $picPath->getThumbPath();
+            if (null != $thumbFilePath && !empty($thumbFilePath)) {
+                unlink($thumbFilePath);
+                // TODO: what shall we do if we could not delete the thumb file, at this point we cannot recover the original picture...
+                //if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
+            }
+
+            $this->dbConn->commitTransaction();
+        } catch (Exception $e) {
+            $this->dbConn->rollbackTransaction();
+            throw $e;
+        }
+
+    }
+
+    private function deletePictureDetails($picId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setConditions(array(self::COL_PICTURE_ID => $picId));
+
+        return $this->sqlManager->delete($sqlBuilder);
+    }
+
+    private function getPicturePathForPicture($picId)
+    {
+        $sqlBuilder= $this->getSqlBuilder()
+            ->setQuery("SELECT pic_id, path_id AS pic_path_id FROM galery_pictures WHERE pic_id = :id")
+            ->setConditions(array("id" => $picId));
+
+        /** @var Picture $picture */
+        $picture = $this->fetchRow($sqlBuilder);
+        return $picture->getPath()->getId();
     }
 
     protected function row2Object($row)

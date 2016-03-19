@@ -167,6 +167,19 @@ class PicturesController extends BildergalerieController
         return $this->getContentFrameView("Bild hinzufügen", $picFormView, false);
     }
 
+    public function deleteAction()
+    {
+        $deletePicId = $this->getIdRequestParam("id", /* throw exception if not given */ true);
+
+        $this->pictureDAO->deletePicture($deletePicId);
+
+        // if deletePicture didn't throw any exception, redirect back?
+        // TODO: where should we redirect to after deleting a picture ??
+
+        $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Das Gemälde wurde erfolgreich entfernt.");
+        $this->getRouter()->reLocateTo(); // home ?!
+    }
+
     private function getPictureFormView($createMode = false)
     {
         $picFormView = new Picture_formView($createMode);
@@ -183,7 +196,6 @@ class PicturesController extends BildergalerieController
     private function processCreatePicture($editPicId = null)
     {
         $edit = (null != $editPicId);
-        //TODO: test update picture data
 
         $post = $this->getRequest()->getPostParam();
         $uploadedBy = $this->baseFactory->getAuthenticator()->getLoggedInUser();

@@ -68,7 +68,7 @@ class PicCatMapDAO extends BaseDAO
      * @param $picId
      * @return bool
      */
-    private function deleteCategoriesForPic($picId)
+    public function deleteCategoriesForPic($picId)
     {
         $sqlBuilder = $this->getSqlBuilder()
             ->setConditions(array(self::COL_PIC_ID => $picId));
