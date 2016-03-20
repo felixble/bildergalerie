@@ -24,14 +24,22 @@ class NewsDAO extends BaseMultiClientDAO
      */
     private $dbConn;
 
+    /**
+     * @var UserDAO
+     */
+    private $userDAO;
+
     public function __construct(GaleryMysql $dbConn, Mandant $mandant)
     {
         parent::__construct($dbConn, $mandant);
+        $this->userDAO = new UserDAO($dbConn, $mandant);
     }
 
     protected function row2Object($row)
     {
-        // TODO: Implement row2Object() method.
+       $newsArticle = new NewsArticle($this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_CONTENT));
+       $newsArticle->setOwner($this->userDAO->row2object($row));
+       return $newsArticle;
     }
 
     /**
@@ -59,5 +67,15 @@ class NewsDAO extends BaseMultiClientDAO
         );
     }
 
+    public function getArticles ()
+    {
+    $sqlbuilder = $this->getSqlBuilder()
+        ->setQuery('SELECT art.*, user.user_id, user.first_name, user.last_name
+                    FROM galery_news_articles AS art
+                    LEFT JOIN galery_user AS user ON art.created_by = user.user_id
+                    WHERE art.mandant_id = :id;')
+        ->setConditions(array("id" => $this->mandant->getMandantId()));
 
+     return $newsArticles = $this->fetchRowMany($sqlbuilder);
+    }
 }

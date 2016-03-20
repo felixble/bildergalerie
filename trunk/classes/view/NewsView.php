@@ -10,6 +10,30 @@ class NewsView extends View
 {
 
     /**
+     * @var NewsArticle[]
+     */
+    private $newsArticles;
+
+    /**
+     * @return NewsArticle[]
+     */
+    public function getNewsArticles()
+    {
+        if (null==$this->newsArticles){
+            return array();
+        }
+        return $this->newsArticles;
+    }
+
+    /**
+     * @param NewsArticle[] $newsArticles
+     */
+    public function setNewsArticles($newsArticles)
+    {
+        $this->newsArticles = $newsArticles;
+    }
+
+    /**
      * @var Post_newsView
      */
     private $postView=null;

@@ -22,7 +22,7 @@ class NewsArticle
     }
 
     /**
-     * @param $owner User
+     * @param $owner User|null
      */
     public function setOwner($owner)
     {
@@ -70,7 +70,7 @@ class NewsArticle
     }
 
 
-    public function __construct($title, $content, $owner)
+    public function __construct($title, $content, $owner = null)
     {
         $this->title=$title;
         $this->content=$content;

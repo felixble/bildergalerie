@@ -67,15 +67,15 @@ class UserDAO extends BaseMultiClientDAO implements IUserDAO
         return $pass == $passUserHash;
     }
 
-    protected function row2Object($row)
+    public function row2Object($row)
     {
         return new User(
             $this->mandant,
-            $row[self::COL_USER_ID],
-            $row[self::COL_USERNAME],
-            $row[self::COL_LAST_NAME],
-            $row[self::COL_FIRST_NAME],
-            $row[self::COL_EMAIL]
+            $this->getValueOrNull($row, self::COL_USER_ID),
+            $this->getValueOrNull($row, self::COL_USERNAME),
+            $this->getValueOrNull($row, self::COL_LAST_NAME),
+            $this->getValueOrNull($row, self::COL_FIRST_NAME),
+            $this->getValueOrNull($row, self::COL_EMAIL)
         );
     }
 

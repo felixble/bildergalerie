@@ -41,6 +41,10 @@ class NewsController extends BildergalerieController
             $post_view = new Post_newsView();
             $newsView->setPostView($post_view);
         }
+
+        $newsArticles = $this->newsDAO->getArticles();
+        $newsView->setNewsArticles($newsArticles);
+
         return $this->getContentFrameView("News und Informationen", $newsView);
     }
 
