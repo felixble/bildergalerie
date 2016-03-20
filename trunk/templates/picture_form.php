@@ -7,6 +7,7 @@ $material = (null == $pic) ? "" : $pic->getMaterial();
 $description = (null == $pic) ? "" : $pic->getDescription();
 $tags = (null == $pic) ? array() : $pic->getTags();
 $picPath = (null == $pic) ? "" : $pic->getPath()->getPath();
+$picFileName = (null == $pic) ? "" : $pic->getPath()->getFileName();
 $picThumbPath = (null == $pic) ? "" : $pic->getPath()->getThumbPath();
 $picPathId = (null == $pic) ? ":" : $pic->getPath()->getId();
 
@@ -34,13 +35,13 @@ $picPathId = (null == $pic) ? ":" : $pic->getPath()->getId();
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="form-group" style="display: <?php echo (!$this->isEditMode()) ? "block" : "none"; ?>;">
+        <div class="form-group" style="display: <?php echo (empty($picPath)) ? "block" : "none"; ?>;">
             <label for="uploadFile">Upload</label>
             <input type="file" id="uploadFile" name="uploadFile" value="<?php echo $picPath; ?>">
         </div>
         <div style="display: inline-block;">
-            <img style="display: <?php echo ($this->isEditMode()) ? "block" : "none"; ?>;" src="<?php echo $picThumbPath; ?>" id="uploadPreview" width="200">
-            <div class="text-center" id="upload_file_name"></div>
+            <img style="display: <?php echo (!empty($picPath)) ? "block" : "none"; ?>;" src="<?php echo $picThumbPath; ?>" id="uploadPreview" width="200">
+            <div class="text-center" id="upload_file_name"><?php echo $picFileName; ?></div>
         </div>
     </div>
 
@@ -85,7 +86,7 @@ $picPathId = (null == $pic) ? ":" : $pic->getPath()->getId();
                 <label for="description">Beschreibung</label>
                 <textarea class="form-control" rows="5" id="description" name="description"><?php echo $description ?></textarea>
             </div>
-            <input type="submit" class="btn btn-success" id="add_pic_submit" name="add_pic_submit" value="Speichern" <?php echo ($this->isEditMode()) ? "" : "disabled"; ?>>
+            <input type="submit" class="btn btn-success" id="add_pic_submit" name="add_pic_submit" value="Speichern" <?php echo ($this->isEditMode() || !empty($picFileName)) ? "" : "disabled"; ?>>
             <input type="hidden" name="picPathId" id="picPathId" value="<?php echo $picPathId; ?>">
 
     </div>

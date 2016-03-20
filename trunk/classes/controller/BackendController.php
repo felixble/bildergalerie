@@ -54,7 +54,9 @@ class BackendController extends BildergalerieController
         // fetch all unlinked picture pathes
         $picturePathDAO = new PicturePathDAO($this->baseFactory->getDbConnection(), $this->mandant);
         $unlinkedPicPathes = $picturePathDAO->getUnlinkedPathes();
-        $dashboardView->setUnlinkedPicturesView(new Dashboard_unlinked_picturesView($unlinkedPicPathes));
+        if (count($unlinkedPicPathes) > 0) {
+            $dashboardView->setUnlinkedPicturesView(new Dashboard_unlinked_picturesView($unlinkedPicPathes));
+        }
 
 
         return $this->getContentFrameView("Dashboard", $dashboardView, false);

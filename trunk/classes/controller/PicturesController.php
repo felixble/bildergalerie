@@ -167,6 +167,19 @@ class PicturesController extends BildergalerieController
         if (array_key_exists("add_pic_submit", $this->getRequest()->getPostParam())) {
             $this->processCreatePicture();
         }
+        // TODO: we should check if there is already a related picture detail entry for the given path_id
+        if (array_key_exists("path_id", $this->getRequest()->getGetParam())) {
+            $mandant = $this->baseFactory->getMandantManager()->getMandant();
+            $picture = new Picture($mandant);
+            $picturePathDAO = new PicturePathDAO($this->baseFactory->getDbConnection(), $mandant);
+            $path = $picturePathDAO->getPicturePathForId($this->getRequest()->getGetParam()["path_id"]);
+            if (null != $path) {
+                $picture->setPath($path);
+                $this->currentPicture = $picture;
+            } else {
+                $this->getAlertManager()->setErrorMessage("<strong>Fehler:</strong> Das Bild wurde nicht gefunden.");
+            }
+        }
 
         $picFormView = $this->getPictureFormView();
 

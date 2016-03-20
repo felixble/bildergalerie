@@ -114,7 +114,7 @@ class Picture
      * @param ArtisticStyle|int $artisticStyle
      * @param null|string[]|Tag[] $tags
      */
-    public function __construct(Mandant $mandant, $pictureId, $title = null, $description = null, $format = null, $material = null, $price = null, $pricePublic = null, $salable = null, $path = null, $producedDate = null, $createdDate = null, User $uploadedBy = null, User $owner = null, $artisticStyle = null, $tags = null
+    public function __construct(Mandant $mandant, $pictureId = null, $title = null, $description = null, $format = null, $material = null, $price = null, $pricePublic = null, $salable = null, $path = null, $producedDate = null, $createdDate = null, User $uploadedBy = null, User $owner = null, $artisticStyle = null, $tags = null
     ) {
         $this->mandant = $mandant;
         $this->pictureId = $pictureId;

@@ -65,7 +65,7 @@ class PicturePathDAO extends BaseMultiClientDAO
     }
 
     /**
-     * @return PicturePath[]|null
+     * @return PicturePath[]
      */
     public function getUnlinkedPathes()
     {
