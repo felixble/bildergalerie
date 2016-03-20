@@ -8,7 +8,21 @@
  */
 class NewsController extends BildergalerieController
 {
+    /**
+     * @var NewsDAO
+     */
+    private $newsDAO;
+    /**
+     * @var Mandant
+     */
+    private $mandant;
 
+    public function onCreate(Router $router)
+    {
+        parent::onCreate($router);
+        $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
+        $this->newsDAO = new NewsDAO($this->baseFactory->getDbConnection(), $this->mandant);
+    }
     /**
      * Default action which will be executed
      * if no specific action is given.
@@ -35,8 +49,19 @@ class NewsController extends BildergalerieController
         $post = $this->getRequest()->getPostParam();
         $title = $this->getValueOrNull("title", $post);
         $content = $this->getValueOrNull("content", $post);
+        $owner = $this->baseFactory->getAuthenticator()->getLoggedInUser();
 
-        $NewsArcticle = new NewsArticle($title,$content);
+
+        $newsArticle = new NewsArticle($title,$content,$owner);
+        $success = $this->newsDAO->createArticle($newsArticle);
+
+        if($success){
+            $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> Der Artikel wurde erfolgreich gespeichert.");
+        }else {
+            $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> Der Artikel konnte nicht gespeichert werden.");
+        }
+        $this->getRouter()->reLocateTo("news");
 
     }
+
 }

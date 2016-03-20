@@ -12,11 +12,31 @@ class NewsArticle
      * @var title of the NewsArticle
      */
     private $title;
+
     /**
-     * @var content of the news article
+     * @return User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param $owner User
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+    }
+    /**
+     * @var content of the NewsArticle
      */
     private $content;
 
+    /**
+     * @var owner of the NewsArticle
+     */
+    private $owner;
     /**
      * @return title
      */
@@ -50,9 +70,10 @@ class NewsArticle
     }
 
 
-    public function __construct($title, $content)
+    public function __construct($title, $content, $owner)
     {
         $this->title=$title;
         $this->content=$content;
+        $this->owner=$owner;
     }
 }
