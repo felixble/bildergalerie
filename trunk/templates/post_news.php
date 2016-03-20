@@ -1,3 +1,5 @@
+<?php /** @var Post_newsView $this */ ?>
+
 <div class="row">
 
     <div class="col-md-2"></div>
@@ -28,20 +30,12 @@
 
     <div class="col-md-8">
         <div class="panel panel-default">
-            <div class="panel-heading">Panel heading without title</div>
+            <div class="panel-heading"><?php "call method" ?></div>
             <div class="panel-body">
-                Panel content
+                <?php "call method"  ?>
             </div>
         </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Panel title</h3>
-            </div>
-            <div class="panel-body">
-                Panel content
-            </div>
-        </div>
     </div>
     <div class="col-md-2"></div>
 </div>
