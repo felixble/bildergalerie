@@ -64,6 +64,20 @@ class PicturePathDAO extends BaseMultiClientDAO
         return $this->fetchRow($sqlBuilder);
     }
 
+    /**
+     * @return PicturePath[]|null
+     */
+    public function getUnlinkedPathes()
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery("SELECT t_path.*, t_pic.pic_id FROM galery_picture_path AS t_path
+                        LEFT JOIN galery_pictures AS t_pic ON t_path.pic_path_id = t_pic.path_id
+                        WHERE t_pic.pic_id IS NULL;")
+            ->setConditions(array("m_id" => $this->mandant->getMandantId()));
+
+        return $this->fetchRowMany($sqlBuilder);
+    }
+
 
     /**
      * @return string table name.

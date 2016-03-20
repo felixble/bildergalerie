@@ -121,6 +121,11 @@ class PicturePath
         return $this;
     }
 
+    public function getFileName()
+    {
+        return basename($this->getPath());
+    }
+
     /**
      * @return null|User
      */

@@ -51,8 +51,7 @@
 </div>
 
 <div class="tab_container" id="tab_pictures">
-    <h2>Lose Gemälde</h2>
-    <p>Die folgenden Bilder wurden bereits hochgeladen, sind jedoch noch nicht mit Details verknüpft.</p>
+    <?php echo $this->getUnlinkedPicturesView(); ?>
 </div>
 
 <div class="tab_container" id="tab_news">

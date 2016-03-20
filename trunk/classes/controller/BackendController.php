@@ -45,9 +45,18 @@ class BackendController extends BildergalerieController
 
     public function dashboardAction()
     {
-        // lade alle Ausstellungen
-        $categories = $this->categoryDAO->getAllCategories();
+        $dashboardView = new DashboardView();
 
-        return $this->getContentFrameView("Dashboard", new DashboardView($categories), false);
+        // fetch all exhibitions
+        $categories = $this->categoryDAO->getAllCategories();
+        $dashboardView->setCategories($categories);
+
+        // fetch all unlinked picture pathes
+        $picturePathDAO = new PicturePathDAO($this->baseFactory->getDbConnection(), $this->mandant);
+        $unlinkedPicPathes = $picturePathDAO->getUnlinkedPathes();
+        $dashboardView->setUnlinkedPicturesView(new Dashboard_unlinked_picturesView($unlinkedPicPathes));
+
+
+        return $this->getContentFrameView("Dashboard", $dashboardView, false);
     }
 }

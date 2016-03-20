@@ -9,20 +9,17 @@
 class DashboardView extends View
 {
 
+    private $css = array();
+
     /**
      * @var null|Category[]
      */
     private $categories;
 
     /**
-     * DashboardView constructor.
-     * @param null|Category[] $categories
+     * @var Dashboard_unlinked_picturesView
      */
-    public function __construct($categories = null)
-    {
-        parent::__construct(null);
-        $this->categories = $categories;
-    }
+    private $unlinkedPicturesView;
 
     /**
      * @return Category[]|null
@@ -37,6 +34,54 @@ class DashboardView extends View
     public function getCustomJS()
     {
         return array("add_category_dialog.js", "tabs_control.js");
+    }
+
+    /**
+     * @return Dashboard_unlinked_picturesView
+     */
+    public function getUnlinkedPicturesView()
+    {
+        return $this->unlinkedPicturesView;
+    }
+
+    /**
+     * @param Dashboard_unlinked_picturesView $unlinkedPicturesView
+     * @return DashboardView|null
+     */
+    public function setUnlinkedPicturesView(Dashboard_unlinked_picturesView $unlinkedPicturesView)
+    {
+        if (null != $unlinkedPicturesView) {
+            $css = $unlinkedPicturesView->getCustomCSS();
+            if (is_array($css)) {
+                $this->css = array_merge($this->css, $unlinkedPicturesView->getCustomCSS());
+            } else {
+                $this->css[] = $css;
+            }
+        }
+
+        $this->unlinkedPicturesView = $unlinkedPicturesView;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasUnlinkedPicturesView()
+    {
+        return (null == $this->unlinkedPicturesView);
+    }
+
+    /**
+     * @param $categories null|Category[]
+     */
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
+    }
+
+    public function getCustomCSS()
+    {
+        return $this->css;
     }
 
 }
