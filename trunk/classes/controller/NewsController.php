@@ -29,4 +29,14 @@ class NewsController extends BildergalerieController
         }
         return $this->getContentFrameView("News und Informationen", $newsView);
     }
+
+    public function createAction ()
+    {
+        $post = $this->getRequest()->getPostParam();
+        $title = $this->getValueOrNull("title", $post);
+        $content = $this->getValueOrNull("content", $post);
+
+        $NewsArcticle = new NewsArticle($title,$content);
+
+    }
 }
