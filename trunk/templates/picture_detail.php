@@ -52,9 +52,10 @@
 
         <?php if($this->isAuthenticated()): ?>
         <div class="text-center">
-            <a class="btn btn-lg btn-primary btn-lg-block" href="<?php echo $this->url("pictures", "edit", array("id" => $this->getPicture()->getPictureId())); ?>">Gemälde Bearbeiten</a>
-            <br>
-            <a class="btn btn-lg btn-danger btn-lg-block" href="<?php echo $this->url("pictures", "delete", array("id" => $this->getPicture()->getPictureId())); ?>">Gemälde löschen</a>
+            <div class="list-group">
+                <a class="list-group-item list-group-item-info" href="<?php echo $this->url("pictures", "edit", array("id" => $this->getPicture()->getPictureId())); ?>">Gemälde Bearbeiten</a>
+                <a class="list-group-item list-group-item-danger confirmation" data-confirmation-text="Soll das Gemälde wirklich gelöscht werden?" href="<?php echo $this->url("pictures", "delete", array("id" => $this->getPicture()->getPictureId())); ?>">Gemälde löschen</a>
+            </div>
         </div>
         <?php endif; ?>
     </div>

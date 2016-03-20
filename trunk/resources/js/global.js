@@ -8,6 +8,7 @@ $(document).ready(function () {
     navFixedOnScroll();
     selectCurrentMenuItem();
     autoScrollToId();
+    confirmationOnClick();
 
 });
 
@@ -71,4 +72,16 @@ function selectCurrentMenuItem() {
         // we found no matching menu item, so we select the home item
         $("#home").addClass("active");
     }
+}
+
+/**
+ * Add onclick-handler for all elements
+ * requiring a confirmation dialog
+ */
+function confirmationOnClick() {
+    $('.confirmation').click(function() {
+        var msg = ($(this).attr('data-confirmation-text')) ? $(this).attr('data-confirmation-text') : "Möchten Sie diese Aktion wirklich ausführen?";
+
+        return confirm(msg);
+    });
 }
