@@ -36,7 +36,7 @@ class DashboardView extends View
 
     public function getCustomJS()
     {
-        return array("add_category_dialog.js");
+        return array("add_category_dialog.js", "tabs_control.js");
     }
 
 }
