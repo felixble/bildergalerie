@@ -186,6 +186,12 @@ class PicturesController extends BildergalerieController
         return $this->getContentFrameView("Bild hinzufügen", $picFormView, false);
     }
 
+    /**
+     *
+     * @throws Exception
+     * @throws SimpleUserErrorException
+     * @AuthRequired
+     */
     public function deleteAction()
     {
         $deletePicId = $this->getIdRequestParam("id", /* throw exception if not given */ true);

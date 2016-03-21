@@ -48,6 +48,9 @@ class NewsController extends BildergalerieController
         return $this->getContentFrameView("News und Informationen", $newsView);
     }
 
+    /**
+     * @AuthRequired
+     */
     public function createAction ()
     {
         $post = $this->getRequest()->getPostParam();
