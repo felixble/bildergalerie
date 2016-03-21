@@ -22,6 +22,11 @@ class DashboardView extends View
     private $unlinkedPicturesView;
 
     /**
+     * @var Dashboard_pic_tableView|null
+     */
+    private $pictureTableView;
+
+    /**
      * @return Category[]|null
      */
     public function getCategories()
@@ -82,6 +87,22 @@ class DashboardView extends View
     public function getCustomCSS()
     {
         return $this->css;
+    }
+
+    /**
+     * @param Dashboard_pic_tableView|null $pictureTableView
+     */
+    public function setAllPicturesView(Dashboard_pic_tableView $pictureTableView)
+    {
+        $this->pictureTableView = $pictureTableView;
+    }
+
+    /**
+     * @return Dashboard_pic_tableView|null
+     */
+    public function getPictureTableView()
+    {
+        return $this->pictureTableView;
     }
 
 }

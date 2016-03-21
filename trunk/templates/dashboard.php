@@ -52,7 +52,7 @@
 
 <div class="tab_container" id="tab_pictures">
     <?php echo $this->getUnlinkedPicturesView(); ?>
-    <h2>Übersicht aller Gemälde</h2>
+    <?php echo $this->getPictureTableView(); ?>
 </div>
 
 <div class="tab_container" id="tab_news">

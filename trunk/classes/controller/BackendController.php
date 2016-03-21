@@ -58,6 +58,12 @@ class BackendController extends BildergalerieController
             $dashboardView->setUnlinkedPicturesView(new Dashboard_unlinked_picturesView($unlinkedPicPathes));
         }
 
+        // fetch all pictures
+        $picDAO = new PictureDAO($this->baseFactory->getDbConnection(), $this->mandant);
+        $pictureTableView = $picDAO->getPicturesFromCategory(-1);
+        if (count($pictureTableView) > 0) {
+            $dashboardView->setAllPicturesView(new Dashboard_pic_tableView($pictureTableView));
+        }
 
         return $this->getContentFrameView("Dashboard", $dashboardView, false);
     }
