@@ -50,13 +50,14 @@
             </div>
         </div>
 
-        <?php if($this->isAuthenticated()): ?>
         <div class="text-center">
             <div class="list-group">
-                <a class="list-group-item list-group-item-info" href="<?php echo $this->url("pictures", "edit", array("id" => $this->getPicture()->getPictureId())); ?>">Gemälde Bearbeiten</a>
-                <a class="list-group-item list-group-item-danger confirmation" data-confirmation-text="Soll das Gemälde wirklich gelöscht werden?" href="<?php echo $this->url("pictures", "delete", array("id" => $this->getPicture()->getPictureId())); ?>">Gemälde löschen</a>
+                <a class="list-group-item list-group-item-success" href="<?php echo $this->url("contact", "", array("ref_pic" => $this->getPicture()->getPictureId())); ?>">Künstler kontaktieren</a>
+                <?php if($this->isAuthenticated()): ?>
+                    <a class="list-group-item list-group-item-info" href="<?php echo $this->url("pictures", "edit", array("id" => $this->getPicture()->getPictureId())); ?>">Gemälde Bearbeiten</a>
+                    <a class="list-group-item list-group-item-danger confirmation" data-confirmation-text="Soll das Gemälde wirklich gelöscht werden?" href="<?php echo $this->url("pictures", "delete", array("id" => $this->getPicture()->getPictureId())); ?>">Gemälde löschen</a>
+                <?php endif; ?>
             </div>
         </div>
-        <?php endif; ?>
     </div>
 </div>
