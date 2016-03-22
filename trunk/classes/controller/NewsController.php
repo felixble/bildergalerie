@@ -71,4 +71,30 @@ class NewsController extends BildergalerieController
 
     }
 
+    public function deleteAction()
+    {
+        $deleteArticleId = $this->getIdRequestParam("id", /* throw exception if not given */ true);
+
+        $this->newsDAO->deleteArticle($deleteArticleId);
+
+        $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Der Artikel wurde erfolgreich entfernt.");
+        $this->getRouter()->reLocateTo(); // home ?!
+    }
+
+    private function getIdRequestParam($key, $throwExceptionIfNotGiven = false)
+    {
+        $get = $this->getRequest()->getGetParam();
+        if (array_key_exists($key, $get)) { // if we have the get param id its easy...
+            return $get[$key];
+        } elseif (count($this->getRequest()->getQueryParams()) > 0) { // otherwise, our first parameter key is our id
+            return $this->getRequest()->getQueryParams()[0];
+        }
+
+        if ($throwExceptionIfNotGiven) {
+            throw new SimpleUserErrorException("Der Artikel wurde nicht gefunden.");
+        }
+
+        return false;
+    }
+
 }

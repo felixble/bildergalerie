@@ -78,4 +78,24 @@ class NewsDAO extends BaseMultiClientDAO
 
      return $newsArticles = $this->fetchRowMany($sqlbuilder);
     }
+
+    public function deleteArticle($articleId)
+    {
+        $res = $this->dbConn->beginTransaction();
+        if (!$res) throw new SimpleUserErrorException("Artikel konnte nicht entfernt werden.");
+
+        try {
+
+            $sqlBuilder = $this->getSqlBuilder()
+                ->setConditions(array(self::COL_ARTICLE_ID => $articleId));
+
+            return $this->sqlManager->delete($sqlBuilder);
+
+            $this->dbConn->commitTransaction();
+        } catch (Exception $e) {
+            $this->dbConn->rollbackTransaction();
+            throw $e;
+        }
+
+    }
 }
