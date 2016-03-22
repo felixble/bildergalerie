@@ -17,12 +17,18 @@ class NewsController extends BildergalerieController
      */
     private $mandant;
 
+    /**
+     * @var NewsArticle
+     */
+    private $currentArticle = null;
+
     public function onCreate(Router $router)
     {
         parent::onCreate($router);
         $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
         $this->newsDAO = new NewsDAO($this->baseFactory->getDbConnection(), $this->mandant);
     }
+
     /**
      * Default action which will be executed
      * if no specific action is given.
@@ -37,8 +43,11 @@ class NewsController extends BildergalerieController
         $newsView = new NewsView();
         $isLoggedIn = (null != $this->baseFactory->getAuthenticator()->getLoggedInUser());
 
-        if ($isLoggedIn){
+        if ($isLoggedIn) {
             $post_view = new Post_newsView();
+            if (null != $this->currentArticle) {
+                $post_view->setArticle($this->currentArticle);
+            }
             $newsView->setPostView($post_view);
         }
 
@@ -51,14 +60,21 @@ class NewsController extends BildergalerieController
     /**
      * @AuthRequired
      */
-    public function createAction ()
-    {   $post = $this->getRequest()->getPostParam();
-        $newsArticle = $this->buildArticle($post);
-        $success = $this->newsDAO->createArticle($newsArticle);
+    public function createAction()
+    {
 
-        if($success){
-            $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> Der Artikel wurde erfolgreich gespeichert.");
+        $post = $this->getRequest()->getPostParam();
+        $newsArticle = $this->buildArticle($post);
+        if(null!=$newsArticle->getId()){
+            $success = $this->newsDAO->updateArticle($newsArticle);
         }else {
+            $success = $this->newsDAO->createArticle($newsArticle);
+        }
+
+
+        if ($success) {
+            $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> Der Artikel wurde erfolgreich gespeichert.");
+        } else {
             $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> Der Artikel konnte nicht gespeichert werden.");
         }
         $this->getRouter()->reLocateTo("news");
@@ -72,7 +88,8 @@ class NewsController extends BildergalerieController
      */
     public function deleteAction()
     {
-        $deleteArticleId = $this->getIdRequestParam("id", /* throw exception if not given */ true);
+        $deleteArticleId = $this->getIdRequestParam("id", /* throw exception if not given */
+            true);
 
         $this->newsDAO->deleteArticle($deleteArticleId);
 
@@ -96,23 +113,25 @@ class NewsController extends BildergalerieController
         return false;
     }
 
-    public function updateAction ()
+    public function updateAction()
     {
-         $updateArticleId = $this->getIdRequestParam("id", /* throw exception if not given */ true);
-      //  $newsArticle = $this->newsDAO->getArticleById($updateArticleId);
-
-        $this->getRouter()->reLocateTo("news");
+        $updateArticleId = $this->getIdRequestParam("id", /* throw exception if not given */true);
+        $newsArticle = $this->newsDAO->getArticleById($updateArticleId);
+        //TODO throw exception if null
+        $this->currentArticle = $newsArticle;
+        return $this->indexAction();
 
 
     }
 
-    private function buildArticle ($post)
+    private function buildArticle($post)
     {
         $title = $this->getValueOrNull("title", $post);
         $content = $this->getValueOrNull("content", $post);
         $owner = $this->baseFactory->getAuthenticator()->getLoggedInUser();
+        $id = $this->getValueOrNull("edit_id",$post);
 
-        return new NewsArticle($title,$content,$owner);
+        return new NewsArticle($title, $content, $owner, $id);
     }
 
 }

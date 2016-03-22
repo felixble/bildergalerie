@@ -12,7 +12,7 @@ class NewsDAO extends BaseMultiClientDAO
 
     const TABLE_NAME = "galery_news_articles";
 
-    const COL_ARTICLE_ID = "article_id";
+    const COL_ARTICLE_ID = "articel_id";
     const COL_MANDANT_ID = "mandant_id";
     const COL_CREATED_BY = "created_by";
     const COL_TITLE = "title";
@@ -37,8 +37,7 @@ class NewsDAO extends BaseMultiClientDAO
 
     protected function row2Object($row)
     {
-       $newsArticle = new NewsArticle($this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_CONTENT));
-       $newsArticle->setOwner($this->userDAO->row2object($row));
+       $newsArticle = new NewsArticle($this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_CONTENT),($this->userDAO->row2object($row)), $this->getValueOrNull($row,self::COL_ARTICLE_ID));
        return $newsArticle;
     }
 
