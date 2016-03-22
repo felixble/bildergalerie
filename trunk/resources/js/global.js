@@ -71,7 +71,7 @@ function selectCurrentMenuItem() {
 
     if (!itemActivated) {
         // we found no matching menu item, so we select the home item
-        $("#home").addClass("active");
+        $("#nav_home").addClass("active");
     }
 }
 

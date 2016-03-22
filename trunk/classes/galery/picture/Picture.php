@@ -441,6 +441,8 @@ class Picture
 
     public function setCategoriesFromStringList($catsStr, $delimiter)
     {
+        if (null == $catsStr) return;
+
         $arr = explode($delimiter, $catsStr);
         foreach ($arr as $item) {
             $this->addCategory(new Category($this->getMandant(), null, $item));
