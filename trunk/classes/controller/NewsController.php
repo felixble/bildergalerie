@@ -52,14 +52,8 @@ class NewsController extends BildergalerieController
      * @AuthRequired
      */
     public function createAction ()
-    {
-        $post = $this->getRequest()->getPostParam();
-        $title = $this->getValueOrNull("title", $post);
-        $content = $this->getValueOrNull("content", $post);
-        $owner = $this->baseFactory->getAuthenticator()->getLoggedInUser();
-
-
-        $newsArticle = new NewsArticle($title,$content,$owner);
+    {   $post = $this->getRequest()->getPostParam();
+        $newsArticle = $this->buildArticle($post);
         $success = $this->newsDAO->createArticle($newsArticle);
 
         if($success){
@@ -71,6 +65,11 @@ class NewsController extends BildergalerieController
 
     }
 
+    /**
+     * @throws Exception
+     * @throws SimpleUserErrorException
+     * @AuthRequired
+     */
     public function deleteAction()
     {
         $deleteArticleId = $this->getIdRequestParam("id", /* throw exception if not given */ true);
@@ -78,7 +77,7 @@ class NewsController extends BildergalerieController
         $this->newsDAO->deleteArticle($deleteArticleId);
 
         $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Der Artikel wurde erfolgreich entfernt.");
-        $this->getRouter()->reLocateTo(); // home ?!
+
     }
 
     private function getIdRequestParam($key, $throwExceptionIfNotGiven = false)
@@ -95,6 +94,25 @@ class NewsController extends BildergalerieController
         }
 
         return false;
+    }
+
+    public function updateAction ()
+    {
+         $updateArticleId = $this->getIdRequestParam("id", /* throw exception if not given */ true);
+      //  $newsArticle = $this->newsDAO->getArticleById($updateArticleId);
+
+        $this->getRouter()->reLocateTo("news");
+
+
+    }
+
+    private function buildArticle ($post)
+    {
+        $title = $this->getValueOrNull("title", $post);
+        $content = $this->getValueOrNull("content", $post);
+        $owner = $this->baseFactory->getAuthenticator()->getLoggedInUser();
+
+        return new NewsArticle($title,$content,$owner);
     }
 
 }

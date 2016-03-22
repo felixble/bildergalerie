@@ -98,4 +98,32 @@ class NewsDAO extends BaseMultiClientDAO
         }
 
     }
+
+    public function updateArticle(NewsArticle $article)
+    {
+        $data = $this->object2array($article);
+
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setConditions(array(self::COL_ARTICLE_ID => $article->getId()))
+            ->setData($data);
+
+        $res = $this->sqlManager->update($sqlBuilder); // $res: bool|null, null iff nothing has been updated
+
+        return $res;
+    }
+
+    public function getArticleById($articleId)
+    {
+
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery('SELECT art.*
+                        FROM galery_news_articles AS art
+                        WHERE art.articel_id = :id;')
+            ->setConditions(array("id" => $articleId));
+
+        /** @var NewsArticle $article */
+        $article = $this->fetchRow($sqlBuilder);
+
+        return $article;
+    }
 }

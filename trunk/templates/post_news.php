@@ -12,7 +12,7 @@
 
                     <div class="form-group has-feedback">
                         <label for="title">Titel</label>
-                        <input type="text" class="form-control" id="title" name="title" required/>
+                        <input type="text" class="form-control" id="title" name="title" required value="test"/>
                         <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                     </div>
 

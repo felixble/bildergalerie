@@ -15,12 +15,12 @@ if (null != $this->getPostView()) {
                 <div>
                     <h2><?php echo $articles->getTitle() ?>
 
-                        <a href=""
+                        <a href="<?php echo $this->url("news", "update", array("id"=> $this->getNewsArticles())) ?>"
                            title="Kommentar bearbeiten"
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </a>
 
-                        <a href=""
+                        <a href="<?php echo $this->url("news", "delete") ?>"
                            title="Kommentar entfernen">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </a>
