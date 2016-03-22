@@ -18,26 +18,26 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="auto_activate" id="home"><a href="<?php echo $this->url(); ?>">Startseite</a></li>
-                        <li class="auto_activate" id="about"><a href="<?php echo $this->url("about"); ?>">Die Künstlerin</a></li>
-                        <li class="auto_activate" id="news"><a href="<?php echo $this->url("news"); ?>">News</a></li>
-                        <li class="auto_activate dropdown" id="pictures">
+                        <li class="auto_activate" id="nav_home"><a href="<?php echo $this->url(); ?>">Startseite</a></li>
+                        <li class="auto_activate" id="nav_about"><a href="<?php echo $this->url("about"); ?>">Die Künstlerin</a></li>
+                        <li class="auto_activate" id="nav_news"><a href="<?php echo $this->url("news"); ?>">News</a></li>
+                        <li class="auto_activate dropdown" id="nav_pictures">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">
                                 Gemälde <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="auto_activate only-on-index" id="exhibition"><a href="<?php echo $this->url("pictures", "exhibition"); ?>">Alle Gemälde</a></li>
-                                <li class="auto_activate only-on-index" id="pictures"><a href="<?php echo $this->url("pictures", "exhibitions"); ?>">Ausstellungen</a></li>
+                                <li class="auto_activate only-on-index" id="nav_exhibition"><a href="<?php echo $this->url("pictures", "exhibition"); ?>">Alle Gemälde</a></li>
+                                <li class="auto_activate only-on-index" id="nav_pictures"><a href="<?php echo $this->url("pictures", "exhibitions"); ?>">Ausstellungen</a></li>
                                 <?php if ($this->isUserLoggedIn()): ?>
-                                <li class="auto_activate" id="pictures/create"><a href="<?php echo $this->url("pictures", "create"); ?>">Hinzufügen</a></li>
+                                <li class="auto_activate" id="nav_pictures/create"><a href="<?php echo $this->url("pictures", "create"); ?>">Hinzufügen</a></li>
                                 <?php endif; ?>
                             </ul>
                         </li>
-                        <li class="auto_activate" id="contact"><a href="<?php echo $this->url("contact"); ?>">Kontakt</a></li>
-                        <li class="auto_activate" id="legalnotice"><a href="<?php echo $this->url("legalnotice"); ?>">Impressum</a></li>
+                        <li class="auto_activate" id="nav_contact"><a href="<?php echo $this->url("contact"); ?>">Kontakt</a></li>
+                        <li class="auto_activate" id="nav_legalnotice"><a href="<?php echo $this->url("legalnotice"); ?>">Impressum</a></li>
                         <?php if ($this->isUserLoggedIn()): ?>
-                            <li class="auto_activate" id="backend"><a href="<?php echo $this->url("backend"); ?>">Backend</a></li>
+                            <li class="auto_activate" id="nav_backend"><a href="<?php echo $this->url("backend"); ?>">Backend</a></li>
                         <?php endif; ?>
                     </ul>
                 </div>

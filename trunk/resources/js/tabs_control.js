@@ -4,14 +4,29 @@
 
 $(function() {
 
+    var hash = window.location.hash.substring(1);
     var active_tab = $('.tab-item.active');
     var current_container_el = $('.tab_container.active');
+
+    if (hash !== "") {
+        active_tab.removeClass("active");
+        active_tab = $('#tab_' + hash);
+        active_tab.addClass("active");
+
+        current_container_el.removeClass("active");
+        current_container_el = $('#' + hash);
+        current_container_el.addClass("active");
+    }
+    console.log(current_container_el);
 
     // hide all tab-containers
     $('.tab_container:not(.active)').hide();
 
     // set onclick handler for tab controls
     $('.tab-control').click(function() {
+
+        console.log("click");
+        console.log(current_container_el);
 
         // hide current container
         if (null !== current_container_el) {
@@ -30,7 +45,10 @@ $(function() {
         active_tab.addClass("active");
         current_container_el = related_container_el;
 
-        return false;
+        console.log("next");
+        console.log(current_container_el);
+
+        return true;
     });
 
 });

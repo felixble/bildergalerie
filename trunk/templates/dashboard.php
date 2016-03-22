@@ -2,13 +2,13 @@
 
 
 <ul class="nav nav-tabs">
-    <li class="tab-item active"><a class="tab-control" data-tab="tab_exhibitions" href="#">Ausstellungen</a></li>
-    <li><a class="tab-item tab-control" data-tab="tab_pictures" href="#">Gemälde</a></li>
-    <li><a class="tab-item tab-control" data-tab="tab_news" href="#">News</a></li>
-    <li><a class="tab-item tab-control" data-tab="tab_users" href="#">Benutzer</a></li>
+    <li class="tab-item active" id="tab_exhibitions"><a class="tab-control" data-tab="exhibitions" href="<?php echo $this->urlScrollTo("exhibitions") ?>">Ausstellungen</a></li>
+    <li class="tab-item" id="tab_pictures"><a class="tab-control" data-tab="pictures" href="<?php echo $this->urlScrollTo("pictures") ?>">Gemälde</a></li>
+    <li class="tab-item" id="tab_news"><a class="tab-control" data-tab="news" href="<?php echo $this->urlScrollTo("news") ?>">News</a></li>
+    <li class="tab-item" id="tab_users"><a class="tab-control" data-tab="users" href="<?php echo $this->urlScrollTo("users") ?>">Benutzer</a></li>
 </ul>
 
-<div class="tab_container active" id="tab_exhibitions">
+<div class="tab_container active" id="exhibitions">
     <!-- Dialog Content -->
     <?php echo new Edit_exhibition_dialogView(/* editMode */
         true); ?>
@@ -50,15 +50,15 @@
     </table>
 </div>
 
-<div class="tab_container" id="tab_pictures">
+<div class="tab_container" id="pictures">
     <?php echo $this->getUnlinkedPicturesView(); ?>
     <?php echo $this->getPictureTableView(); ?>
 </div>
 
-<div class="tab_container" id="tab_news">
+<div class="tab_container" id="news">
     <h2>Alle News-Artikel</h2>
 </div>
 
-<div class="tab_container" id="tab_users">
+<div class="tab_container" id="users">
     <h2>Alle Benutzer</h2>
 </div>
