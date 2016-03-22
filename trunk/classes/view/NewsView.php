@@ -15,6 +15,11 @@ class NewsView extends View
     private $newsArticles;
 
     /**
+     * @var bool
+     */
+    private $isUserLoggedIn = false;
+
+    /**
      * @return NewsArticle[]
      */
     public function getNewsArticles()
@@ -52,6 +57,19 @@ class NewsView extends View
     public function getPostView()
     {
         return $this->postView;
+    }
+
+    /**
+     * @param boolean $isUserLoggedIn
+     */
+    public function setIsUserLoggedIn($isUserLoggedIn)
+    {
+        $this->isUserLoggedIn = $isUserLoggedIn;
+    }
+
+    public function isUserLoggedIn()
+    {
+        return $this->isUserLoggedIn;
     }
 
 

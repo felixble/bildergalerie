@@ -49,6 +49,7 @@ class NewsController extends BildergalerieController
                 $post_view->setArticle($this->currentArticle);
             }
             $newsView->setPostView($post_view);
+            $newsView->setIsUserLoggedIn(true);
         }
 
         $newsArticles = $this->newsDAO->getArticles();
