@@ -152,22 +152,23 @@ class PictureDAO extends BaseMultiClientDAO
                       FROM galery_pic_category_map AS t_cat_map
                       LEFT JOIN galery_pictures AS t_pic ON t_cat_map.pic_id=t_pic.pic_id
                       LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
-                      LEFT JOIN galery_categories AS t_cat ON t_cat_map.cat_id=t_cat.category_id
-                      GROUP BY t_pic.pic_id';
+                      LEFT JOIN galery_categories AS t_cat ON t_cat_map.cat_id=t_cat.category_id';
         } else {
             $query = 'SELECT t_cat_map.cat_id, t_pic.pic_id, t_cat_map.pic_id, t_pic.title, t_path.path,t_path.thumb_path
                       FROM galery_pic_category_map AS t_cat_map
                       LEFT JOIN galery_pictures AS t_pic ON t_cat_map.pic_id=t_pic.pic_id
-                      LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
-                      GROUP BY t_pic.pic_id';
+                      LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id';
         }
-
-        $where = ($categoryId != -1) ? ' WHERE cat_id = :catId' : '';
+        // If we fetch all categories, we must set the mandant condition!!
+        $where = ' WHERE t_pic.mandant_id = :m_id';
+        $where .= ($categoryId != -1) ? ' AND cat_id = :catId' : '';
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery($query . $where);
+            ->setQuery($query . $where . ' GROUP BY t_pic.pic_id');
+        $conditions = array("m_id" => $this->mandant->getMandantId());
         if ($categoryId != -1) {
-            $sqlBuilder->setConditions(array("catId" => $categoryId));
+            $conditions["catId"] = $categoryId;
         }
+        $sqlBuilder->setConditions($conditions);
 
         return $this->fetchRowMany($sqlBuilder);
     }
