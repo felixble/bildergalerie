@@ -39,3 +39,9 @@ td.table-no-truncate {
         width: 100%;
     }
 }
+
+.vertical-allign {
+    display: flex;
+    allign-items: center;
+
+}

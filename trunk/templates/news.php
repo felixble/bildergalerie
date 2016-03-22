@@ -7,28 +7,25 @@ if (null != $this->getPostView()) {
 ?>
 
 
-<div class="col-md-2"></div>
-<div class="col-md-8">
-    <div>
+<div>
+    <?php foreach ($this->getNewsArticles() as $article): ?>
         <div>
-            <?php foreach ($this->getNewsArticles() as $article): ?>
-                <div>
-                    <h2><?php echo $article->getTitle() ?>
+            <hr>
+            <h2><?php echo $article->getTitle() ?></h2>
 
-                        <a href="<?php echo $this->url("news", "update", array("id"=> $article->getId())) ?>"
-                           title="Kommentar bearbeiten">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </a>
+            <p> <?php echo $article->getContent() ?></p>
+            <div class="pull-right">
+            <a href="<?php echo $this->url("news", "update", array("id" => $article->getId())) ?>"
+               title="Kommentar bearbeiten">
+                <span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true"></span>
+            </a>
 
-                        <a href="<?php echo $this->url("news", "delete", array("id"=>$article->getId())) ?>"
-                           title="Kommentar entfernen">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </a>
-
-                    </h2>
-                    <p> <?php echo $article->getContent() ?></p>
-                </div>
-            <?php endforeach; ?>
+            <a class="confirmation" data-confirmation-text="Soll der Artikel wirklich gelöscht werden?"
+               href="<?php echo $this->url("news", "delete", array("id" => $article->getId())) ?>"
+               title="Kommentar entfernen">
+                <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>
+            </a>
+            </div>
         </div>
-    </div>
-    <div class="col-md-2"></div>
+    <?php endforeach; ?>
+</div>

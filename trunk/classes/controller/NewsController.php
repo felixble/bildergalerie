@@ -94,6 +94,7 @@ class NewsController extends BildergalerieController
         $this->newsDAO->deleteArticle($deleteArticleId);
 
         $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Der Artikel wurde erfolgreich entfernt.");
+        $this->getRouter()->reLocateTo("news");
 
     }
 
