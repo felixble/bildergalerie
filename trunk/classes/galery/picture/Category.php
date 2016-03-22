@@ -149,4 +149,9 @@ class Category
         return $this->numberRelatedPictures;
     }
 
+    public function __toString()
+    {
+        return $this->getCategoryName();
+    }
+
 }

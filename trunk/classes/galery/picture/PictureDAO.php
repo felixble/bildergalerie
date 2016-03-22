@@ -144,15 +144,27 @@ class PictureDAO extends BaseMultiClientDAO
         return $picture;
     }
 
-    public function getPicturesFromCategory($categoryId)
+    public function getPicturesFromCategory($categoryId, $fetchRelatedCategories = false)
     {
+        if ($fetchRelatedCategories) {
+            $query = 'SELECT t_cat_map.cat_id, t_pic.pic_id, t_cat_map.pic_id, t_pic.title, t_path.path,t_path.thumb_path,
+                        GROUP_CONCAT(t_cat.category_name SEPARATOR \'\t\') as categories
+                      FROM galery_pic_category_map AS t_cat_map
+                      LEFT JOIN galery_pictures AS t_pic ON t_cat_map.pic_id=t_pic.pic_id
+                      LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
+                      LEFT JOIN galery_categories AS t_cat ON t_cat_map.cat_id=t_cat.category_id
+                      GROUP BY t_pic.pic_id';
+        } else {
+            $query = 'SELECT t_cat_map.cat_id, t_pic.pic_id, t_cat_map.pic_id, t_pic.title, t_path.path,t_path.thumb_path
+                      FROM galery_pic_category_map AS t_cat_map
+                      LEFT JOIN galery_pictures AS t_pic ON t_cat_map.pic_id=t_pic.pic_id
+                      LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
+                      GROUP BY t_pic.pic_id';
+        }
+
         $where = ($categoryId != -1) ? ' WHERE cat_id = :catId' : '';
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery('SELECT t_cat.cat_id, t_pic.pic_id, t_cat.pic_id, t_pic.title, t_path.path,t_path.thumb_path
-                        FROM galery_pic_category_map AS t_cat
-                        LEFT JOIN galery_pictures AS t_pic ON t_cat.pic_id=t_pic.pic_id
-                        LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id'
-                        . $where);
+            ->setQuery($query . $where);
         if ($categoryId != -1) {
             $sqlBuilder->setConditions(array("catId" => $categoryId));
         }
@@ -231,6 +243,8 @@ class PictureDAO extends BaseMultiClientDAO
         $picture = new Picture($this->mandant, $this->getValueOrNull($row, self::COL_PICTURE_ID), $this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_DESCRIPTION), $this->getValueOrNull($row, self::COL_FORMAT), $this->getValueOrNull($row, self::COL_MATERIAL), $this->getValueOrNull($row, self::COL_PRICE), $this->getValueOrNull($row, self::COL_PRICE_PUBLIC), $this->getValueOrNull($row, self::COL_SALABLE), null, $this->getValueOrNull($row, self::COL_DATE_PRODUCED), $this->getValueOrNull($row, self::COL_DATE_CREATED), null, null, null, null);
 
         // set all complex objects now
+
+        $picture->setCategoriesFromStringList($this->getValueOrNull($row, "categories"), "\t");
 
         $picture->setPath($this->picPathDAO->row2Object($row));
 

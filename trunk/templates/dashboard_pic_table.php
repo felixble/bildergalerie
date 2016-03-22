@@ -16,7 +16,7 @@
             <td><img class="img-responsive" width="50" src="<?php echo $picture->getPath()->getThumbPath(); ?>"></td>
             <td id="pic_title_<?php echo $id; ?>"
                 class="table-no-truncate"><?php echo $picture->getTitle(); ?></td>
-            <td id="exhibition_descr_<?php echo $id; ?>">Hier und da (TODO)</td>
+            <td id="exhibition_descr_<?php echo $id; ?>"><?php echo $picture->getCategoriesAsString(", "); ?></td>
             <td class="text-right table-no-truncate">
                 <a href="<?php echo $this->url("pictures", "edit", array("id" => $id)); ?>"
                    title="Gemälde bearbeiten">

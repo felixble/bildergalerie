@@ -60,7 +60,7 @@ class BackendController extends BildergalerieController
 
         // fetch all pictures
         $picDAO = new PictureDAO($this->baseFactory->getDbConnection(), $this->mandant);
-        $pictureTableView = $picDAO->getPicturesFromCategory(-1);
+        $pictureTableView = $picDAO->getPicturesFromCategory(-1, true);
         if (count($pictureTableView) > 0) {
             $dashboardView->setAllPicturesView(new Dashboard_pic_tableView($pictureTableView));
         }

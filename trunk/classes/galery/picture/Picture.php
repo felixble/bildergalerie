@@ -439,6 +439,19 @@ class Picture
         }
     }
 
+    public function setCategoriesFromStringList($catsStr, $delimiter)
+    {
+        $arr = explode($delimiter, $catsStr);
+        foreach ($arr as $item) {
+            $this->addCategory(new Category($this->getMandant(), null, $item));
+        }
+    }
+
+    public function getCategoriesAsString($delimiter)
+    {
+        return implode($delimiter, $this->getCategories());
+    }
+
     /**
      * Returns the category object identified by the given id
      * or null, iff not given.
