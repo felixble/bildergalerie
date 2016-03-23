@@ -41,7 +41,7 @@ class LegalnoticeView extends View
     private $city;
 
     /**
-     * @return name
+     * @return string name
      */
     public function getName()
     {
@@ -57,7 +57,7 @@ class LegalnoticeView extends View
     }
 
     /**
-     * @return zipcode
+     * @return string zipcode
      */
     public function getZipcode()
     {
@@ -73,7 +73,7 @@ class LegalnoticeView extends View
     }
 
     /**
-     * @return city
+     * @return string city
      */
     public function getCity()
     {
@@ -89,7 +89,7 @@ class LegalnoticeView extends View
     }
 
     /**
-     * @return address
+     * @return string address
      */
     public function getAddress()
     {
@@ -105,7 +105,7 @@ class LegalnoticeView extends View
     }
 
     /**
-     * @return mandant
+     * @return string mandant
      */
     public function getMandant()
     {
@@ -121,7 +121,7 @@ class LegalnoticeView extends View
     }
 
     /**
-     * @return email
+     * @return string email
      */
     public function getEmail()
     {
