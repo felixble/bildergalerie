@@ -14,7 +14,7 @@
             <div class="form-group has-feedback">
                 <label for="title">eMail</label>
                 <input type="text" class="form-control" id="mail" name="mail" required value=""/>
-                <span class="glyphicon form-control-feedback input-group-addon>@<" aria-hidden="true"></span>
+                <span class="glyphicon form-control-feedback input-group-addon" aria-hidden="true">@</span>
             </div>
             <label for="title">Telefon</label>
             <input type="text" class="form-control" id="tel" name="tel" value=""/>
