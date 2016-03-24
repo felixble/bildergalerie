@@ -17,7 +17,7 @@ class NewsDAO extends BaseMultiClientDAO
     const COL_CREATED_BY = "created_by";
     const COL_TITLE = "title";
     const COL_CONTENT = "content";
-    const COL_DATE_CREATED = "date_Created";
+    const COL_DATE_CREATED = "date_created";
 
     /**
      * @var GaleryMysql
@@ -37,8 +37,9 @@ class NewsDAO extends BaseMultiClientDAO
 
     protected function row2Object($row)
     {
-       $newsArticle = new NewsArticle($this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_CONTENT),($this->userDAO->row2object($row)), $this->getValueOrNull($row,self::COL_ARTICLE_ID));
-       return $newsArticle;
+        $newsArticle = new NewsArticle($this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_CONTENT),($this->userDAO->row2object($row)), $this->getValueOrNull($row,self::COL_ARTICLE_ID));
+        $newsArticle->setDate($this->getValueOrNull($row, self::COL_DATE_CREATED));
+        return $newsArticle;
     }
 
     /**
@@ -69,7 +70,7 @@ class NewsDAO extends BaseMultiClientDAO
     public function getArticles ()
     {
     $sqlbuilder = $this->getSqlBuilder()
-        ->setQuery('SELECT art.*, user.user_id, user.first_name, user.last_name
+        ->setQuery('SELECT art.*, user.user_id, user.first_name, user.last_name, art.date_created
                     FROM galery_news_articles AS art
                     LEFT JOIN galery_user AS user ON art.created_by = user.user_id
                     WHERE art.mandant_id = :id;')

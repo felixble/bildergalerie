@@ -8,14 +8,20 @@
  */
 class NewsArticle
 {
+    const MYSQL_DATE_TIME_FORMAT = "Y-m-d H:i:s";
     /**
-     * @var id of the NewsArticle
+     * @var int id of the NewsArticle
      */
     private $id;
     /**
-     * @var title of the NewsArticle
+     * @var string  title of the NewsArticle
      */
     private $title;
+
+    /**
+     * @var DateTime date
+     */
+    private $date;
 
     /**
      * @return User
@@ -33,16 +39,16 @@ class NewsArticle
         $this->owner = $owner;
     }
     /**
-     * @var content of the NewsArticle
+     * @var string  content of the NewsArticle
      */
     private $content;
 
     /**
-     * @var owner of the NewsArticle
+     * @var User owner of the NewsArticle
      */
     private $owner;
     /**
-     * @return title
+     * @return string title
      */
     public function getTitle()
     {
@@ -50,7 +56,7 @@ class NewsArticle
     }
 
     /**
-     * @param title $title
+     * @param string  $title
      */
     public function setTitle($title)
     {
@@ -58,7 +64,7 @@ class NewsArticle
     }
 
     /**
-     * @return content
+     * @return string content
      */
     public function getContent()
     {
@@ -66,7 +72,7 @@ class NewsArticle
     }
 
     /**
-     * @param content $content
+     * @param string  $content
      */
     public function setContent($content)
     {
@@ -74,7 +80,27 @@ class NewsArticle
     }
 
     /**
-     * @return id
+     * @param Date|string|null $date
+     */
+    public function setDate($date)
+    {
+        if (null == $date || $date instanceof DateTime) {
+            $this->$date = $date;
+        } else { // convert db date to DateTime
+            $this->date = DateTime::createFromFormat(self::MYSQL_DATE_TIME_FORMAT, $date);
+        }
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @return int id
      */
     public function getId()
     {
@@ -82,7 +108,7 @@ class NewsArticle
     }
 
     /**
-     * @param id $id
+     * @param int $id
      */
     public function setId($id)
     {
