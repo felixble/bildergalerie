@@ -21,11 +21,17 @@ class BackendController extends BildergalerieController
      */
     private $categoryDAO;
 
+    /**
+     * @var NewsDAO
+     */
+    private $newsDAO;
+
     public function onCreate(Router $router)
     {
         parent::onCreate($router);
         $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
         $this->categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
+        $this->newsDAO = new NewsDAO($this->baseFactory->getDbConnection(), $this->mandant);
     }
 
     /**
@@ -46,6 +52,10 @@ class BackendController extends BildergalerieController
     public function dashboardAction()
     {
         $dashboardView = new DashboardView();
+
+        //fetch all newsArticles
+        $newsArticles = $this->newsDAO->getArticles();
+        $dashboardView->setNewsTableView(new Dashboard_news_tableView($newsArticles));
 
         // fetch all exhibitions
         $categories = $this->categoryDAO->getAllCategories();

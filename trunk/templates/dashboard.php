@@ -56,7 +56,7 @@
 </div>
 
 <div class="tab_container" id="news">
-    <h2>Alle News-Artikel</h2>
+    <?php echo $this->getNewsTableView(); ?>
 </div>
 
 <div class="tab_container" id="users">

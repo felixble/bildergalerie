@@ -26,6 +26,29 @@ class DashboardView extends View
      */
     private $pictureTableView;
 
+
+    /**
+     * @var Dashboard_news_tableView
+     */
+    private $newsTableView;
+
+
+    /**
+     * @param Dashboard_news_tableView $newsTableView
+     */
+    public function setNewsTableView($newsTableView)
+    {
+        $this->newsTableView = $newsTableView;
+    }
+
+    /**
+     * @return Dashboard_news_tableView
+     */
+    public function getNewsTableView()
+    {
+        return $this->newsTableView;
+    }
+
     /**
      * @return Category[]|null
      */

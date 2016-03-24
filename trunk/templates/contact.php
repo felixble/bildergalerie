@@ -38,13 +38,12 @@
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             <div class="help-block with-errors"></div>
         </div>
-        <div class="form-group has-feedback">
+        <div class="form-group">
             <label for="tel">Telefon</label>
             <div class="input-group">
                 <span class="input-group-addon" id="tel-addon"><i class="glyphicon glyphicon-earphone"></i></span>
                 <input type="text" class="form-control" id="tel" name="tel" aria-describedby="tel-addon"/>
             </div>
-            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
         </div>
         <div class="form-group has-feedback">
             <!-- glyphicon glyphicon-bullhorn / glyphicon glyphicon-envelope -->
