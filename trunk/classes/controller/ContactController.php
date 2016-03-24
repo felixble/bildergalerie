@@ -22,8 +22,15 @@ class ContactController extends BildergalerieController
     public function indexAction()
     {
         $contactView = new ContactView();
+        $get = $this->getRequest()->getGetParam();
+        if(array_key_exists("ref_pic", $get))
+        {
+        //TODO datenbankabfrage mit $get für bild details
+        }
+
         return $this->getContentFrameView("Kontaktformular", $contactView);
     }
+
 
     public function sendAction()
     {

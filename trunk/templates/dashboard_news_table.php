@@ -34,9 +34,9 @@
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
 
-                <a href="<?php echo $this->url("news", "delete", array("id" => $article->getId())) ?>"
+                <a class="confirmation" data-confirmation-text="Soll der Artikel wirklich gelöscht werden?" href="<?php echo $this->url("news", "delete", array("id" => $article->getId())) ?>"
                    title="Artikel entfernen">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-remove "  aria-hidden="true"></span>
                 </a>
             </td>
         </tr>
