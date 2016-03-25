@@ -14,12 +14,13 @@ class InvalidInputException extends UserException
 
     /**
      * InvalidInputException constructor.
-     * @param string $fieldName
+     * @param string $fieldName or free text
      * @param string $input
+     * @param bool $freeText
      */
-    public function __construct($fieldName, $input = "")
+    public function __construct($fieldName, $input = "", $freeText = false)
     {
-        parent::__construct(sprintf("The Input \"%s\" for field \"%s\" is invalid.", $input, $fieldName));
+        parent::__construct(($freeText) ? $fieldName : sprintf("Die Eingabe \"%s\" im Feld \"%s\" ist ungültig.", $input, $fieldName));
         $this->fieldName = $fieldName;
         $this->input = $input;
     }

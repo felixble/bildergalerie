@@ -134,6 +134,37 @@ class Picture
         $this->setTags($tags);
     }
 
+
+    /**
+     * It is sometimes necessary to create a
+     * picture object without setting all
+     * obligatory attributes.
+     * So, use this method if you would like
+     * to know if all obligatory attributes
+     * are correctly set.
+     *
+     */
+    public function validate()
+    {
+        if (null == $this->getMandant() || !($this->getMandant() instanceof Mandant)) {
+            throw new IllegalStateException("Picture object does not have a mandant object.");
+        }
+
+        $title = $this->getTitle();
+        if (null == $title || empty($title)) {
+            throw new InvalidInputException("Das Gemälde hat keinen Titel.", "", true);
+        }
+
+        if (null == $this->getPath()) {
+            throw new InvalidInputException("Zu den Gemälde-Details wurde kein Bild hochgeladen.", "", true);
+        }
+
+        $categories = $this->getCategories();
+        if (null == $categories || count($categories) == 0) {
+            throw new InvalidInputException("Das Gemälde muss mindestens einer Kategorie zugeordnet werden.", "", true);
+        }
+    }
+
     /**
      * @return Mandant
      */
@@ -434,6 +465,7 @@ class Picture
 
     public function addCategories($categories)
     {
+        if (null == $categories) return;
         foreach ($categories as $category) {
             $this->addCategory($category);
         }

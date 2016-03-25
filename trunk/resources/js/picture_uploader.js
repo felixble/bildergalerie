@@ -48,6 +48,9 @@ function uploadSuccessful(filePath, thumbPath, picPathId, fileName) {
 
     uploadPreview.attr('src', thumbPath);
     uploadPreview.show();
+
+    $('#uploadFile_path').val(filePath);
+    $('#uploadFile_thumbPath').val(thumbPath);
 }
 
 function setPicPathId(picPathId) {
@@ -66,4 +69,40 @@ function uploadFile(formData, success) {
         success: success
     });
 
+}
+
+
+$('#picForm').submit(function(e) {
+    // check if at least one exhibition chosen
+    var el = $('#category');
+    var selected_arr = el.selectpicker('val');
+
+    if (null == selected_arr || selected_arr.length == 0) {
+        e.preventDefault();
+        setExhibitionError(true);
+    }
+});
+
+$('#category').change(function(e) {
+    var selected_arr = $(this).selectpicker('val');
+    setExhibitionError(null == selected_arr || selected_arr.length == 0);
+});
+
+$('.open_category_dialog').focus(function() {
+    var el = $('#category');
+    var selected_arr = el.selectpicker('val');
+    setExhibitionError(null == selected_arr || selected_arr.length == 0);
+});
+
+function setExhibitionError(hasError) {
+    var form_group = $('#form-group-exhibition');
+    var msg = form_group.attr('data-error');
+    var errorDiv = form_group.find('.help-block');
+    if (hasError) {
+        errorDiv.html(msg);
+        // simple hack because addClass('has-error') does not work...
+        errorDiv.css('color', '#A94442');
+    } else {
+        errorDiv.html('');
+    }
 }

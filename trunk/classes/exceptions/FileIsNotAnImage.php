@@ -15,6 +15,6 @@ class FileIsNotAnImage extends UserException
      */
     public function __construct($fileName)
     {
-        parent::__construct(sprintf("The file %s is not an image.", $fileName));
+        parent::__construct(sprintf("Die Datei %s ist kein Bild.", $fileName));
     }
 }

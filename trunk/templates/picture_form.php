@@ -38,6 +38,8 @@ $picPathId = (null == $pic) ? ":" : $pic->getPath()->getId();
         <div class="form-group" style="display: <?php echo (empty($picPath)) ? "block" : "none"; ?>;">
             <label for="uploadFile">Upload</label>
             <input type="file" id="uploadFile" name="uploadFile" value="<?php echo $picPath; ?>">
+            <input type="hidden" id="uploadFile_thumbPath" name="uploadFile_thumbPath" value="<?php echo $picThumbPath; ?>">
+            <input type="hidden" id="uploadFile_path" name="uploadFile_path" value="<?php echo $picPath; ?>">
         </div>
         <div style="display: inline-block;">
             <img style="display: <?php echo (!empty($picPath)) ? "block" : "none"; ?>;" src="<?php echo $picThumbPath; ?>" id="uploadPreview" width="200">
@@ -52,13 +54,13 @@ $picPathId = (null == $pic) ? ":" : $pic->getPath()->getId();
 
             <div class="form-group has-feedback">
                 <label for="title">Titel</label>
-                <input type="text" class="form-control" id="title" name="title" value="<?php echo $title; ?>" required/>
+                <input type="text" class="form-control" id="title" name="title" value="<?php echo $title; ?>" autofocus required/>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group has-feedback" id="form-group-exhibition" data-error="Bitte wählen Sie mindestens eine Ausstellung.">
                 <label for="category">Ausstellung</label>
                 <div class="input-group">
-                    <select class="selectpicker form-control" name="category[]" id="category" data-none-selected-text="-- Bitte wählen --" multiple required>
+                    <select class="selectpicker form-control" name="category[]" id="category" data-none-selected-text="-- Bitte wählen --" multiple>
                         <!--<option value="-1">-- Bitte wählen --</option>-->
                         <?php
                         foreach ($this->getCategories() as $category) {
@@ -75,12 +77,14 @@ $picPathId = (null == $pic) ? ":" : $pic->getPath()->getId();
                         </button>
                     </span>
                 </div>
+                <div class="help-block with-errors"></div>
             </div>
             <div class="form-group has-feedback">
                 <label for="material">Material/Technik</label>
                 <input type="text" class="form-control" id="material" name="material" value="<?php echo $material ?>"
-                       placeholder="z.B. Acryl auf Leinwand" required/>
+                       placeholder="z.B. Acryl auf Leinwand" data-error="Bitte geben Sie das verwendete Material und die Technik an." required/>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
             </div>
             <div class="form-group">
                 <label for="description">Beschreibung</label>

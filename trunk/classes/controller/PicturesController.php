@@ -170,7 +170,7 @@ class PicturesController extends BildergalerieController
         // TODO: we should check if there is already a related picture detail entry for the given path_id
         if (array_key_exists("path_id", $this->getRequest()->getGetParam())) {
             $mandant = $this->baseFactory->getMandantManager()->getMandant();
-            $picture = new Picture($mandant);
+            $picture = (null == $this->currentPicture) ? new Picture($mandant) : $this->currentPicture;
             $picturePathDAO = new PicturePathDAO($this->baseFactory->getDbConnection(), $mandant);
             $path = $picturePathDAO->getPicturePathForId($this->getRequest()->getGetParam()["path_id"]);
             if (null != $path) {
@@ -231,14 +231,17 @@ class PicturesController extends BildergalerieController
         $descr = $this->getValueOrNull("description", $post);
         $material = $this->getValueOrNull("material", $post);
         $picPathId = $this->getValueOrNull("picPathId", $post);
+        $picPath = $this->getValueOrNull("uploadFile_path", $post);
+        $picPathThumb = $this->getValueOrNull("uploadFile_thumbPath", $post);
         $category = $this->getValueOrNull("category", $post);
 
         $success = false;
         $picture = null;
         try {
-            // TODO: validate user input (-> throw exception in setters of picture ?! - Maybe not the best idea...) - maybe validate method ??
             $picture = new Picture($this->mandant, /* null, iff create-new-pic-Mode */ $editPicId, $title, $descr, null, $material, null, null, null, $picPathId, null, null, $uploadedBy, $owner, null, $tags);
+            $picture->getPath()->setPath($picPath)->setThumbPath($picPathThumb);
             $picture->addCategories($category);
+            $picture->validate();
             // store/update the new picture in the database
             if ($edit) {
                 $this->pictureDAO->updatePicture($picture);
