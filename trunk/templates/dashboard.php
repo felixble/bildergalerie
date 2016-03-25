@@ -8,7 +8,7 @@
     <li class="tab-item" id="tab_users"><a class="tab-control" data-tab="users" href="<?php echo $this->urlScrollTo("users") ?>">Benutzer</a></li>
 </ul>
 
-<div class="tab_container active" id="exhibitions">
+<div class="tab_container active" id="_exhibitions">
     <!-- Dialog Content -->
     <?php echo new Edit_exhibition_dialogView(/* editMode */
         true); ?>
@@ -50,15 +50,15 @@
     </table>
 </div>
 
-<div class="tab_container" id="pictures">
+<div class="tab_container" id="_pictures">
     <?php echo $this->getUnlinkedPicturesView(); ?>
     <?php echo $this->getPictureTableView(); ?>
 </div>
 
-<div class="tab_container" id="news">
+<div class="tab_container" id="_news">
     <?php echo $this->getNewsTableView(); ?>
 </div>
 
-<div class="tab_container" id="users">
+<div class="tab_container" id="_users">
     <h2>Alle Benutzer</h2>
 </div>

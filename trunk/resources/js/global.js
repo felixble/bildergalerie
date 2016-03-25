@@ -50,7 +50,6 @@ function selectCurrentMenuItem() {
     var itemActivated = false;
     $(".auto_activate").each(function() {
         var currentId = $(this).attr('id').substr(4); // remove the nav_-prefix
-        console.log(currentId);
         var index = path.indexOf(currentId);
 
         if (index > -1) { // url contains item id

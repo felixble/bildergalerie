@@ -14,20 +14,15 @@ $(function() {
         active_tab.addClass("active");
 
         current_container_el.removeClass("active");
-        current_container_el = $('#' + hash);
+        current_container_el = $('#_' + hash);
         current_container_el.addClass("active");
     }
-    console.log(current_container_el);
 
     // hide all tab-containers
     $('.tab_container:not(.active)').hide();
 
     // set onclick handler for tab controls
-    $('.tab-control').click(function() {
-
-        console.log("click");
-        console.log(current_container_el);
-
+    $('.tab-control').click(function(event) {
         // hide current container
         if (null !== current_container_el) {
             current_container_el.hide();
@@ -38,15 +33,14 @@ $(function() {
 
         // show related container
         var related_container = $(this).attr('data-tab');
-        var related_container_el = $('#' + related_container);
+        // simple hack to prevent the default scroll event to the anchor: the real id of the selected tab starts with
+        // an underline so there is no element with the id given in the url (hash)
+        var related_container_el = $('#_' + related_container);
         related_container_el.show();
 
         active_tab = $(this).parent();
         active_tab.addClass("active");
         current_container_el = related_container_el;
-
-        console.log("next");
-        console.log(current_container_el);
 
         return true;
     });
