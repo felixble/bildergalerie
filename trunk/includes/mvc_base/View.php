@@ -129,11 +129,12 @@ class View {
      * @param string|null $controller
      * @param string $action
      * @param array $params
+     * @param string $scrollTo id
      * @return string
      */
-    public function url($controller = null, $action = "", $params = array())
+    public function url($controller = null, $action = "", $params = array(), $scrollTo = "")
     {
-        return Router::getUrl($controller, $action, $params);
+        return Router::getUrl($controller, $action, $params, $scrollTo);
     }
 
     public function urlScrollTo($id)

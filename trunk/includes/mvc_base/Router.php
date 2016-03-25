@@ -54,9 +54,10 @@ class Router {
      * @param string|null $controller
      * @param string $action
      * @param array $params
+     * @param string $scrollTo id
      * @return string
      */
-    public static function getUrl($controller = null, $action = "", $params = array())
+    public static function getUrl($controller = null, $action = "", $params = array(), $scrollTo = "")
     {
         if (null == $controller ) {
             $controller = MvcConfig::getInstance()->getDefaultControllerName();
@@ -69,6 +70,10 @@ class Router {
 
         foreach($params as $key => $val) {
             $url .= "/" . $key . "/" . $val;
+        }
+
+        if (!empty($scrollTo)) {
+            $url .= "#" . $scrollTo;
         }
 
         return $url;

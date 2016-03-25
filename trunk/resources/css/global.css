@@ -40,8 +40,14 @@ td.table-no-truncate {
     }
 }
 
-.vertical-allign {
-    display: flex;
-    allign-items: center;
-
+/* Because we have a navbar which is fixed to the top
+   we use special hidden anchor elements to scroll to
+   a element with a offset with the same value as the
+   height of the navbar.
+*/
+.anchor {
+    display: block;
+    position: relative;
+    top: -52px;
+    visibility: hidden;
 }

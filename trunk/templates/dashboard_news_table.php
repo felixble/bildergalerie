@@ -29,12 +29,13 @@
             <td><?php echo $article->getOwner(); ?></td>
             <td><?php echo $article->getDate()->format("d.m.Y"); ?></td>
             <td class="text-right table-no-truncate">
-                <a href="<?php echo $this->url("news", "update", array("id" => $article->getId())) ?>"
+                <a href="<?php echo $this->url("news", "update", array("id" => $article->getId()), "new_article") ?>"
                    title="Artikel bearbeiten">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
 
-                <a class="confirmation" data-confirmation-text="Soll der Artikel wirklich gelöscht werden?" href="<?php echo $this->url("news", "delete", array("id" => $article->getId())) ?>"
+                <a class="confirmation" data-confirmation-text="Soll der Artikel wirklich gelöscht werden?"
+                   href="<?php echo $this->url("news", "delete", array("id" => $article->getId())); ?>"
                    title="Artikel entfernen">
                     <span class="glyphicon glyphicon-remove "  aria-hidden="true"></span>
                 </a>

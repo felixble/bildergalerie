@@ -1,7 +1,8 @@
 <?php /** @var Post_newsView $this */ ?>
 
+<div class="anchor" id="new_article"></div>
 <div class="panel panel-default">
-    <div class="panel-heading">Beitrag verfassen</div>
+    <div class="panel-heading">Beitrag <?php echo ($this->isEditMode()) ? "ändern" : "verfassen"; ?></div>
     <div class="panel-body">
         <form data-toggle="validator" role="form" action="<?php echo $this->url("news","create");?>" method="post">
 

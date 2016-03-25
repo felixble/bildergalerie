@@ -6,13 +6,12 @@
 
         <div class="row">
             <div class="col-lg-5 col-md-5">
-                <div class="form-group has-feedback">
+                <div class="form-group">
                     <label for="name">Vorname</label>
                     <div class="input-group">
                         <span class="input-group-addon" id="name-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input type="text" class="form-control" id="name" name="name" aria-describedby="name-addon"/>
+                        <input type="text" class="form-control" id="name" name="name" aria-describedby="name-addon" autofocus/>
                     </div>
-                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 </div>
             </div>
             <div class="col-lg-7 col-md-7">
@@ -33,7 +32,7 @@
             <div class="input-group">
                 <span class="input-group-addon" id="email-addon">@</span>
                 <input type="email" class="form-control" id="mail" name="mail" placeholder="email@example.com"
-                       data-error="Bitte geben Sie eine korrekte E-Mail-Adresse an" aria-describedby="email-addon" required />
+                       data-error="Bitte geben Sie eine korrekte E-Mail-Adresse an, damit wir Ihnen antworten können." aria-describedby="email-addon" required />
             </div>
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             <div class="help-block with-errors"></div>
@@ -50,9 +49,11 @@
             <label for="subject">Betreff</label>
             <div class="input-group">
                 <span class="input-group-addon" id="subject-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                <input type="text" class="form-control" id="subject" name="subject" aria-describedby="subject-addon" required value=""/>
+                <input type="text" class="form-control" id="subject" name="subject"
+                       aria-describedby="subject-addon" required value=""/>
             </div>
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <div class="help-block with-errors"></div>
         </div>
 
         <div class="form-group has-feedback">

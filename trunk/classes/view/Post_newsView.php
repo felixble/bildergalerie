@@ -12,7 +12,7 @@ class Post_newsView extends View
     /**
      * @var NewsArticle
      */
-    private $article=null;
+    private $article = null;
 
     /**
      * @return NewsArticle
@@ -43,5 +43,10 @@ class Post_newsView extends View
     public function getID()
     {
         return (null==$this->article) ? "" : $this->getArticle()->getId();
+    }
+
+    public function isEditMode()
+    {
+        return null != $this->article;
     }
 }
