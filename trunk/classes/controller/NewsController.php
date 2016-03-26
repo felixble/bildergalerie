@@ -118,10 +118,18 @@ class NewsController extends BildergalerieController
 
     public function updateAction()
     {
-        $updateArticleId = $this->getIdRequestParam("id", /* throw exception if not given */true);
-        $newsArticle = $this->newsDAO->getArticleById($updateArticleId);
-        //TODO throw exception if null
-        $this->currentArticle = $newsArticle;
+        try {
+            $updateArticleId = $this->getIdRequestParam("id", /* throw exception if not given */true);
+            $newsArticle = $this->newsDAO->getArticleById($updateArticleId);
+            if (null == $newsArticle) {
+                throw new SimpleUserErrorException("Der Beitrag wurde nicht gefunden.");
+            }
+            $this->currentArticle = $newsArticle;
+        } catch(UserException $e) {
+            // we cannot throw an exception because the news articles should be shown, though.
+            $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> " . $e->getMessage());
+        }
+
         return $this->indexAction();
 
 
