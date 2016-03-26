@@ -9,7 +9,7 @@
 class ContactController extends BildergalerieController
 {
 
-    const MAILADDRESS = "hilde@blechschmitt.name";
+    const MAILADDRESS = "otting.marc@gmail.com";
     /**
      * Default action which will be executed
      * if no specific action is given.
@@ -45,6 +45,8 @@ class ContactController extends BildergalerieController
         $message = $this->buildMessage($name,$lastName,$mail,$telephone,$subject,$content);
 
         mail(self::MAILADDRESS,$message, $mail);
+        $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Vielen Dank. Ihre Anfrage wird umgehend bearbeitet.");
+        $this->getRouter()->reLocateTo("home");
     }
 
     private function buildMessage($name, $lastName, $mail, $telephone, $subject, $content)
