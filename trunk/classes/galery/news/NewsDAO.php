@@ -102,7 +102,7 @@ class NewsDAO extends BaseMultiClientDAO
             ->setConditions(array(self::COL_ARTICLE_ID => $article->getId()))
             ->setData($data);
 
-        $res = $this->sqlManager->update($sqlBuilder); // $res: bool|null, null iff nothing has been updated
+        $res = $this->sqlManager->update($sqlBuilder); // $res: bool, false iff nothing has been updated
 
         return $res;
     }

@@ -17,7 +17,7 @@ if (null != $this->getPostView()) {
 
             <?php if ($this->isUserLoggedIn()): ?>
             <div class="pull-right">
-                <a href="<?php echo $this->url("news", "update", array("id" => $article->getId())) ?>"
+                <a href="<?php echo $this->url("news", "update", array("id" => $article->getId()), "new_article") ?>"
                    title="Kommentar bearbeiten">
                     <span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true"></span>
                 </a>

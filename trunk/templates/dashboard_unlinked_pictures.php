@@ -1,8 +1,11 @@
 <?php /** @var Dashboard_unlinked_picturesView $this */ ?>
 
 <h2>Lose Gemälde</h2>
-<p>Die folgenden Bilder wurden bereits hochgeladen, sind jedoch noch nicht mit Details verknüpft. Wählen Sie ein Bild
-    aus, um einen Title und weitere Informationen hinzuzufügen.</p>
+<p>
+    Die folgenden Bilder wurden bereits hochgeladen, sind jedoch noch nicht mit Details verknüpft. Wählen Sie ein Bild
+    aus, um einen Titel und weitere Informationen hinzuzufügen. Erst dann kann das Bild im öffentlichen Bereich
+    ausgestellt werden.
+</p>
 <div class="menu row">
     <?php foreach ($this->getPicturePathes() as $path): ?>
         <div class="menu-category list-group">

@@ -17,7 +17,7 @@ function autoScrollToId() {
 
     if (null == scrollToEl.offset()) return;
     $('html, body').animate({
-        scrollTop: scrollToEl.offset().top
+        scrollTop: scrollToEl.offset().top -50
     }, 1000);
 }
 

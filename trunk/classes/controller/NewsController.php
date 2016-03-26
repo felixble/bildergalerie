@@ -67,7 +67,8 @@ class NewsController extends BildergalerieController
         $post = $this->getRequest()->getPostParam();
         $newsArticle = $this->buildArticle($post);
         if(null!=$newsArticle->getId()){
-            $success = $this->newsDAO->updateArticle($newsArticle);
+            $this->newsDAO->updateArticle($newsArticle);
+            $success = true; // update returns false iff nothing has been update, but this is not an error.
         }else {
             $success = $this->newsDAO->createArticle($newsArticle);
         }
@@ -75,7 +76,7 @@ class NewsController extends BildergalerieController
 
         if ($success) {
             $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> Der Artikel wurde erfolgreich gespeichert.");
-        } else {
+        } else { // no success means nothing as been updates
             $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> Der Artikel konnte nicht gespeichert werden.");
         }
         $this->getRouter()->reLocateTo("news");
