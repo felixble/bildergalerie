@@ -1,5 +1,10 @@
 <?php /** @var Picture_detailView $this */ ?>
 <?php
+$overall_rating = "3,7";
+$my_rating = "";
+$rating_text = ($my_rating == null | empty($my_rating))
+    ? "Gesamtbewertung: $overall_rating"
+    : "Gesamtbewertung: $overall_rating / meine Bewertung: $my_rating";
 ?>
 <div class="row">
     <div class="col-lg-8">
@@ -9,7 +14,7 @@
             &nbsp; <!-- empty space because there is no back link -->
         <?php endif; ?>
         <img src="<?php echo $this->getPicture()->getPath()->getPath(); ?>"
-             class="img-rounded img-responsive
+             class="img-rounded img-responsive"
               alt="<?php echo $this->getPicture()->getTitle(); ?>" width="1000" />
         <?php
         $tags = $this->getPicture()->getTags();
@@ -21,8 +26,8 @@
     <div class="col-lg-4">
         <div class="panel panel-default" style="margin-top: 20px">
             <div class="panel-heading">
-                <div class="pull-right c-rating"></div>
-                <div class="pull-right">3,7 </div>
+                <div class="pull-right" title="<?php echo $rating_text; ?>"><?php echo $overall_rating; ?><small>/5</small></div>
+                <div class="pull-right c-rating" data-overall-rating="<?php echo str_replace(",", ".", $overall_rating); ?>"></div>
                 <strong><?php echo $this->getPicture()->getTitle(); ?></strong>
             </div>
             <div class="panel-body">
