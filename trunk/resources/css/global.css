@@ -52,6 +52,14 @@ td.table-no-truncate {
     visibility: hidden;
 }
 
+.articleDevider {
+    text-align: right;
+    font-size: 14px;
+    border-bottom: 1px solid #dadada;
+    padding-bottom: 1px;
+    margin-bottom: 25px;
+}
+
 .c-rating {
     min-width: 110px;
     margin-top: -3px;

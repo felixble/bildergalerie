@@ -10,25 +10,23 @@ if (null != $this->getPostView()) {
 <div>
     <?php foreach ($this->getNewsArticles() as $article): ?>
         <div>
-            <hr>
             <h2><?php echo $article->getTitle() ?></h2>
 
+            <h6>Veröffentlicht am <?php echo $article->getDate()->format("d.m.Y"); ?> von <?php echo $article->getOwner(); ?></h6>
+
             <p> <?php echo $article->getContent() ?></p>
+                <div class="articleDevider">
+                <?php if ($this->isUserLoggedIn()): ?>
+                    <a href="<?php echo $this->url("news", "update", array("id" => $article->getId()), "new_article") ?>"
+                       title="Kommentar bearbeiten">Bearbeiten
+                    </a> &middot
 
-            <?php if ($this->isUserLoggedIn()): ?>
-            <div class="pull-right">
-                <a href="<?php echo $this->url("news", "update", array("id" => $article->getId()), "new_article") ?>"
-                   title="Kommentar bearbeiten">
-                    <span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true"></span>
-                </a>
-
-                <a class="confirmation" data-confirmation-text="Soll der Artikel wirklich gelöscht werden?"
-                   href="<?php echo $this->url("news", "delete", array("id" => $article->getId())) ?>"
-                   title="Kommentar entfernen">
-                    <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>
-                </a>
-            </div>
-            <?php endif; ?>
+                    <a class="confirmation" data-confirmation-text="Soll der Artikel wirklich gelöscht werden?"
+                       href="<?php echo $this->url("news", "delete", array("id" => $article->getId())) ?>"
+                       title="Kommentar entfernen">Entfernen
+                    </a>
+                <?php endif; ?>
+                </div>
         </div>
     <?php endforeach; ?>
 </div>

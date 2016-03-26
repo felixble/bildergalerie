@@ -1,10 +1,10 @@
 <?php /** @var LegalnoticeView $this */ ?>
 
 <h1>Impressum</h1>
-<h5><?php echo $this->getName() ?></h5>
-<h5><?php echo $this->getMandant() ?></h5>
-<h5>E-Mail: <a href="<?php echo $this->url("contact")?>" title="Kontaktformular" >Kontaktformular</a> </h5>
-<h5><?php echo $this->getCity() ?></h5>
+<p><?php echo $this->getName() ?></p>
+<p><?php echo $this->getMandant() ?></p>
+<p>E-Mail: <a href="<?php echo $this->url("contact")?>" title="Kontaktformular" >Kontaktformular</a> <p>
+<p><?php echo $this->getCity() ?><p>
 <br>
 <br>
 <!-- Haftungsausschluss
