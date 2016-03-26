@@ -44,7 +44,7 @@ class ContactController extends BildergalerieController
 
         $message = $this->buildMessage($name,$lastName,$mail,$telephone,$subject,$content);
 
-        mail(self::MAILADDRESS,$message);
+        mail(self::MAILADDRESS,$message, $mail);
     }
 
     private function buildMessage($name, $lastName, $mail, $telephone, $subject, $content)

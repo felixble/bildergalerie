@@ -8,8 +8,7 @@
  */
 class LegalnoticeView extends View
 {
-    const NAME = "Hilde Blechschmitt";
-    const EMAIL = "hilde@blechschmitt.name";
+    const NAME = "Hildegard Blechschmitt";
     const MANDANT = "Hildes Bildergalerie";
     const ADDRESS = "Dr Schierstraße 3";
     const ZIPCODE = "66386";
@@ -19,10 +18,6 @@ class LegalnoticeView extends View
      * @var name
      */
     private $name;
-    /**
-     * @var email
-     */
-    private $email;
     /**
      * @var mandant
      */
@@ -119,23 +114,4 @@ class LegalnoticeView extends View
     {
         $this->mandant = self::MANDANT;
     }
-
-    /**
-     * @return string email
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param email $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = self::EMAIL;
-    }
-
-
-
 }

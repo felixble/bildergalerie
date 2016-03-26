@@ -23,7 +23,6 @@ class LegalnoticeController extends BildergalerieController
         $legalnotice = new LegalnoticeView();
         $legalnotice->setAddress(null);
         $legalnotice->setName(null);
-        $legalnotice->setEmail(null);
         $legalnotice->setMandant(null);
         $legalnotice->setZipcode(null);
         $legalnotice->setCity(null);
