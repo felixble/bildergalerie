@@ -20,7 +20,7 @@
                     <ul class="nav navbar-nav">
                         <li class="auto_activate" id="nav_home"><a href="<?php echo $this->url(); ?>">Startseite</a></li>
                         <li class="auto_activate" id="nav_about"><a href="<?php echo $this->url("about"); ?>">Die Künstlerin</a></li>
-                        <li class="auto_activate" id="nav_news"><a href="<?php echo $this->url("news"); ?>">News</a></li>
+                        <li class="auto_activate" id="nav_news"><a href="<?php echo $this->url("news"); ?>">Aktuelles</a></li>
                         <li class="auto_activate dropdown" id="nav_pictures">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">

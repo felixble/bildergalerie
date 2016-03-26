@@ -21,7 +21,7 @@
     </div><!-- /.col-lg-4 -->
     <div class="col-sm-4">
         <img class="img-circle" src="resources/img/hilde_news.jpg" alt="Hildes News" width="140" height="140">
-        <h2>News</h2>
+        <h2>Aktuelles</h2>
         <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta
             felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
             massa justo sit amet risus.</p>

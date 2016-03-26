@@ -8,14 +8,18 @@ if (null != $this->getPostView()) {
 
 
 <div>
-    <?php foreach ($this->getNewsArticles() as $article): ?>
+    <?php
+    $i = 0;
+    $max = count($this->getNewsArticles());
+    foreach ($this->getNewsArticles() as $article): ?>
         <div>
             <h2><?php echo $article->getTitle() ?></h2>
 
             <h6>Veröffentlicht am <?php echo $this->getGermanDate($article->getDate()); ?> von <?php echo $article->getOwner(); ?></h6>
 
             <p> <?php echo $article->getContent() ?></p>
-                <div class="articleDevider">
+            <?php if($this->isUserLoggedIn() || $i+1 < $max): ?>
+            <div class="articleDevider">
                 <?php if ($this->isUserLoggedIn()): ?>
                     <a href="<?php echo $this->url("news", "update", array("id" => $article->getId()), "new_article") ?>"
                        title="Kommentar bearbeiten">Bearbeiten
@@ -26,7 +30,10 @@ if (null != $this->getPostView()) {
                        title="Kommentar entfernen">Entfernen
                     </a>
                 <?php endif; ?>
-                </div>
+            </div>
+            <?php endif; ?>
         </div>
-    <?php endforeach; ?>
+    <?php
+    $i++;
+    endforeach; ?>
 </div>
