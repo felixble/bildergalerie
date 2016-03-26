@@ -34,18 +34,23 @@ class ContactController extends BildergalerieController
 
     public function sendAction()
     {
-        $post = $this->getRequest()->getPostParam();
-        $name = $this->getValueOrNull("name", $post);
-        $lastName = $this->getValueOrNull("lastName", $post);
-        $mail = $this->getValueOrNull("mail", $post);
-        $telephone = $this->getValueOrNull("tel", $post);
-        $subject = $this->getValueOrNull("subject", $post);
-        $content = $this->getValueOrNull("content", $post);
+        try {
+            $post = $this->getRequest()->getPostParam();
+            $name = $this->getValueOrNull("name", $post);
+            $lastName = $this->getValueOrNull("lastName", $post);
+            $mail = $this->getValueOrNull("mail", $post);
+            $telephone = $this->getValueOrNull("tel", $post);
+            $subject = $this->getValueOrNull("subject", $post);
+            $content = $this->getValueOrNull("content", $post);
 
-        $message = $this->buildMessage($name,$lastName,$mail,$telephone,$subject,$content);
+            $message = $this->buildMessage($name, $lastName, $mail, $telephone, $subject, $content);
 
-        mail(self::MAILADDRESS,$message, $mail);
-        $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Vielen Dank. Ihre Anfrage wird umgehend bearbeitet.");
+            mail(self::MAILADDRESS, $message, $mail);
+            $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Vielen Dank. Ihre Anfrage wird umgehend bearbeitet.");
+        } catch (Exception $e) {
+            $this->getAlertManager()->setErrorMessage("<strong>Fehler:</strong> Ihre Anfrage konnte leider nicht gesendet werden. Bitte versuchen sie es erneut.");
+            return $this->indexAction();
+        }
         $this->getRouter()->reLocateTo("home");
     }
 
