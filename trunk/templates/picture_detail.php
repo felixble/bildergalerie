@@ -22,6 +22,7 @@
         <div class="panel panel-default" style="margin-top: 20px">
             <div class="panel-heading">
                 <div class="pull-right c-rating"></div>
+                <div class="pull-right">3,7 </div>
                 <strong><?php echo $this->getPicture()->getTitle(); ?></strong>
             </div>
             <div class="panel-body">
