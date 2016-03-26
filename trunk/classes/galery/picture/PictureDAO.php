@@ -238,6 +238,16 @@ class PictureDAO extends BaseMultiClientDAO
         return $picture->getPath()->getId();
     }
 
+    public function checkPictureExists($picId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery("SELECT COUNT(pic_id) AS count FROM galery_pictures WHERE pic_id = :pid")
+            ->setConditions(array("pid" => $picId));
+
+        $row = $this->sqlManager->fetchRow($sqlBuilder);
+        return (0 != $row["count"]);
+    }
+
     protected function row2Object($row)
     {
         // create the picture object with all primitive data.

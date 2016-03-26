@@ -10,16 +10,23 @@
  */
 class AjaxController extends BildergalerieController
 {
+    const KEY_COOKIE_RATING = "bildergalerie_vistor_rating_id";
 
     /**
      * @var Mandant
      */
     private $mandant;
 
+    /**
+     * @var PicRatingDAO
+     */
+    private $ratingDAO;
+
     public function onCreate(Router $router)
     {
         parent::onCreate($router);
         $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
+        $this->ratingDAO = new PicRatingDAO($this->baseFactory->getDbConnection(), $this->mandant);
     }
 
 
@@ -151,4 +158,57 @@ class AjaxController extends BildergalerieController
 
         return json_encode($resultArray);
     }
+
+    public function rateAction()
+    {
+        $resultArray = array(
+            "status"    => "OK"
+        );
+
+        $get = $this->getRequest()->getGetParam();
+
+        if (!array_key_exists("picId", $get)) {
+            throw new InvalidArgumentException("Parameter pidId missing.");
+        }
+
+        if (!array_key_exists("value", $get)) {
+            throw new InvalidArgumentException("Parameter value missing.");
+        }
+
+        $picId = $get["picId"];
+        $ratingeValue = $get["value"];
+
+        if ($ratingeValue < 1 || $ratingeValue > 5) {
+            throw new InvalidArgumentException("Value must be between 1 and 5");
+        }
+
+        $visitorRatingId = $this->getVisitorRatingId();
+
+        if ($this->ratingDAO->checkVisitorAlreadRated($visitorRatingId, $picId)) {
+            throw new IllegalStateException("Visitor rated already.");
+        }
+
+        $ratingId = $this->ratingDAO->createVotingEntry($picId, $ratingeValue, $visitorRatingId);
+
+        if ($ratingId == false) {
+            throw new IllegalStateException("Could not save rating");
+        }
+
+        $resultArray["rating_id"] = $ratingId;
+
+        return json_encode($resultArray);
+    }
+
+    private function getVisitorRatingId()
+    {
+        $cookies = $this->getRequest()->getCookies();
+        if (!array_key_exists(self::KEY_COOKIE_RATING, $cookies)) {
+            $ratingId = uniqid();
+            setcookie(self::KEY_COOKIE_RATING, $ratingId, 2147483647, "/"); // expire = max int value (2^31-1)
+            return $ratingId;
+        }
+
+        return $cookies[self::KEY_COOKIE_RATING];
+    }
+
 }
