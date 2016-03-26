@@ -25,6 +25,9 @@
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <?php endif; ?>
 
+    <!-- CSS for rating plugin -->
+    <link rel="stylesheet" href="vendor/callmenick/five-star-rating/css/rating.min.css">
+
     <?php
     if (null != $this->getCSS() && is_array($this->getCSS())) {
         foreach ($this->getCSS() as $css) {
@@ -61,6 +64,9 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
 
+
+<!-- JS for rating plugin -->
+<script src="vendor/callmenick/five-star-rating/js/dist/rating.min.js"></script>
 
 <?php
 if (null != $this->getJS() && is_array($this->getJS())) {

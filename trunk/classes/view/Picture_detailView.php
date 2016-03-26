@@ -87,4 +87,9 @@ class Picture_detailView extends View
         return $this->isAuthenticated;
     }
 
+    public function getCustomJS()
+    {
+        return "pic_rating.js";
+    }
+
 }

@@ -51,3 +51,8 @@ td.table-no-truncate {
     top: -52px;
     visibility: hidden;
 }
+
+.c-rating {
+    min-width: 110px;
+    margin-top: -3px;
+}

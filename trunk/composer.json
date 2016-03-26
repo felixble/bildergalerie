@@ -13,6 +13,18 @@
                     "reference": "master"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "callmenick/five-star-rating",
+                "version": "dev-master",
+                "source": {
+                    "url": "https://github.com/callmenick/five-star-rating.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
         }
     ],
 
@@ -25,6 +37,7 @@
         "components/bootstrap-switch": "dev-master",
         "makeusabrew/bootbox": "dev-master",
         "1000hz/bootstrap-validator": "dev-master",
+        "callmenick/five-star-rating": "dev-master",
         "crodas/notoj": "^1.2"
 
     },

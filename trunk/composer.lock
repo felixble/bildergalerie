@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7c3bc19ad6b2e13a26418ffa5e1a0728",
-    "content-hash": "a841c021102637a169a02b6f6e06bb27",
+    "hash": "a7cba10bf1469cc24b8224992394fed4",
+    "content-hash": "6206123b7ebe7a3932babed7d9f287cb",
     "packages": [
         {
             "name": "1000hz/bootstrap-validator",
@@ -81,6 +81,17 @@
                 "sessions"
             ],
             "time": "2015-03-27 18:33:22"
+        },
+        {
+            "name": "callmenick/five-star-rating",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/callmenick/five-star-rating.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2015-11-02 00:34:29"
         },
         {
             "name": "components/bootstrap",
@@ -625,7 +636,8 @@
     "stability-flags": {
         "components/bootstrap-switch": 20,
         "makeusabrew/bootbox": 20,
-        "1000hz/bootstrap-validator": 20
+        "1000hz/bootstrap-validator": 20,
+        "callmenick/five-star-rating": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
