@@ -2,14 +2,14 @@
 <?php
 $overall_rating = $this->getPicture()->getAverageRatingValue();
 $my_rating = $this->getPicture()->getRatingValue();
-$rating_text = ($my_rating == null | empty($my_rating))
+/*$rating_text = ($my_rating == null | empty($my_rating))
     ? "Gesamtbewertung: $overall_rating"
     : "Gesamtbewertung: $overall_rating / meine Bewertung: $my_rating";
 
 if ($overall_rating == null || empty($overall_rating)) {
     $overall_rating = 0;
     $rating_text = "Bisher noch keine Bewertungen";
-}
+}*/
 ?>
 <div class="row">
     <div class="col-lg-8">
@@ -29,10 +29,11 @@ if ($overall_rating == null || empty($overall_rating)) {
         ?>
     </div>
     <div class="col-lg-4">
+        <div class="alert alert-success" id="rating_msg" style="margin-top: -42px; margin-bottom: -10px; display: none;"></div>
         <div class="panel panel-default" style="margin-top: 20px">
-            <div class="panel-heading">
-                <div class="pull-right" title="<?php echo $rating_text; ?>"><?php echo $overall_rating; ?><small>/5</small></div>
-                <div class="pull-right c-rating" data-pic-id="<?php echo $this->getPicture()->getPictureId(); ?>" data-overall-rating="<?php echo str_replace(",", ".", $overall_rating); ?>"></div>
+            <div class="panel-heading" id="rating_title">
+                <div class="pull-right" id="rating_info"><span id="overall_rating">0</span><small>/5</small></div>
+                <div class="pull-right c-rating" data-pic-id="<?php echo $this->getPicture()->getPictureId(); ?>" data-my-rating="<?php echo $my_rating; ?>" data-overall-rating="<?php echo str_replace(",", ".", $overall_rating); ?>"></div>
                 <strong><?php echo $this->getPicture()->getTitle(); ?></strong>
             </div>
             <div class="panel-body">

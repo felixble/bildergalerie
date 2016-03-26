@@ -183,17 +183,29 @@ class AjaxController extends BildergalerieController
 
         $visitorRatingId = RatingManager::getVisitorRatingId();
 
-        if ($this->ratingDAO->checkVisitorAlreadRated($visitorRatingId, $picId)) {
-            throw new IllegalStateException("Visitor rated already.");
+        $result = true;
+        $update = false;
+        $ratingId = $this->ratingDAO->getRatingIdForVisitor($visitorRatingId, $picId);
+        if (null != $ratingId) {
+            // update rating value
+            $this->ratingDAO->updateVotingEntry($ratingeValue, $ratingId);
+            $update = true;
+
+        } else {
+            // create a new rating value
+            $result = $this->ratingDAO->createVotingEntry($picId, $ratingeValue, $visitorRatingId);
         }
 
-        $ratingId = $this->ratingDAO->createVotingEntry($picId, $ratingeValue, $visitorRatingId);
-
-        if ($ratingId == false) {
+        if ($result == false) {
             throw new IllegalStateException("Could not save rating");
         }
 
-        $resultArray["rating_id"] = $ratingId;
+        // fetch the current overall rating value
+        $overallRating = $this->ratingDAO->getOverallRatingForPic($picId);
+
+        $resultArray["overall_rating"] = $overallRating;
+        $resultArray["value"] = $ratingeValue;
+        $resultArray["update"] = $update;
 
         return json_encode($resultArray);
     }

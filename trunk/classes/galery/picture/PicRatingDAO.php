@@ -49,26 +49,49 @@ class PicRatingDAO extends BaseDAO
             throw new IllegalStateException(sprintf("Das Bild mit der Id %s existiert nicht.", $picId));
         }
 
-        $data = array(
-            self::COL_PIC_ID        => $picId,
-            self::COL_RATING_VALUE  => $votingValue,
-            self::COL_VISITOR_ID    => $visitorId
-        );
+        $data = $this->getRowArray($picId, $votingValue, $visitorId);
 
         return $this->create($data);
     }
 
-    public function checkVisitorAlreadRated($visitorRatingId, $picId)
+    public function getRatingIdForVisitor($visitorRatingId, $picId)
     {
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery("SELECT COUNT(rating_id) AS count_value FROM galery_pic_rating
+            ->setQuery("SELECT rating_id FROM galery_pic_rating
                         WHERE visitor_rating_id = :id AND ref_pic_id = :pid;")
             ->setConditions(array("id" => $visitorRatingId, "pid" => $picId));
 
         $row = $this->sqlManager->fetchRow($sqlBuilder);
-        return (0 != $row["count_value"]);
+        if (!$this->sqlManager->getRowCount()) return null;
+        return $row["rating_id"];
     }
 
+    public function getOverallRatingForPic($picId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery("SELECT ROUND(AVG(rating_value), 1) AS overall_rating_value FROM galery_pic_rating WHERE ref_pic_id = :pid;")
+            ->setConditions(array("pid" => $picId));
+
+        $row = $this->sqlManager->fetchRow($sqlBuilder);
+        return $row["overall_rating_value"];
+    }
+
+    public function updateVotingEntry($ratingeValue, $ratingId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setConditions(array(self::COL_RATING_ID => $ratingId))
+            ->setData(array(self::COL_RATING_VALUE => $ratingeValue));
+
+        return $this->sqlManager->update($sqlBuilder);
+    }
+
+    private function getRowArray($picId, $votingValue, $visitorId) {
+        return array(
+            self::COL_PIC_ID        => $picId,
+            self::COL_RATING_VALUE  => $votingValue,
+            self::COL_VISITOR_ID    => $visitorId
+        );
+    }
 
     protected function row2Object($row)
     {
