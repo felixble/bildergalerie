@@ -96,6 +96,18 @@ class Picture
     private $tags;
 
     /**
+     * The current users rating value.
+     *
+     * @var int
+     */
+    private $ratingValue;
+
+    /**
+     * @var double
+     */
+    private $averageRatingValue;
+
+    /**
      * Picture constructor.
      * @param Mandant $mandant
      * @param int|null $pictureId
@@ -557,5 +569,30 @@ class Picture
 
     }
 
+    public function setVisitorRatingValue($ratingValue)
+    {
+        $this->ratingValue = $ratingValue;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRatingValue()
+    {
+        return $this->ratingValue;
+    }
+
+    public function setAverageRatingValue($averageRatingValue)
+    {
+        $this->averageRatingValue = $averageRatingValue;
+    }
+
+    /**
+     * @return float
+     */
+    public function getAverageRatingValue()
+    {
+        return $this->averageRatingValue;
+    }
 
 }

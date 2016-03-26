@@ -120,13 +120,16 @@ class PictureDAO extends BaseMultiClientDAO
      */
     public function getPictureById($picId)
     {
-        // when fetching a single picture by its id it stands to reason that we need all details of the picture.
+        // when fetching a single picture by id it stands to reason that we need all details of the picture.
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery('SELECT t_pic.*,t_path.pic_path_id, t_path.path,t_path.thumb_path,t_path.date_uploaded
+            ->setQuery('SELECT t_pic.*,t_path.pic_path_id, t_path.path,t_path.thumb_path,t_path.date_uploaded,
+                          t_my_rate.rating_value, ROUND(AVG(t_rates.rating_value), 1) AS average_rating_value
                         FROM galery_pictures AS t_pic
                         LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
+                        LEFT JOIN galery_pic_rating AS t_rates ON t_pic.pic_id=t_rates.ref_pic_id
+                        LEFT JOIN galery_pic_rating AS t_my_rate ON t_pic.pic_id=t_my_rate.ref_pic_id AND t_my_rate.visitor_rating_id=:visitorId
                         WHERE pic_id = :id;')
-            ->setConditions(array("id" => $picId));
+            ->setConditions(array("id" => $picId, "visitorId" => RatingManager::getVisitorRatingId()));
 
         /** @var Picture $picture */
         $picture = $this->fetchRow($sqlBuilder);
@@ -258,6 +261,9 @@ class PictureDAO extends BaseMultiClientDAO
         $picture->setCategoriesFromStringList($this->getValueOrNull($row, "categories"), "\t");
 
         $picture->setPath($this->picPathDAO->row2Object($row));
+
+        $picture->setVisitorRatingValue($this->getValueOrNull($row, "rating_value"));
+        $picture->setAverageRatingValue($this->getValueOrNull($row, "average_rating_value"));
 
         return $picture;
     }

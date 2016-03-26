@@ -10,7 +10,6 @@
  */
 class AjaxController extends BildergalerieController
 {
-    const KEY_COOKIE_RATING = "bildergalerie_vistor_rating_id";
 
     /**
      * @var Mandant
@@ -182,7 +181,7 @@ class AjaxController extends BildergalerieController
             throw new InvalidArgumentException("Value must be between 1 and 5");
         }
 
-        $visitorRatingId = $this->getVisitorRatingId();
+        $visitorRatingId = RatingManager::getVisitorRatingId();
 
         if ($this->ratingDAO->checkVisitorAlreadRated($visitorRatingId, $picId)) {
             throw new IllegalStateException("Visitor rated already.");
@@ -197,18 +196,6 @@ class AjaxController extends BildergalerieController
         $resultArray["rating_id"] = $ratingId;
 
         return json_encode($resultArray);
-    }
-
-    private function getVisitorRatingId()
-    {
-        $cookies = $this->getRequest()->getCookies();
-        if (!array_key_exists(self::KEY_COOKIE_RATING, $cookies)) {
-            $ratingId = uniqid();
-            setcookie(self::KEY_COOKIE_RATING, $ratingId, 2147483647, "/"); // expire = max int value (2^31-1)
-            return $ratingId;
-        }
-
-        return $cookies[self::KEY_COOKIE_RATING];
     }
 
 }
