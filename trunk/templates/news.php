@@ -12,7 +12,7 @@ if (null != $this->getPostView()) {
         <div>
             <h2><?php echo $article->getTitle() ?></h2>
 
-            <h6>Veröffentlicht am <?php echo $article->getDate()->format("d.m.Y"); ?> von <?php echo $article->getOwner(); ?></h6>
+            <h6>Veröffentlicht am <?php echo $this->getGermanDate($article->getDate()); ?> von <?php echo $article->getOwner(); ?></h6>
 
             <p> <?php echo $article->getContent() ?></p>
                 <div class="articleDevider">

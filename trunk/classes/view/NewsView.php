@@ -72,6 +72,16 @@ class NewsView extends View
         return $this->isUserLoggedIn;
     }
 
-
+    public function getGermanDate($date){
+        $formatter = new IntlDateFormatter(
+            "de-DE",
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::NONE,
+            "Europe/Berlin",
+            IntlDateFormatter::GREGORIAN,
+            "dd MMMM YYYY"
+        );
+        return $formatter->format($date);
+    }
 }
 
