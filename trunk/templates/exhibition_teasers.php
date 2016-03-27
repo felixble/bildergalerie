@@ -1,4 +1,16 @@
 <?php /** @var Exhibition_teasersView $this */ ?>
+
+<?php
+if ($this->showNoContentMsg()):
+    $count = count($this->getCatTeasers());
+    if ($count == 0): ?>
+        <h2>Die Ausstellungen werden in Kürze veröffentlicht</h2>
+        <p>
+            Ich aktualisiere derzeit meine Online-Ausstellung. Bitte besuchen Sie meine Website bald wieder.
+        </p>
+    <?php endif; ?>
+<?php endif; ?>
+
 <?php $i = 0;
 foreach ($this->getCatTeasers() as $catTeaser): /** @var CategoryTeaser $catTeaser */ ?>
     <?php if ($i != 0 || $this->showFirstDivider()): ?>

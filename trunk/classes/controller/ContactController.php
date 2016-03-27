@@ -45,7 +45,9 @@ class ContactController extends BildergalerieController
 
             $message = $this->buildMessage($name, $lastName, $mail, $telephone, $subject, $content);
 
-            mail(self::MAILADDRESS, $message, $mail);
+            $headerFrom = sprintf("FROM: %s %s <%s>", $name, $lastName, $mail);
+
+            mail(self::MAILADDRESS, "Hildes-Bildergalerie - $subject", $message, $headerFrom);
             $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Vielen Dank. Ihre Anfrage wird umgehend bearbeitet.");
         } catch (Exception $e) {
             $this->getAlertManager()->setErrorMessage("<strong>Fehler:</strong> Ihre Anfrage konnte leider nicht gesendet werden. Bitte versuchen sie es erneut.");
@@ -56,11 +58,11 @@ class ContactController extends BildergalerieController
 
     private function buildMessage($name, $lastName, $mail, $telephone, $subject, $content)
     {
-        $tel = (null==$telephone) ? "Die Telefonnummer lautet: ".$telephone : "";
-        $message = "Sehr geehrter Kunde, Sie haben eine Kontaktanfrage von".$name.
-                    " ".$lastName."erhalten\n\n"."Bitte senden Sie eine Antwortmail an:" .
-                    $mail.$tel."\n\nDer Betreff der eMail lautet: ".$subject."\n und es wurde folgender"
-                    . "Inhalt eingetragen: ".$content;
+        $tel = (null==$telephone) ? ". Die Telefonnummer lautet: ".$telephone : "";
+        $message = "Sehr geehrter Kunde,\r\nSie haben eine Kontaktanfrage von ".$name.
+                    " ".$lastName." erhalten\r\n"."Bitte senden Sie eine Antwortmail an:" .
+                    $mail.$tel."\r\nDer Betreff der E-Mail lautet: ".$subject."\r\n und es wurde folgender"
+                    . "Inhalt eingetragen:\r\n\r\n".$content;
 
         return $message;
     }

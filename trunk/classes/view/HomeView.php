@@ -23,7 +23,8 @@ class HomeView extends View {
 
     public function setCategoryTeaser($ausstellungTeaserView)
     {
-        $this->ausstellungTeaserView = new Exhibition_teasersView($ausstellungTeaserView, /*showFirstDivider*/ true);
+        $this->ausstellungTeaserView =
+            new Exhibition_teasersView($ausstellungTeaserView, /*showFirstDivider*/ true, /*showNoContentMsg*/ false);
     }
 
     /**

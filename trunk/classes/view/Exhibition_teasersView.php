@@ -20,15 +20,22 @@ class Exhibition_teasersView extends View
     private $showFirstDivider;
 
     /**
+     * @var bool
+     */
+    private $showNoContentMsg;
+
+    /**
      * Ausstellung_teasersView constructor.
      * @param $teasers CategoryTeaser[]
      * @param bool $showFirstDivider
+     * @param bool $showNoContentMsg
      */
-    public function __construct($teasers, $showFirstDivider = false)
+    public function __construct($teasers, $showFirstDivider = false, $showNoContentMsg = true)
     {
         parent::__construct();
         $this->teasers = $teasers;
         $this->showFirstDivider = $showFirstDivider;
+        $this->showNoContentMsg = $showNoContentMsg;
     }
 
 
@@ -46,5 +53,10 @@ class Exhibition_teasersView extends View
     public function showFirstDivider()
     {
         return $this->showFirstDivider;
+    }
+
+    public function showNoContentMsg()
+    {
+        return $this->showNoContentMsg;
     }
 }
