@@ -53,6 +53,11 @@ class PictureDAO extends BaseMultiClientDAO
     private $dbConn;
 
     /**
+     * @var PicRatingDAO
+     */
+    private $picRatingDAO;
+
+    /**
      * PictureDAO constructor.
      * @param GaleryMysql $dbConn
      * @param Mandant $mandant
@@ -65,6 +70,7 @@ class PictureDAO extends BaseMultiClientDAO
         $this->picPathDAO = new PicturePathDAO($dbConn, $mandant);
         $this->picCatMapDAO = new PicCatMapDAO($dbConn, $mandant);
         $this->categoryDAO = new CategoryDAO($dbConn, $mandant);
+        $this->picRatingDAO = new PicRatingDAO($dbConn, $mandant, $this);
     }
 
     public function createPicture(Picture $picture)
@@ -191,6 +197,9 @@ class PictureDAO extends BaseMultiClientDAO
 
             // then we delete the related entries in the category_map table
             $this->picCatMapDAO->deleteCategoriesForPic($picId); // same as above
+
+            // then we delete the related rating entries in the pic_rating table
+            $this->picRatingDAO->deleteRatingEntriesForPic($picId);
 
             // then we delete the picture details
             $res = $this->deletePictureDetails($picId);

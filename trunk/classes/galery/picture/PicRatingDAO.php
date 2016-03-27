@@ -25,11 +25,15 @@ class PicRatingDAO extends BaseDAO
      * PicRatingDAO constructor.
      * @param GaleryMysql|\Simplon\Mysql\Mysql $dbConn
      * @param Mandant $mandant
+     * @param PictureDAO|null $pictureDAO
      */
-    public function __construct(\Simplon\Mysql\Mysql $dbConn, Mandant $mandant)
+    public function __construct(\Simplon\Mysql\Mysql $dbConn, Mandant $mandant, PictureDAO $pictureDAO = null)
     {
         parent::__construct($dbConn);
-        $this->pictureDAO = new PictureDAO($dbConn, $mandant);
+        if (null == $pictureDAO) {
+            $pictureDAO = new PictureDAO($dbConn, $mandant);
+        }
+        $this->pictureDAO = $pictureDAO;
     }
 
 
@@ -91,6 +95,18 @@ class PicRatingDAO extends BaseDAO
             self::COL_RATING_VALUE  => $votingValue,
             self::COL_VISITOR_ID    => $visitorId
         );
+    }
+
+    /**
+     * @param $picId
+     * @return bool
+     */
+    public function deleteRatingEntriesForPic($picId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setConditions(array(self::COL_PIC_ID => $picId));
+
+        return $this->sqlManager->delete($sqlBuilder);
     }
 
     protected function row2Object($row)
