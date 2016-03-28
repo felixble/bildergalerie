@@ -10,6 +10,17 @@ class ContactController extends BildergalerieController
 {
 
     const MAILADDRESS = "otting.marc@gmail.com";
+
+    /**
+     * @var PictureDAO pictureDAO
+     */
+    private $pictureDAO;
+
+    /**
+     * @var Mandant
+     */
+    private $mandant;
+
     /**
      * Default action which will be executed
      * if no specific action is given.
@@ -25,7 +36,9 @@ class ContactController extends BildergalerieController
         $get = $this->getRequest()->getGetParam();
         if(array_key_exists("ref_pic", $get))
         {
-        //TODO datenbankabfrage mit $get für bild details
+        $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
+        $this->pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $this->mandant);
+        $picDetails = $this->pictureDAO->getPictureById($get);
         }
 
         return $this->getContentFrameView("Kontaktformular", $contactView);

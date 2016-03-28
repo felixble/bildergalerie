@@ -9,6 +9,28 @@
 class ContactView extends View
 
 {
+    const PICTUREURL = "/bildergalerie/pictures/pic/id/";
+
+
+
+    /**
+     * @var string title
+     */
+    private $title;
+
+    /**
+     * @var string picId
+     */
+    private $picId;
+
+    /**
+     * @param string $picId
+     */
+    public function setPicId($picId)
+    {
+        $this->picId = $picId;
+    }
+
     /**
      * @param string $title
      */
@@ -16,8 +38,5 @@ class ContactView extends View
     {
         $this->title = $title;
     }
-    /**
-     * @var string title
-     */
-    private $title;
+
 }
