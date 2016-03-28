@@ -12,8 +12,23 @@
     <!-- Dialog Content -->
     <?php echo new Edit_exhibition_dialogView(/* editMode */
         true); ?>
-    <h2>Übersicht aller Ausstellungen</h2>
-    <table class="table table-striped table-truncate table-hover">
+    <div>
+        <div class='pull-right'>
+            <!-- TODO: onSuccess anpassen!! -->
+            <button type='button' class='open_category_dialog btn btn-success hidden-xs hidden-sm'
+                    data-on-success="onSuccessDashboard">
+                Neue Ausstellung hinzufügen
+            </button>
+            <button class="open_category_dialog btn btn-success visible-xs visible-sm" data-on-success="onSuccessDashboard"
+                    type="button" title="Neue Ausstellung hinzufügen">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+        </div>
+        <h2>Übersicht aller Ausstellungen</h2>
+    </div>
+
+
+    <table id="exhibition_table_body" class="table table-striped table-truncate table-hover">
         <thead>
         <tr>
             <th class="col-xs-3">Titel/Thema</th>
@@ -24,7 +39,7 @@
         </thead>
         <tbody class="">
         <?php foreach ($this->getCategories() as $category): $id = $category->getCategoryId() ?>
-            <tr>
+            <tr id="row_<?php echo $id; ?>">
                 <td id="exhibition_name_<?php echo $id; ?>"
                     class="table-no-truncate"><?php echo $category->getCategoryName(); ?></td>
                 <td id="exhibition_descr_<?php echo $id; ?>"><?php echo $category->getDescription(); ?></td>

@@ -21,9 +21,13 @@ function onSuccessPicForm(id, name, description) {
 }
 
 function onSuccessDashboard(id, name, description) {
-    $('#exhibition_name_' + id).html(name);
-    $('#exhibition_descr_' + id).html(description);
-
+    if ($('#row_' + id).length !== 0) {
+        $('#exhibition_name_' + id).html(name);
+        $('#exhibition_descr_' + id).html(description);
+    } else {
+        // reload page
+        window.location.href = "backend";
+    }
 }
 
 function getEditValuesDashboard(id) {
@@ -34,13 +38,11 @@ function getEditValuesDashboard(id) {
 }
 
 $(function() {
-    var dialog, dialog_element, form, editCategory, saveBtnTitle, successFunction,
+    var dialog, dialog_element, form, editCategory, successFunction,
         catId = -1,
         name = $( "#category_name" ),
         descr = $( "#category_description"),
-        allFields = $( [] ).add( name ).add( descr),
-
-        dialog_buttons = {};
+        allFields = $( [] ).add( name ).add( descr);
 
 
     var ajaxAddCategory = function (name, descr, editId, success) {
@@ -89,22 +91,30 @@ $(function() {
 
     dialog_element = $("#dialog-add_category");
     editCategory = dialog_element.attr("data-edit") == "true";
-    saveBtnTitle = (editCategory) ? "Änderungen speichern" : "Ausstellung hinzufügen";
-    dialog_buttons[saveBtnTitle] = addCategory;
-    dialog_buttons["Abbrechen"] = function() { dialog.dialog( "close" ); };
 
-    dialog = dialog_element.dialog({
-        title: (editCategory) ? "Ausstellung bearbeiten" : "Neue Ausstellung hinzufügen",
-        autoOpen: false,
-        height: 400,
-        width: 500,
-        modal: true,
-        buttons: dialog_buttons,
-        close: function() {
-            form[ 0 ].reset();
-            allFields.removeClass( "ui-state-error" );
-        }
-    });
+
+
+    var initDialog = function(edit) {
+        var saveBtnTitle = (edit) ? "Änderungen speichern" : "Ausstellung hinzufügen";
+        var dialog_buttons = {};
+        dialog_buttons[saveBtnTitle] = addCategory;
+        dialog_buttons["Abbrechen"] = function() { dialog.dialog( "close" ); };
+
+        return dialog_element.dialog({
+            title: (edit) ? "Ausstellung bearbeiten" : "Neue Ausstellung hinzufügen",
+            autoOpen: false,
+            height: 400,
+            width: 500,
+            modal: true,
+            buttons: dialog_buttons,
+            close: function() {
+                form[ 0 ].reset();
+                allFields.removeClass( "ui-state-error" );
+            }
+        });
+    };
+
+    dialog = initDialog(editCategory);
 
     form = dialog.find( "form" ).on( "submit", function( event ) {
         event.preventDefault();
@@ -113,9 +123,12 @@ $(function() {
 
 
     $( ".open_category_dialog" ).on( "click", function() {
+        catId = -1;
         if ($(this).attr("data-id")) {
             catId = $(this).attr("data-id");
         }
+
+        dialog = initDialog(catId != -1);
 
         // If a get-values function is provided we will call it and pre-set the form values
         if (catId != -1 && $(this).attr("data-get-values")) {
@@ -127,8 +140,6 @@ $(function() {
 
         // very dirty approach...
         successFunction = window[$(this).attr("data-on-success")];
-
-        dialog_element.attr("title", "hallo");//(editCategory) ? "Neue Ausstellung hinzufügen" : "Ausstellung bearbeiten");
 
 
         dialog.dialog( "open" );
