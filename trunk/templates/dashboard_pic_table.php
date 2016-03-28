@@ -1,6 +1,18 @@
 <?php /** @var Dashboard_pic_tableView $this */ ?>
 
-<h2>Übersicht aller Gemälde</h2>
+<div>
+    <div class='pull-right'>
+        <a class='btn btn-success hidden-xs hidden-sm'
+            href="<?php echo $this->url("pictures", "create"); ?>">
+            Neues Gemälde hinzufügen
+        </a>
+        <a class="btn btn-success visible-xs visible-sm" title="Neues Gemälde hinzufügen"
+           href="<?php echo $this->url("pictures", "create"); ?>">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </a>
+    </div>
+    <h2>Übersicht aller Gemälde</h2>
+</div>
 <table class="table table-striped table-truncate table-hover">
     <thead>
     <tr>

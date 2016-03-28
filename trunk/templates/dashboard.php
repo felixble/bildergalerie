@@ -14,7 +14,6 @@
         true); ?>
     <div>
         <div class='pull-right'>
-            <!-- TODO: onSuccess anpassen!! -->
             <button type='button' class='open_category_dialog btn btn-success hidden-xs hidden-sm'
                     data-on-success="onSuccessDashboard">
                 Neue Ausstellung hinzufügen

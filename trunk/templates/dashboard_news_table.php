@@ -9,8 +9,19 @@
 
 ?>
 
-<h2>Alle News-Artikel</h2>
-
+<div>
+    <div class='pull-right'>
+        <a class='btn btn-success hidden-xs hidden-sm'
+           href="<?php echo $this->url("news", "", array(), "new_article"); ?>">
+            Neuen Artikel erstellen
+        </a>
+        <a class="btn btn-success visible-xs visible-sm" title="Neuen Artikel erstellen"
+           href="<?php echo $this->url("news", "", array(), "new_article"); ?>">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </a>
+    </div>
+    <h2>Alle News-Artikel</h2>
+</div>
 <table class="table table-striped table-truncate table-hover">
     <thead>
     <tr>
