@@ -70,8 +70,7 @@ class CategoryDAO extends BaseMultiClientDAO
                             ORDER BY RAND()) AS t_pic ON t_pic.cat_id=t_cat.category_id
                         LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
                         WHERE t_cat.mandant_id =:m_id AND t_pic.pic_id IS NOT NULL
-                        GROUP BY t_cat.category_id' . $add_limit
-                        . ' ORDER BY t_cat.category_id DESC;')
+                        GROUP BY t_cat.category_id ORDER BY t_cat.category_id DESC ' . $add_limit . ';')
             ->setConditions($conditions);
 
         $rows = $this->sqlManager->fetchRowMany($sqlBuilder);
