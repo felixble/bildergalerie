@@ -8,7 +8,6 @@ $(document).ready(function() {
             reverse: true,
             fadeIn: 1000,
             outlineThickness : 1,
-            maxSpeed : 0.03,
             depth : 0.75,
             initial:  [0.08,-0.03],
             minSpeed: 0.005,

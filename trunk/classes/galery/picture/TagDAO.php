@@ -58,6 +58,20 @@ class TagDAO extends BaseMultiClientDAO
         return null;
     }
 
+    public function queryTagForId($tagId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery("SELECT * FROM galery_tag WHERE tag_id = :id")
+            ->setConditions(array('id' => $tagId));
+
+        $row = $this->sqlManager->fetchRow($sqlBuilder);
+
+        if ($this->sqlManager->getRowCount()) {
+            return $this->row2object($row);
+        }
+        return null;
+    }
+
     /**
      * @return Tag[]
      */

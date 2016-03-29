@@ -24,22 +24,31 @@ class ExhibitionView extends View
     private $tags;
 
     /**
+     * @var null|Tag
+     */
+    private $tag;
+
+    /**
      * ExhibitionView constructor.
      * @param Category|null $exhibition
      * @param $pictures Picture[]
      * @param null|Tag[] $tags
+     * @param Tag $tag
      */
-    public function __construct($exhibition, $pictures, $tags = null)
+    public function __construct($exhibition, $pictures, $tags = null, $tag = null)
     {
         parent::__construct();
         $this->exhibition = $exhibition;
         $this->pictures = $pictures;
         $this->tags = $tags;
+        $this->tag = $tag;
     }
 
     public function getExhibitionName()
     {
-        if (null == $this->exhibition) return "Alle Gemälde";
+        if (null == $this->exhibition) {
+            return "Alle Gemälde";
+        }
 
         return $this->exhibition->getCategoryName();
     }

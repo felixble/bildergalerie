@@ -111,6 +111,22 @@ class PicturesController extends BildergalerieController
         return $this->getContentFrameView("Ausstellung", new ExhibitionView($exhibition, $pictures, $tags), true);
     }
 
+    public function tagAction()
+    {
+        $tagId = $this->getIdRequestParam("id", /*exceptionIfNotGiven*/ true);
+
+        $tagDAO = new TagDAO($this->baseFactory->getDbConnection(), $this->mandant);
+        $tag = $tagDAO->queryTagForId($tagId);
+
+        $pictures = $this->pictureDAO->getPicturesForTag($tagId);
+
+        $this->baseFactory->getSessionManager()
+            ->setBackTo(Router::getUrl("pictures", "tag", array("id" => $tagId)));
+
+
+        return $this->getContentFrameView("Ausstellung", new ExhibitionView(null, $pictures, null, $tag), true);
+    }
+
     /**
      * Shows detail view of a picture.
      * @return BootstrapView
