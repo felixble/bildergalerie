@@ -6,6 +6,11 @@ if (null != $this->getPostView()) {
 }
 ?>
 
+<?php
+if (count($this->getNewsArticles()) == 0) {
+    echo "<p>Momentan gibt es keine Neuigkeiten zu berichten.</p>";
+}
+?>
 
 <div>
     <?php

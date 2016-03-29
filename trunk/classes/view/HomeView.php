@@ -40,17 +40,22 @@ class HomeView extends View {
         return $this->ausstellungTeaserView;
     }
 
-    public function setLatestArticle(NewsArticle $latestArticle)
+    /**
+     * @param NewsArticle|null $latestArticle
+     */
+    public function setLatestArticle($latestArticle)
     {
         $this->latestArticle = $latestArticle;
     }
 
     /**
-     * @return NewsArticle
+     * @return string
      */
-    public function getLatestArticle()
+    public function getLatestArticleContent()
     {
-        return $this->latestArticle;
+        return (null == $this->latestArticle)
+            ? "Momentan gibt es keine Neuigkeiten zu berichten"
+            : $this->latestArticle->getContent();
     }
 
 }

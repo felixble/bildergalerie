@@ -9,7 +9,7 @@ $about_text = "Hildegard Blechschmitt, geboren in Speyer 1951, lebt in St. Ingbe
                 . "glückliche Fügung die Chance aufgetan hätte, eine große Menge Bilder in den Fluren und Räumen "
                 . "einer Neunkircher Klinik aufzuhängen.";
 
-$news_text = $this->getLatestArticle()->getContent();
+$news_text = $this->getLatestArticleContent();
 
 $max_length = 218;
 
