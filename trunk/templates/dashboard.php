@@ -5,7 +5,7 @@
     <li class="tab-item active" id="tab_exhibitions"><a class="tab-control" data-tab="exhibitions" href="<?php echo $this->urlScrollTo("exhibitions") ?>">Ausstellungen</a></li>
     <li class="tab-item" id="tab_pictures"><a class="tab-control" data-tab="pictures" href="<?php echo $this->urlScrollTo("pictures") ?>">Gemälde</a></li>
     <li class="tab-item" id="tab_news"><a class="tab-control" data-tab="news" href="<?php echo $this->urlScrollTo("news") ?>">News</a></li>
-    <li class="tab-item" id="tab_users"><a class="tab-control" data-tab="users" href="<?php echo $this->urlScrollTo("users") ?>">Benutzer</a></li>
+    <!--<li class="tab-item" id="tab_users"><a class="tab-control" data-tab="users" href="<?php echo $this->urlScrollTo("users") ?>">Benutzer</a></li>-->
 </ul>
 
 <div class="tab_container active" id="_exhibitions">
