@@ -94,6 +94,12 @@ class PicturesController extends BildergalerieController
             throw new SimpleUserErrorException("Die Ausstellung wurde nicht gefunden.");
         }
 
+        $tags = null;
+        if ($exhibitionId == -1) {
+            $tagDAO = new TagDAO($this->baseFactory->getDbConnection(), $this->mandant);
+            $tags = $tagDAO->queryForAll();
+        }
+
         $backtoParams = ($exhibitionId == -1) ? array() : array("id" => $exhibitionId) ;
         $this->baseFactory->getSessionManager()
             ->setBackTo(Router::getUrl("pictures", "exhibition", $backtoParams));
@@ -102,7 +108,7 @@ class PicturesController extends BildergalerieController
                 ->setFlash("currentExhibition", $exhibitionId);
         }
 
-        return $this->getContentFrameView("Ausstellung", new ExhibitionView($exhibition, $pictures), true);
+        return $this->getContentFrameView("Ausstellung", new ExhibitionView($exhibition, $pictures, $tags), true);
     }
 
     /**

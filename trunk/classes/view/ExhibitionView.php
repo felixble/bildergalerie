@@ -19,15 +19,22 @@ class ExhibitionView extends View
     private $pictures;
 
     /**
+     * @var null|Tag[]
+     */
+    private $tags;
+
+    /**
      * ExhibitionView constructor.
      * @param Category|null $exhibition
      * @param $pictures Picture[]
+     * @param null|Tag[] $tags
      */
-    public function __construct($exhibition, $pictures)
+    public function __construct($exhibition, $pictures, $tags = null)
     {
         parent::__construct();
         $this->exhibition = $exhibition;
         $this->pictures = $pictures;
+        $this->tags = $tags;
     }
 
     public function getExhibitionName()
@@ -43,6 +50,17 @@ class ExhibitionView extends View
         return $this->exhibition->getDescription();
     }
 
+    public function showTagCanvas()
+    {
+        return (null == $this->exhibition && count($this->getTags()) != 0 );
+    }
+
+    public function getTags()
+    {
+        if (null == $this->tags) return array();
+        return $this->tags;
+    }
+
     public function getPictures()
     {
         return $this->pictures;
@@ -52,6 +70,11 @@ class ExhibitionView extends View
     public function getCustomCSS()
     {
         return "pinterest_style.css";
+    }
+
+    public function getCustomJS()
+    {
+        return "tag_canvas.js";
     }
 
 }

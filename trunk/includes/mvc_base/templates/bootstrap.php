@@ -68,6 +68,9 @@
 <!-- JS for rating plugin -->
 <script src="vendor/callmenick/five-star-rating/js/dist/rating.min.js"></script>
 
+<!-- TagCanvas jquery plugin -->
+<script src="resources/js/libs/jquery.tagcanvas.min.js"></script>
+
 <?php
 if (null != $this->getJS() && is_array($this->getJS())) {
     foreach ($this->getJS() as $js) {
