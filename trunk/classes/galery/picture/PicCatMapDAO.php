@@ -14,11 +14,6 @@ class PicCatMapDAO extends BaseDAO
     const COL_PIC_ID = "pic_id";
     const COL_CAT_ID = "cat_id";
 
-    /**
-     * @var TagDAO
-     */
-    private $categoryDAO;
-
 
     /**
      * PicTagMapDAO constructor.
@@ -28,7 +23,6 @@ class PicCatMapDAO extends BaseDAO
     public function __construct(Simplon\Mysql\Mysql $dbConn, Mandant $mandant)
     {
         parent::__construct($dbConn);
-        $this->categoryDAO = new TagDAO($dbConn, $mandant);
     }
 
     /**
@@ -72,6 +66,23 @@ class PicCatMapDAO extends BaseDAO
     {
         $sqlBuilder = $this->getSqlBuilder()
             ->setConditions(array(self::COL_PIC_ID => $picId));
+
+        return $this->sqlManager->delete($sqlBuilder);
+    }
+
+    /**
+     * Deletes all entries related to the given
+     * category id.
+     * Some pictures could then be without any
+     * related category!
+     *
+     * @param $catId
+     * @return bool
+     */
+    public function deleteEntriesForCatId($catId)
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setConditions(array(self::COL_CAT_ID => $catId));
 
         return $this->sqlManager->delete($sqlBuilder);
     }

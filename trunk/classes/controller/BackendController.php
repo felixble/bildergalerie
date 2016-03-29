@@ -77,4 +77,19 @@ class BackendController extends BildergalerieController
 
         return $this->getContentFrameView("Dashboard", $dashboardView, false);
     }
+
+    public function deleteExhibitionAction()
+    {
+        $get = $this->getRequest()->getGetParam();
+        $catId = $this->getValueOrNull("id", $get);
+        if (null == $catId) {
+            throw new SimpleUserErrorException("Die Ausstellung wurde nicht gefunden.");
+        }
+
+        $this->categoryDAO->deleteCateogry($catId);
+
+        $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Die Ausstellung wurde entfernt.");
+
+        $this->getRouter()->reLocateTo("backend");
+    }
 }

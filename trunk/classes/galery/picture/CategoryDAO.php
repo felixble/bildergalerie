@@ -17,13 +17,19 @@ class CategoryDAO extends BaseMultiClientDAO
     const COL_CATEGORY_DESCRIPTION = "description";
 
     /**
+     * @var GaleryMysql
+     */
+    private $dbConn;
+
+    /**
      * CategoryDAO constructor.
-     * @param \Simplon\Mysql\Mysql $dbConn
+     * @param GaleryMysql $dbConn
      * @param Mandant $mandant
      */
-    public function __construct(Simplon\Mysql\Mysql $dbConn, Mandant $mandant)
+    public function __construct(GaleryMysql $dbConn, Mandant $mandant)
     {
         parent::__construct($dbConn, $mandant);
+        $this->dbConn = $dbConn;
     }
 
     /**
@@ -128,6 +134,33 @@ class CategoryDAO extends BaseMultiClientDAO
             ->setData($data);
 
         return $this->sqlManager->update($sqlBuilder);
+    }
+
+    public function deleteCateogry($categoryId)
+    {
+        $res = $this->dbConn->beginTransaction();
+        if (!$res) throw new SimpleUserErrorException("Ausstellung konnte nicht entfernt werden.");
+
+        try {
+            // first we delete all related entries in the pic_cat_map
+            $picCatMapDAO = new PicCatMapDAO($this->dbConn, $this->mandant);
+            $picCatMapDAO->deleteEntriesForCatId($categoryId);
+            // we don't have to check the result value, if there are no pics related to the category the result will be false
+
+            // then we can delete the category itself
+            $sqlBuilder = $this->getSqlBuilder()
+                ->setConditions(array(self::COL_CATEGORY_ID => $categoryId));
+
+            $res = $this->sqlManager->delete($sqlBuilder);
+            // now we check the result, because there should be exactly one entry to be deleted.
+            if (!$res) throw new SimpleUserErrorException("Ausstellung konnte nicht entfernt werden.");
+
+            $res = $this->dbConn->commitTransaction();
+            if (!$res) throw new SimpleUserErrorException("Ausstellung konnte nicht entfernt werden.");
+        } catch (Exception $e) {
+            $this->dbConn->rollbackTransaction();
+            throw $e;
+        }
     }
 
     protected function object2Array(Category $category)

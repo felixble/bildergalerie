@@ -40,7 +40,9 @@
         <?php foreach ($this->getCategories() as $category): $id = $category->getCategoryId() ?>
             <tr id="row_<?php echo $id; ?>">
                 <td id="exhibition_name_<?php echo $id; ?>"
-                    class="table-no-truncate"><?php echo $category->getCategoryName(); ?></td>
+                    class="table-no-truncate">
+                    <a href="<?php echo $this->url("pictures", "exhibition", array("id" => $id)); ?>"><?php echo $category->getCategoryName(); ?></a>
+                </td>
                 <td id="exhibition_descr_<?php echo $id; ?>"><?php echo $category->getDescription(); ?></td>
                 <td class="text-center"><?php echo $category->getNumberPictures(); ?></td>
                 <td class="text-right table-no-truncate">
@@ -53,7 +55,9 @@
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
                     <!-- TODO: Remove exhibition -->
-                    <a href=""
+                    <a href="<?php echo $this->url("backend", "deleteExhibition", array("id" => $id)); ?>"
+                       class="confirmation"
+                       data-confirmation-text="Soll die Ausstellung wirklich gelöscht werden?"
                        title="Ausstellung entfernen">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     </a>

@@ -223,7 +223,8 @@ class PictureDAO extends BaseMultiClientDAO
                 //if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
             }
 
-            $this->dbConn->commitTransaction();
+            $res = $this->dbConn->commitTransaction();
+            if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
         } catch (Exception $e) {
             $this->dbConn->rollbackTransaction();
             throw $e;
@@ -262,8 +263,13 @@ class PictureDAO extends BaseMultiClientDAO
 
     protected function row2Object($row)
     {
+        // simple workaround: if nothing has been selected, fetchRow returns an array with all values set to null
+        // so we definite that at least the id value must be set!
+        $id = $this->getValueOrNull($row, self::COL_PICTURE_ID);
+        if (null == $id) return null;
+
         // create the picture object with all primitive data.
-        $picture = new Picture($this->mandant, $this->getValueOrNull($row, self::COL_PICTURE_ID), $this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_DESCRIPTION), $this->getValueOrNull($row, self::COL_FORMAT), $this->getValueOrNull($row, self::COL_MATERIAL), $this->getValueOrNull($row, self::COL_PRICE), $this->getValueOrNull($row, self::COL_PRICE_PUBLIC), $this->getValueOrNull($row, self::COL_SALABLE), null, $this->getValueOrNull($row, self::COL_DATE_PRODUCED), $this->getValueOrNull($row, self::COL_DATE_CREATED), null, null, null, null);
+        $picture = new Picture($this->mandant, $id, $this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_DESCRIPTION), $this->getValueOrNull($row, self::COL_FORMAT), $this->getValueOrNull($row, self::COL_MATERIAL), $this->getValueOrNull($row, self::COL_PRICE), $this->getValueOrNull($row, self::COL_PRICE_PUBLIC), $this->getValueOrNull($row, self::COL_SALABLE), null, $this->getValueOrNull($row, self::COL_DATE_PRODUCED), $this->getValueOrNull($row, self::COL_DATE_CREATED), null, null, null, null);
 
         // set all complex objects now
 
