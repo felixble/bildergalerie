@@ -65,6 +65,7 @@
                 <textarea class="form-control" rows="5" id="content" name="content" required></textarea>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
+            <input type="hidden" name="edit_id" value="<?php echo $this->getPicId()?>">
             <input type="submit" class="btn btn-success" id="news_submit" name="news_submit" value="Absenden">
         </form>
     </div>

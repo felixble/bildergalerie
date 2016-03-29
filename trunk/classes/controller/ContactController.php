@@ -57,8 +57,9 @@ class ContactController extends BildergalerieController
             $telephone = $this->getValueOrNull("tel", $post);
             $subject = $this->getValueOrNull("subject", $post);
             $content = $this->getValueOrNull("content", $post);
+            $picId = $this->getValueOrNull("edit_id", $post);
 
-            $message = $this->buildMessage($name, $lastName, $mail, $telephone, $subject, $content);
+            $message = $this->buildMessage($name, $lastName, $mail, $telephone, $subject, $content, $picId);
 
             $headerFrom = sprintf("FROM: %s %s <%s>", $name, $lastName, $mail);
 
@@ -71,13 +72,17 @@ class ContactController extends BildergalerieController
         $this->getRouter()->reLocateTo("home");
     }
 
-    private function buildMessage($name, $lastName, $mail, $telephone, $subject, $content)
+    private function buildMessage($name, $lastName, $mail, $telephone, $subject, $content, $picId)
     {
         $tel = (null==$telephone) ? ". Die Telefonnummer lautet: ".$telephone : "";
+        $path = (null!=$picId) ?
+            "\r\nDer Pfad zum betreffenden Bild lautet: ".
+            substr($_SERVER["REDIRECT_URL"],0,$_SERVER["REDIRECT_URL"]-13)."/pictures/pic/id/".$picId :"";
+
         $message = "Sehr geehrter Kunde,\r\nSie haben eine Kontaktanfrage von ".$name.
                     " ".$lastName." erhalten\r\n"."Bitte senden Sie eine Antwortmail an:" .
-                    $mail.$tel."\r\nDer Betreff der E-Mail lautet: ".$subject."\r\n und es wurde folgender"
-                    . "Inhalt eingetragen:\r\n\r\n".$content;
+                    $mail.$tel."\r\nDer Betreff der E-Mail lautet: ".$subject.$path.
+                    "\r\n und es wurde folgender Inhalt eingetragen:\r\n\r\n".$content;
 
         return $message;
     }
