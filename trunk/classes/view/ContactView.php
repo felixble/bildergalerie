@@ -19,24 +19,16 @@ class ContactView extends View
     private $title;
 
     /**
-     * @var string picId
+     * @var Picture
      */
-    private $picId;
-
-    /**
-     * @param string $picId
-     */
-    public function setPicId($picId)
-    {
-        $this->picId = $picId;
-    }
+    private $picture;
 
     /**
      * @return string
      */
     public function getPicId()
     {
-        return $this->picId;
+        return $this->picture->getPictureId();
     }
 
     /**
@@ -47,9 +39,34 @@ class ContactView extends View
         $this->title = $title;
     }
 
-    public function getPictureDetails (){
-        $pictureDetails = self::PICTUREURL.$this->getPicId();
+    public function getPictureDetails ()
+    {
+        if (null == $this->picture) return "";
+        $pictureDetails = self::PICTUREURL . $this->getPicId();
         return $pictureDetails;
+    }
+
+    /**
+     * @param Picture $picture
+     */
+    public function setPicture(Picture $picture)
+    {
+        $this->picture = $picture;
+    }
+
+    /**
+     * @return Picture
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    public function getSubjectValue()
+    {
+        if (null == $this->picture) return "";
+
+        return "Anfrage zum Gemälde " . $this->getPicture()->getTitle();
     }
 
 }
