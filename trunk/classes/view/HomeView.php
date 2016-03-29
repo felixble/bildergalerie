@@ -14,6 +14,11 @@ class HomeView extends View {
     private $ausstellungTeaserView;
 
     /**
+     * @var NewsArticle
+     */
+    private $latestArticle;
+
+    /**
      * HomeView constructor.
      */
     public function __construct()
@@ -33,6 +38,19 @@ class HomeView extends View {
     public function getCatTeaserView()
     {
         return $this->ausstellungTeaserView;
+    }
+
+    public function setLatestArticle(NewsArticle $latestArticle)
+    {
+        $this->latestArticle = $latestArticle;
+    }
+
+    /**
+     * @return NewsArticle
+     */
+    public function getLatestArticle()
+    {
+        return $this->latestArticle;
     }
 
 }

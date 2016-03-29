@@ -26,6 +26,10 @@ class HomeController extends BildergalerieController {
     {
         $homeView = new HomeView();
 
+        $newsDAO = new NewsDAO($this->baseFactory->getDbConnection(), $this->mandant);
+        $latestArticle = $newsDAO->getLatestArticle();
+        $homeView->setLatestArticle($latestArticle);
+
         $categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
         $catTeasers = $categoryDAO->getCategoryTeasers(3);
 
