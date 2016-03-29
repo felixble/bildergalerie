@@ -1,7 +1,11 @@
+<?php /** @var LoginView $this */ ?>
 <div class="container">
 
     <form class="form-signin" action="" method="post">
         <h2 class="form-signin-heading">Bitte anmelden</h2>
+        <?php if($this->isFailure()): ?>
+            <div class="alert alert-danger">Benutzername oder Passwort sind nicht korrekt.</div>
+        <?php endif; ?>
         <label for="inputUser" class="sr-only">Benutzername</label>
         <input type="text" id="inputUser" name="inputUser" class="form-control" placeholder="Benutzername" required autofocus />
         <label for="inputPassword" class="sr-only">Passwort</label>

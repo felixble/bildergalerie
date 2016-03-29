@@ -25,6 +25,7 @@ class AuthController extends BildergalerieController
 
     public function loginAction()
     {
+        $failure = false;
         if (array_key_exists("submit_login", $this->getRequest()->getPostParam())) { // login form submitted
             $username = $this->getRequest()->getPostParam()["inputUser"];
             $pass = $this->getRequest()->getPostParam()["inputPassword"];
@@ -33,11 +34,11 @@ class AuthController extends BildergalerieController
                 $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> Willkommen zurück!");
                 $this->getRouter()->rewindAndRestartRouting();
             } else {
-                // TODO: Fehlermeldung!
+                $failure = true;
             }
         }
 
-        $view = BootstrapView::getContentFrameView("Login", new LoginView());
+        $view = BootstrapView::getContentFrameView("Login", new LoginView($failure));
         return $view;
     }
 
