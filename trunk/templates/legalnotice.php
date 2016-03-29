@@ -1,12 +1,18 @@
 <?php /** @var LegalnoticeView $this */ ?>
 
-<h1>Impressum</h1>
-<p><?php echo $this->getName() ?></p>
-<p><?php echo $this->getMandant() ?></p>
-<p>E-Mail: <a href="<?php echo $this->url("contact")?>" title="Kontaktformular" >Kontaktformular</a> <p>
-<p><?php echo $this->getCity() ?><p>
-<br>
-<br>
+<div class="row">
+    <div class="col-md-10 col-sm-10">
+        <h1>Impressum</h1>
+        <p><?php echo $this->getName() ?></p>
+        <p><?php echo $this->getMandant() ?></p>
+        <p>E-Mail: <a href="<?php echo $this->url("contact")?>" title="Kontaktformular" >Kontaktformular</a> <p>
+        <p><?php echo $this->getCity() ?><p>
+     </div>
+    <div class="col-md-2 col-sm-2 legal-notice" style="vertical-align: baseline">
+        <img class="img-circle" src="resources/img/hilde_profile.jpg" alt="Hilde, Die Künstlerin" width="140"
+             height="140">
+    </div>
+</div>
 <!-- Haftungsausschluss
 ================================================== -->
 <div class="bs-docs-section">

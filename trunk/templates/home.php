@@ -1,8 +1,8 @@
 <?php /** @var HomeView $this */ ?>
 <?php
-$galery_text = "Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies "
-                . "vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus "
-                . "magna.";
+$galery_text = "Malen bedeutet Lebensfreude und Lust. Mit den Jahren kommen viele Gemälde zustanden. Eine Auswahl "
+                . "dieser findet sich in verschiedenen thematisch eingebetteten Ausstellungen wieder.<br>"
+                . "Viel Spaß beim Stöbern.";
 
 $about_text = "Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis "
                 . "consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum "
@@ -28,13 +28,13 @@ $news_text = (strlen($news_text) > 200) ? substr($news_text, 0, 200) . "..." : $
              height="140">
         <h2>Die Künstlerin</h2>
         <p><?php echo $about_text; ?></p>
-        <p><a class="btn btn-default" href="#" role="button">Mehr erfahren &raquo;</a></p>
+        <p><a class="btn btn-default" href="<?php echo $this->url("about"); ?>" role="button">Mehr erfahren &raquo;</a></p>
     </div><!-- /.col-lg-4 -->
     <div class="col-sm-4">
         <img class="img-circle" src="resources/img/hilde_news.jpg" alt="Hildes News" width="140" height="140">
         <h2>Aktuelles</h2>
         <p><?php echo $news_text; ?></p>
-        <p><a class="btn btn-default" href="#" role="button">News lesen &raquo;</a></p>
+        <p><a class="btn btn-default" href="<?php echo $this->url("news"); ?>" role="button">News lesen &raquo;</a></p>
     </div><!-- /.col-lg-4 -->
 </div><!-- /.row -->
 

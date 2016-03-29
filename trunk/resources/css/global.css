@@ -64,3 +64,13 @@ td.table-no-truncate {
     min-width: 120px;
     margin-top: -3px;
 }
+
+.legal-notice {
+    margin-top: 0px;
+}
+
+@media (min-width: 768px) {
+    .legal-notice {
+        margin-top: 50px;
+    }
+}
