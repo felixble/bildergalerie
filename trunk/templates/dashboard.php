@@ -54,7 +54,6 @@
                        data-on-success="onSuccessDashboard">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
-                    <!-- TODO: Remove exhibition -->
                     <a href="<?php echo $this->url("backend", "deleteExhibition", array("id" => $id)); ?>"
                        class="confirmation"
                        data-confirmation-text="Soll die Ausstellung wirklich gelöscht werden?"
@@ -70,6 +69,7 @@
 
 <div class="tab_container" id="_pictures">
     <?php echo $this->getUnlinkedPicturesView(); ?>
+    <?php echo $this->getUncategorizedPicturesView(); ?>
     <?php echo $this->getPictureTableView(); ?>
 </div>
 

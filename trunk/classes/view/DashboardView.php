@@ -32,6 +32,11 @@ class DashboardView extends View
      */
     private $newsTableView;
 
+    /**
+     * @var Dashboard_uncategorized_picturesView
+     */
+    private $uncategorized_picturesView;
+
 
     /**
      * @param Dashboard_news_tableView $newsTableView
@@ -61,7 +66,7 @@ class DashboardView extends View
 
     public function getCustomJS()
     {
-        return array("add_category_dialog.js", "tabs_control.js");
+        return array("add_category_dialog.js", "tabs_control.js", "categorize_pic.js");
     }
 
     /**
@@ -69,7 +74,7 @@ class DashboardView extends View
      */
     public function getUnlinkedPicturesView()
     {
-        return $this->unlinkedPicturesView;
+        return (null == $this->unlinkedPicturesView) ? "" : $this->unlinkedPicturesView;
     }
 
     /**
@@ -89,14 +94,6 @@ class DashboardView extends View
 
         $this->unlinkedPicturesView = $unlinkedPicturesView;
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasUnlinkedPicturesView()
-    {
-        return (null == $this->unlinkedPicturesView);
     }
 
     /**
@@ -126,6 +123,22 @@ class DashboardView extends View
     public function getPictureTableView()
     {
         return $this->pictureTableView;
+    }
+
+    /**
+     * @param Dashboard_uncategorized_picturesView $uncategorized_picturesView
+     */
+    public function setUncategorizedPicturesView(Dashboard_uncategorized_picturesView $uncategorized_picturesView)
+    {
+        $this->uncategorized_picturesView = $uncategorized_picturesView;
+    }
+
+    /**
+     * @return Dashboard_uncategorized_picturesView
+     */
+    public function getUncategorizedPicturesView()
+    {
+        return (null == $this->uncategorized_picturesView) ? "" : $this->uncategorized_picturesView;
     }
 
 }

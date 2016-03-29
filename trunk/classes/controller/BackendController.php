@@ -26,10 +26,16 @@ class BackendController extends BildergalerieController
      */
     private $newsDAO;
 
+    /**
+     * @var PictureDAO
+     */
+    private $picDAO;
+
     public function onCreate(Router $router)
     {
         parent::onCreate($router);
         $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
+        $this->picDAO = new PictureDAO($this->baseFactory->getDbConnection(), $this->mandant);
         $this->categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
         $this->newsDAO = new NewsDAO($this->baseFactory->getDbConnection(), $this->mandant);
     }
@@ -68,9 +74,16 @@ class BackendController extends BildergalerieController
             $dashboardView->setUnlinkedPicturesView(new Dashboard_unlinked_picturesView($unlinkedPicPathes));
         }
 
+        // fetch all uncategorized pictures
+        $uncategorizedPics = $this->picDAO->getUncategorizedPictures();
+        if (count($uncategorizedPics)) {
+            $allCategories = $this->categoryDAO->getAllCategories();
+            $dashboardView->setUncategorizedPicturesView(
+                new Dashboard_uncategorized_picturesView($uncategorizedPics, $allCategories));
+        }
+
         // fetch all pictures
-        $picDAO = new PictureDAO($this->baseFactory->getDbConnection(), $this->mandant);
-        $pictureTableView = $picDAO->getPicturesFromCategory(-1, true);
+        $pictureTableView = $this->picDAO->getPicturesFromCategory(-1, true);
         if (count($pictureTableView) > 0) {
             $dashboardView->setAllPicturesView(new Dashboard_pic_tableView($pictureTableView));
         }

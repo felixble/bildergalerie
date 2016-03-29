@@ -34,7 +34,6 @@
                    title="Gemälde bearbeiten">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
-                <!-- TODO: Remove exhibition -->
                 <a href="<?php echo $this->url("pictures", "delete", array("id" => $id)); ?>"
                    class="confirmation"
                    data-confirmation-text="Soll das Gemälde wirklich gelöscht werden?"

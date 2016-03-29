@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a7cba10bf1469cc24b8224992394fed4",
-    "content-hash": "6206123b7ebe7a3932babed7d9f287cb",
+    "hash": "bde38a85bc1c2146004d3fb0aca40c6b",
+    "content-hash": "e71f15d80f9ea65be15655c3670d737c",
     "packages": [
         {
             "name": "1000hz/bootstrap-validator",
@@ -160,55 +160,6 @@
                 "web"
             ],
             "time": "2015-11-24 20:19:41"
-        },
-        {
-            "name": "components/bootstrap-switch",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tubssp/bootstrap-switch.git",
-                "reference": "7c2d069a98cba7e7b24ec605a761f8c0685e0be9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tubssp/bootstrap-switch/zipball/7c2d069a98cba7e7b24ec605a761f8c0685e0be9",
-                "reference": "7c2d069a98cba7e7b24ec605a761f8c0685e0be9",
-                "shasum": ""
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "name": "bootstrap-switch",
-                    "files": [
-                        "dist/**"
-                    ],
-                    "scripts": [
-                        "dist/js/bootstrap-switch.js"
-                    ],
-                    "shim": {
-                        "exports": "BootstrapSwitch"
-                    }
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache License Version 2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Mattia Larentis",
-                    "homepage": "http://www.larentis.eu"
-                }
-            ],
-            "description": "Turn checkboxes and radio buttons in toggle switches.",
-            "homepage": "http://www.bootstrap-switch.org",
-            "keywords": [
-                "JS",
-                "bootstrap",
-                "javascript",
-                "switch"
-            ],
-            "time": "2014-06-25 18:28:03"
         },
         {
             "name": "components/jquery",
@@ -634,7 +585,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "components/bootstrap-switch": 20,
         "makeusabrew/bootbox": 20,
         "1000hz/bootstrap-validator": 20,
         "callmenick/five-star-rating": 20

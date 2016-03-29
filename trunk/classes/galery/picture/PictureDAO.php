@@ -182,6 +182,18 @@ class PictureDAO extends BaseMultiClientDAO
         return $this->fetchRowMany($sqlBuilder);
     }
 
+    public function getUncategorizedPictures()
+    {
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setQuery("SELECT t_pic.pic_id, t_pic.title, t_path.thumb_path, t_cat_map.cat_id, t_pic.date_created
+                        FROM galery_pictures AS t_pic
+                        LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
+                        LEFT JOIN galery_pic_category_map AS t_cat_map ON t_pic.pic_id=t_cat_map.pic_id
+                        WHERE t_cat_map.cat_id IS NULL");
+
+        return $this->fetchRowMany($sqlBuilder);
+    }
+
     public function deletePicture($picId)
     {
         $res = $this->dbConn->beginTransaction();

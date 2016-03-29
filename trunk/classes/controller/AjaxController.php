@@ -158,6 +158,41 @@ class AjaxController extends BildergalerieController
         return json_encode($resultArray);
     }
 
+    public function categorizePicAction()
+    {
+        $resultArray = array(
+            "status"    => "OK"
+        );
+
+        $post = $this->getRequest()->getPostParam();
+
+        // TODO: validate input
+        $picId = $this->getValueOrNull("picId", $post);
+        $categories = $this->getValueOrNull("categories", $post);
+
+        if (null == $picId) {
+            throw new InvalidArgumentException("Parameter picId missing.");
+        }
+
+        if (null == $categories) {
+            throw new InvalidArgumentException("Parameter categories missing.");
+        }
+
+        if (count($categories) == 0) {
+            throw new InvalidArgumentException("There must be at least one category given.");
+        }
+
+        $picCatMapDAP = new PicCatMapDAO($this->baseFactory->getDbConnection(), $this->mandant);
+        foreach ($categories as $catId) {
+            $picCatMapDAP->createEntry($picId, new Category($this->mandant, $catId));
+        }
+
+        $derden = (count($categories) == 1) ? "der Ausstellung" : "den Ausstellungen";
+        $this->getAlertManager()->setSuccessMessage("<strong>OK: </strong> Das Gemälde wurde $derden zugeordnet.");
+
+        return json_encode($resultArray);
+    }
+
     public function rateAction()
     {
         $resultArray = array(
