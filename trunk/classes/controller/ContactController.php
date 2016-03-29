@@ -39,6 +39,8 @@ class ContactController extends BildergalerieController
         $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
         $this->pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $this->mandant);
         $picDetails = $this->pictureDAO->getPictureById($get);
+        $picId = $picDetails->getPictureId();
+        $contactView->setPicId($picId);
         }
 
         return $this->getContentFrameView("Kontaktformular", $contactView);

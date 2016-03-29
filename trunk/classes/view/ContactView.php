@@ -32,11 +32,24 @@ class ContactView extends View
     }
 
     /**
+     * @return string
+     */
+    public function getPicId()
+    {
+        return $this->picId;
+    }
+
+    /**
      * @param string $title
      */
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    public function getPictureDetails (){
+        $pictureDetails = self::PICTUREURL.$this->getPicId();
+        return $pictureDetails;
     }
 
 }

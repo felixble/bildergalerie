@@ -48,8 +48,8 @@
             <!-- glyphicon glyphicon-bullhorn / glyphicon glyphicon-envelope -->
             <label for="subject">Betreff</label>
             <div class="input-group">
-                <span class="input-group-addon" id="subject-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                <input type="text" class="form-control" id="subject" name="subject"
+                <span class="input-group-addon"  id="subject-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                <input type="text" class="form-control" id="subject" name="subject" placeholder="<?php echo $this->getPictureDetails() ?>"
                        aria-describedby="subject-addon" required value=""/>
             </div>
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
