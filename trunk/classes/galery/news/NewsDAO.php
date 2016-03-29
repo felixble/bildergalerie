@@ -73,7 +73,9 @@ class NewsDAO extends BaseMultiClientDAO
             ->setQuery('SELECT art.*, user.user_id, user.first_name, user.last_name, art.date_created
                         FROM galery_news_articles AS art
                         LEFT JOIN galery_user AS user ON art.created_by = user.user_id
-                        WHERE art.mandant_id = :id;')
+                        WHERE art.mandant_id = :id
+                        ORDER BY art.date_created DESC;
+                        ;')
             ->setConditions(array("id" => $this->mandant->getMandantId()));
 
          return $newsArticles = $this->fetchRowMany($sqlbuilder);
