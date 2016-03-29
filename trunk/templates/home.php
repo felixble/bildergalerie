@@ -1,17 +1,20 @@
 <?php /** @var HomeView $this */ ?>
 <?php
 $galery_text = "Malen bedeutet Lebensfreude und Lust. Mit den Jahren kommen viele Gemälde zustanden. Eine Auswahl "
-                . "dieser findet sich in verschiedenen thematisch eingebetteten Ausstellungen wieder.<br>"
+                . "dieser findet sich in verschiedenen thematisch eingebetteten Ausstellungen wieder. "
                 . "Viel Spaß beim Stöbern.";
 
-$about_text = "Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis "
-                . "consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum "
-                . "nibh.";
+$about_text = "Hildegard Blechschmitt, geboren in Speyer 1951, lebt in St. Ingbert und malt mit Liebe und Freude "
+                . "in ihrem kleinen Atelier, das schon aus den Nähten zu platzen drohte, wenn sich nicht durch "
+                . "glückliche Fügung die Chance aufgetan hätte, eine große Menge Bilder in den Fluren und Räumen "
+                . "einer Neunkircher Klinik aufzuhängen.";
 
 $news_text = $this->getLatestArticle()->getContent();
 
-$about_text = (strlen($about_text) > 200) ? substr($about_text, 0, 200) . "..." : $about_text;
-$news_text = (strlen($news_text) > 200) ? substr($news_text, 0, 200) . "..." : $news_text;
+$max_length = 218;
+
+$about_text = (strlen($about_text) > $max_length) ? substr($about_text, 0, $max_length) . "..." : $about_text;
+$news_text = (strlen($news_text) > $max_length) ? substr($news_text, 0, $max_length) . "..." : $news_text;
 
 ?>
 
