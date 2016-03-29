@@ -16,8 +16,9 @@ if (null != $this->getPostView()) {
             <div class="anchor" id="<?php echo $article->getId(); ?>"></div>
             <h2><?php echo $article->getTitle() ?></h2>
 
-            <h6>Veröffentlicht am <?php echo $this->getGermanDate($article->getDate()); ?> von <?php echo $article->getOwner(); ?></h6>
-
+            <div class="newsSubHeader">
+                Veröffentlicht am <?php echo $this->getGermanDate($article->getDate()); ?> von <?php echo $article->getOwner(); ?>
+            </div>
             <p> <?php echo $article->getContent() ?></p>
             <?php if($this->isUserLoggedIn() || $i+1 < $max): ?>
             <div class="articleDevider">
