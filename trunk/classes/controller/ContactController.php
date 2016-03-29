@@ -39,7 +39,6 @@ class ContactController extends BildergalerieController
         $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
         $this->pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $this->mandant);
         $picDetails = $this->pictureDAO->getPictureById($get);
-        $picId = $picDetails->getPictureId();
         $contactView->setPicture($picDetails);
         }
 
@@ -70,14 +69,15 @@ class ContactController extends BildergalerieController
             return $this->indexAction();
         }
         $this->getRouter()->reLocateTo("home");
+        return null; // this statement will not be reached...
     }
 
     private function buildMessage($name, $lastName, $mail, $telephone, $subject, $content, $picId)
     {
         $tel = (null==$telephone) ? ". Die Telefonnummer lautet: ".$telephone : "";
         $path = (null!=$picId) ?
-            "\r\nDer Pfad zum betreffenden Bild lautet: ".
-            substr($_SERVER["REDIRECT_URL"],0,$_SERVER["REDIRECT_URL"]-13)."/pictures/pic/id/".$picId :"";
+            "\r\nDas angefragte Gemälde finden Sie unter: ".
+            MvcConfig::getInstance()->getCompleteBaseUrl() . "pictures/pic/id/".$picId :"";
 
         $message = "Sehr geehrter Kunde,\r\nSie haben eine Kontaktanfrage von ".$name.
                     " ".$lastName." erhalten\r\n"."Bitte senden Sie eine Antwortmail an:" .

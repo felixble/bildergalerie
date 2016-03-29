@@ -34,11 +34,13 @@ abstract class BaseDAO
         return $this->sqlManager->insert($sqlBuilder);
     }
 
-    protected function getSqlBuilder()
+    protected function getSqlBuilder($setTableName = true)
     {
         $sqlBuilder = new Simplon\Mysql\Manager\SqlQueryBuilder();
 
-        $sqlBuilder->setTableName($this->getTableName());
+        if ($setTableName) {
+            $sqlBuilder->setTableName($this->getTableName());
+        }
         return $sqlBuilder;
     }
 

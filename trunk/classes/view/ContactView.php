@@ -28,6 +28,7 @@ class ContactView extends View
      */
     public function getPicId()
     {
+        if ($this->picture == null) return "";
         return $this->picture->getPictureId();
     }
 

@@ -108,6 +108,14 @@ class MvcConfig {
         $this->defaultControllerName = $defaultControllerName;
     }
 
+    public function getCompleteBaseUrl()
+    {
+        $s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
+        $protocol = "http" . $s;
+        $port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
+        return $protocol."://".$_SERVER['SERVER_NAME'].$port . $this->getBasePath();
+    }
+
 
     /**
      * Calculates the application path from the

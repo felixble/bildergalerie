@@ -191,10 +191,9 @@ class PictureDAO extends BaseMultiClientDAO
     public function getPicturesForTag($tagId)
     {
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery("SELECT t_cat_map.cat_id, t_pic.pic_id, t_cat_map.pic_id, t_pic.title, t_path.path,
+            ->setQuery("SELECT t_pic.pic_id, t_pic.title, t_path.path,
                           t_path.thumb_path, t_tag_map.tag_id
-                        FROM galery_pic_category_map AS t_cat_map
-                        LEFT JOIN galery_pictures AS t_pic ON t_cat_map.pic_id=t_pic.pic_id
+                        FROM galery_pictures AS t_pic
                         LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
                         LEFT JOIN galery_pic_tag_map AS t_tag_map ON t_pic.pic_id=t_tag_map.pic_id
                         WHERE t_tag_map.tag_id = :tagId")

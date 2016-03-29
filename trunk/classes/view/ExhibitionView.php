@@ -47,7 +47,9 @@ class ExhibitionView extends View
     public function getExhibitionName()
     {
         if (null == $this->exhibition) {
-            return "Alle Gemälde";
+            return (null == $this->tag)
+                ? "Alle Gemälde"
+                : "Gemälde mit Schlagwort " . $this->tag->getTagName();
         }
 
         return $this->exhibition->getCategoryName();

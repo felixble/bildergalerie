@@ -85,6 +85,22 @@ class TagDAO extends BaseMultiClientDAO
     }
 
     /**
+     * Gets all tags which are currently linked
+     * to pictures.
+     */
+    public function queryForLinkedTags()
+    {
+        $sqlBuilder = $this->getSqlBuilder(false)
+            ->setQuery("SELECT t_tag.*, t_map.pic_id FROM galery_tag AS t_tag
+                        LEFT JOIN galery_pic_tag_map AS t_map ON t_tag.tag_id = t_map.tag_id
+                        WHERE mandant_id = 1 AND t_map.pic_id IS NOT NULL
+                        GROUP BY t_tag.tag_id")
+            ->setConditions(array('mandant' => $this->mandant->getMandantId()));
+
+        return $this->fetchRowMany($sqlBuilder);
+    }
+
+    /**
      * @param $row
      * @return Tag
      */

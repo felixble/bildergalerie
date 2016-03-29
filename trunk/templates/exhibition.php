@@ -21,10 +21,10 @@
                     <p>In Internet Explorer versions up to 8, things inside the canvas are inaccessible!</p>
                 </canvas>
             </div>
-            <div id="tags">
+            <div id="tags" style="display: none;">
                 <ul>
                     <?php foreach ($this->getTags() as $tag): ?>
-                        <li><a href="#"><?php echo $tag->getTagName(); ?></a></li>
+                        <li><a href="<?php echo $this->url("pictures", "tag", array("id" => $tag->getTagId())); ?>"><?php echo $tag ?></a></li>
                     <?php endforeach; ?>
                 </ul>
             </div>

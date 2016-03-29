@@ -97,7 +97,7 @@ class PicturesController extends BildergalerieController
         $tags = null;
         if ($exhibitionId == -1) {
             $tagDAO = new TagDAO($this->baseFactory->getDbConnection(), $this->mandant);
-            $tags = $tagDAO->queryForAll();
+            $tags = $tagDAO->queryForLinkedTags();
         }
 
         $backtoParams = ($exhibitionId == -1) ? array() : array("id" => $exhibitionId) ;
