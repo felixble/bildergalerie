@@ -17,7 +17,11 @@
     <tbody class="">
     <?php foreach ($this->getUncategorizedPics() as $picture): $id = $picture->getPictureId() ?>
         <tr>
-            <td><img class="img-responsive" width="50" src="<?php echo $picture->getPath()->getThumbPath(); ?>"></td>
+            <td>
+                <a href="<?php echo $this->url("pictures", "pic", array("id" => $id)); ?>">
+                    <img class="img-responsive" width="50" src="<?php echo $picture->getPath()->getThumbPath(); ?>">
+                </a>
+            </td>
             <td id="pic_title_<?php echo $id; ?>"
                 class="table-no-truncate"><?php echo $picture->getTitle(); ?></td>
             <td style="overflow: visible">

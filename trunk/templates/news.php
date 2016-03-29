@@ -13,6 +13,7 @@ if (null != $this->getPostView()) {
     $max = count($this->getNewsArticles());
     foreach ($this->getNewsArticles() as $article): ?>
         <div>
+            <div class="anchor" id="<?php echo $article->getId(); ?>"></div>
             <h2><?php echo $article->getTitle() ?></h2>
 
             <h6>Veröffentlicht am <?php echo $this->getGermanDate($article->getDate()); ?> von <?php echo $article->getOwner(); ?></h6>

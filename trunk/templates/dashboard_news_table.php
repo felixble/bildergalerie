@@ -35,7 +35,11 @@
     <tbody class="">
     <?php foreach ($this->getNewsArticles() as $article):?>
         <tr>
-            <td class="table-no-truncate"><?php echo $article->getTitle(); ?></td>
+            <td class="table-no-truncate">
+                <a href="<?php echo $this->url("news", "", array(), $article->getId()); ?>">
+                    <?php echo $article->getTitle(); ?>
+                </a>
+            </td>
             <td> <?php echo $article->getContent(); ?></td>
             <td><?php echo $article->getOwner(); ?></td>
             <td><?php echo $article->getDate()->format("d.m.Y"); ?></td>
