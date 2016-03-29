@@ -26,7 +26,9 @@
         <h2>Übersicht aller Ausstellungen</h2>
     </div>
 
-
+    <?php if (count($this->getCategories()) == 0): ?>
+        <p>Bisher sind noch keine Ausstellungen vorhanden.</p>
+    <?php else: ?>
     <table id="exhibition_table_body" class="table table-striped table-truncate table-hover">
         <thead>
         <tr>
@@ -65,6 +67,7 @@
         <?php endforeach; ?>
         </tbody>
     </table>
+    <?php endif; ?>
 </div>
 
 <div class="tab_container" id="_pictures">

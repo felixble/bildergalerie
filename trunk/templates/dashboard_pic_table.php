@@ -13,6 +13,9 @@
     </div>
     <h2>Übersicht aller Gemälde</h2>
 </div>
+<?php if (count($this->getPictures()) == 0): ?>
+<p>Es wurden noch keine Bilder hochgeladen.</p>
+<?php else: ?>
 <table class="table table-striped table-truncate table-hover">
     <thead>
     <tr>
@@ -49,3 +52,4 @@
     <?php endforeach; ?>
     </tbody>
 </table>
+<?php endif; ?>

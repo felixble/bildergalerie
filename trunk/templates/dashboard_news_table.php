@@ -22,6 +22,10 @@
     </div>
     <h2>Alle News-Artikel</h2>
 </div>
+
+<?php if (count($this->getNewsArticles()) == 0): ?>
+    <p>Es wurden noch keine Artikel veröffentlicht.</p>
+<?php else: ?>
 <table class="table table-striped table-truncate table-hover">
     <thead>
     <tr>
@@ -59,3 +63,4 @@
     <?php endforeach; ?>
     </tbody>
 </table>
+<?php endif; ?>
