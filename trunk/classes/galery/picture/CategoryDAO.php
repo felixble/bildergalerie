@@ -43,7 +43,8 @@ class CategoryDAO extends BaseMultiClientDAO
             ->setQuery('SELECT t_cat.*, COUNT(t_map.pic_id) AS number_related_pictures FROM galery_categories AS t_cat
                         LEFT JOIN galery_pic_category_map AS t_map ON t_cat.category_id=t_map.cat_id
                         WHERE mandant_id =:m_id
-                        GROUP BY category_id')
+                        GROUP BY category_id
+                        ORDER BY t_cat.category_name ASC')
             ->setConditions(array("m_id" => $this->mandant->getMandantId()));
 
         return $this->fetchRowMany($sqlBuilder);
@@ -69,7 +70,8 @@ class CategoryDAO extends BaseMultiClientDAO
                             ORDER BY RAND()) AS t_pic ON t_pic.cat_id=t_cat.category_id
                         LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
                         WHERE t_cat.mandant_id =:m_id AND t_pic.pic_id IS NOT NULL
-                        GROUP BY t_cat.category_id' . $add_limit . ';')
+                        GROUP BY t_cat.category_id' . $add_limit
+                        . ' ORDER BY t_cat.category_id DESC;')
             ->setConditions($conditions);
 
         $rows = $this->sqlManager->fetchRowMany($sqlBuilder);
