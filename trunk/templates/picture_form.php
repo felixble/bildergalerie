@@ -42,6 +42,7 @@ $picPathId = (null == $pic) ? ":" : $pic->getPath()->getId();
             <input type="hidden" id="uploadFile_path" name="uploadFile_path" value="<?php echo $picPath; ?>">
         </div>
         <div style="display: inline-block;">
+            <img id="loading" style="margin-left: 50px; display: none" src="resources/img/ajax-loader.gif">
             <img style="display: <?php echo (!empty($picPath)) ? "block" : "none"; ?>;" src="<?php echo $picThumbPath; ?>" id="uploadPreview" width="200">
             <div class="text-center" id="upload_file_name"><?php echo $picFileName; ?></div>
         </div>

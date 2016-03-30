@@ -8,6 +8,8 @@ $("#uploadFile").change(function() {
     var file_data = $('#uploadFile').prop('files')[0];
     var formData = new FormData();
     formData.append('uploadFile', file_data);
+    var loading = $('#loading');
+    loading.show();
     uploadFile(
         formData,
         function (result) {
@@ -19,6 +21,7 @@ $("#uploadFile").change(function() {
                 console.log(result);
                 uploadError(json.errMsg);
             }
+            loading.hide();
         }
     );
 });
