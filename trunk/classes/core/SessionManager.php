@@ -58,17 +58,12 @@ class SessionManager
 
     public function setBackTo($backTo)
     {
-        $flashSegment = $this->getFlashSegment();
-        $flashSegment->setFlash("backto", $backTo);
+        $this->setFlash("backto", $backTo);
     }
 
     public function getBackTo($refresh = false)
     {
-        $backTo = $this->getFlashSegment()->getFlash("backto");
-        if ($refresh) {
-            $this->setBackTo($backTo);
-        }
-        return $backTo;
+        return $this->getFlash("backto", $refresh);
     }
 
     public function setFlash($key, $value)
