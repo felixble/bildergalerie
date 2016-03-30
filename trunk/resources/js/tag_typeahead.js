@@ -11,7 +11,8 @@ var tags = new Bloodhound({
         filter: function(list) {
             return $.map(list, function(tag) { // TODO: tags with spaces are not working ?!
                 return { name: tag }; });
-        }
+        },
+        cache: false
     }
 });
 tags.initialize();
