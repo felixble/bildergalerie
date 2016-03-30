@@ -49,6 +49,7 @@ class AjaxController extends BildergalerieController
      * @throws Exception
      * @throws FileAlreadyExists
      * @throws IllegalArgumentException
+     * @AuthRequired
      */
     public function uploadAction()
     {
@@ -114,6 +115,10 @@ class AjaxController extends BildergalerieController
         return json_encode($tagsArr);
     }
 
+    /**
+     * @return string
+     * @AuthRequired
+     */
     public function addCategoryAction()
     {
         $resultArray = array(
@@ -158,6 +163,10 @@ class AjaxController extends BildergalerieController
         return json_encode($resultArray);
     }
 
+    /**
+     * @return string
+     * @AuthRequired
+     */
     public function categorizePicAction()
     {
         $resultArray = array(

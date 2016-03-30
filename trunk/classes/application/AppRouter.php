@@ -36,7 +36,12 @@ class AppRouter extends Router
             $actionAnnotations = $controller->getAnnotationParser()->getAnnotationsForMethod($action);
             $isAuthRequired = ($controllerAnnotations->has("AuthRequired") || $actionAnnotations->has("AuthRequired"));
             if ($isAuthRequired && !$this->isUserLoggedIn()) {
-                $this->reRouteTo("auth", "login");
+                // authRequired but no user authenticated!
+                if ($controllerAnnotations->has("JsonResponse") || $actionAnnotations->has("JsonResponse")) {
+                    throw new SimpleUserErrorException("Sie sind nicht angemeldet. Bitte loggen Sie sich zuerst ein.");
+                } else {
+                    $this->reRouteTo("auth", "login");
+                }
             }
         } else {
             throw new IllegalStateException(
