@@ -63,7 +63,7 @@ class CategoryDAO extends BaseMultiClientDAO
             $conditions['limit'] = $limit;
         }
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery('SELECT * FROM bildergalerie.galery_categories AS t_cat
+            ->setQuery('SELECT * FROM galery_categories AS t_cat
                         LEFT JOIN
                           (SELECT t_pic.pic_id, title, path_id, cat_id FROM galery_pic_category_map t_map
                             LEFT JOIN galery_pictures AS t_pic ON t_pic.pic_id=t_map.pic_id
