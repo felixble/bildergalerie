@@ -1,6 +1,6 @@
 <?php /** @var HomeView $this */ ?>
 <?php
-$galery_text = "Malen bedeutet Lebensfreude und Lust. Mit den Jahren kommen viele Gemälde zustanden. Eine Auswahl "
+$galery_text = "Malen bedeutet Lebensfreude und Lust. Mit den Jahren kommen viele Gemälde zustande. Eine Auswahl "
                 . "dieser findet sich in verschiedenen thematisch eingebetteten Ausstellungen wieder. "
                 . "Viel Spaß beim Stöbern.";
 
