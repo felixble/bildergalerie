@@ -26,7 +26,7 @@ if (count($this->getNewsArticles()) == 0) {
             </div>
             <p> <?php echo $article->getContent() ?></p>
             <?php if($this->isUserLoggedIn() || $i+1 < $max): ?>
-            <div class="articleDevider">
+            <div class="articleDivider">
                 <?php if ($this->isUserLoggedIn()): ?>
                     <a href="<?php echo $this->url("news", "update", array("id" => $article->getId()), "new_article") ?>"
                        title="Kommentar bearbeiten">Bearbeiten

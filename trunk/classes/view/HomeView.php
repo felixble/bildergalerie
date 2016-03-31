@@ -55,7 +55,7 @@ class HomeView extends View {
     {
         return (null == $this->latestArticle)
             ? "Momentan gibt es keine Neuigkeiten zu berichten"
-            : $this->latestArticle->getContent();
+            : "<strong>" . $this->latestArticle->getTitle() . "</strong> " . $this->latestArticle->getContent();
     }
 
 }
