@@ -108,6 +108,11 @@ class Picture
     private $averageRatingValue;
 
     /**
+     * @var int
+     */
+    private $ratingCount = 0;
+
+    /**
      * Picture constructor.
      * @param Mandant $mandant
      * @param int|null $pictureId
@@ -593,6 +598,19 @@ class Picture
     public function getAverageRatingValue()
     {
         return $this->averageRatingValue;
+    }
+
+    public function setRatingCount($ratingCount)
+    {
+        $this->ratingCount = $ratingCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRatingCount()
+    {
+        return $this->ratingCount;
     }
 
 }

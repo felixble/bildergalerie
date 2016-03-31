@@ -129,7 +129,8 @@ class PictureDAO extends BaseMultiClientDAO
         // when fetching a single picture by id it stands to reason that we need all details of the picture.
         $sqlBuilder = $this->getSqlBuilder()
             ->setQuery('SELECT t_pic.*,t_path.pic_path_id, t_path.path,t_path.thumb_path,t_path.date_uploaded,
-                          t_my_rate.rating_value, ROUND(AVG(t_rates.rating_value), 1) AS average_rating_value
+                          t_my_rate.rating_value, ROUND(AVG(t_rates.rating_value), 1) AS average_rating_value,
+                          (SELECT COUNT(rating_id) FROM galery_pic_rating WHERE ref_pic_id = :id) AS rating_count
                         FROM galery_pictures AS t_pic
                         LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id
                         LEFT JOIN galery_pic_rating AS t_rates ON t_pic.pic_id=t_rates.ref_pic_id
@@ -334,6 +335,7 @@ class PictureDAO extends BaseMultiClientDAO
 
         $picture->setVisitorRatingValue($this->getValueOrNull($row, "rating_value"));
         $picture->setAverageRatingValue($this->getValueOrNull($row, "average_rating_value"));
+        $picture->setRatingCount($this->getValueOrNull($row, "rating_count"));
 
         return $picture;
     }

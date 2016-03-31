@@ -54,6 +54,12 @@ $(function() {
             msg_el.addClass("alert-success");
             var txt = (json.update) ? "Ihre Bewertung wurde aktualisiert." : "Ihre Bewertung wurde gespeichert.";
             msg_el.html("Vielen Dank! " + txt);
+
+            if (!json.update) {
+                // update rating count if it was a new rating entry
+                var ratingCountEl = $('#rating_count_value');
+                ratingCountEl.html(( parseInt(ratingCountEl.html())) + 1);
+            }
         } else {
             msg_el.addClass("alert-danger");
             msg_el.removeClass("alert-success");
