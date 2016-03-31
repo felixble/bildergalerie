@@ -52,10 +52,16 @@ class AppRouter extends Router
     protected function exceptionHandler(\Exception $e, $jsonResponse = false)
     {
         $exceptionView = parent::exceptionHandler($e, $jsonResponse);
+
+        if (!$jsonResponse || !($e instanceof UserException)) {
+            // send ErrorMail
+            ErrorMailHandler::sendErrorMail($e);
+        }
+
         if ($jsonResponse || $this->baseFactory == null) {
             return $exceptionView;
         }
-        if (!$jsonResponse && $e instanceof UserException) {
+        if (!$jsonResponse && ($e instanceof UserException)) {
             $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> " . $e->getMessage());
             $exceptionView = "";
         }

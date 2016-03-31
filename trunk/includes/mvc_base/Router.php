@@ -269,7 +269,6 @@ class Router {
 
         $exceptionView = new ExceptionView();
         $exceptionView->setInfosFromException($e);
-        // TODO: Show bildergalerie page wrapper (content_frame) !
         return BootstrapHelper::getContentFrameView("Error occured!", $exceptionView);
     }
 

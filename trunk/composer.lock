@@ -359,16 +359,16 @@
         },
         {
             "name": "crodas/notoj",
-            "version": "v1.2.2",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crodas/Notoj.git",
-                "reference": "234dfe3f6b59341f51f77cf35c295d7aa2c0988c"
+                "reference": "56e35ee4ac9a89fd95b9044e64381e461d90fc08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crodas/Notoj/zipball/234dfe3f6b59341f51f77cf35c295d7aa2c0988c",
-                "reference": "234dfe3f6b59341f51f77cf35c295d7aa2c0988c",
+                "url": "https://api.github.com/repos/crodas/Notoj/zipball/56e35ee4ac9a89fd95b9044e64381e461d90fc08",
+                "reference": "56e35ee4ac9a89fd95b9044e64381e461d90fc08",
                 "shasum": ""
             },
             "require": {
@@ -393,7 +393,7 @@
                 }
             ],
             "description": "Annotation parser. Uses reflection and provides cache out of the box.",
-            "time": "2016-01-05 01:33:42"
+            "time": "2016-03-31 08:37:41"
         },
         {
             "name": "makeusabrew/bootbox",

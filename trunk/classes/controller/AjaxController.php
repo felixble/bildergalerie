@@ -1,7 +1,11 @@
 <?php
 
 /**
- * Created by PhpStorm.
+ *
+ * This controller handles all asynchronous
+ * requests.
+ * All actions produce responses in json format.
+ *
  * User: felix
  * Date: 19.02.16
  * Time: 07:41
