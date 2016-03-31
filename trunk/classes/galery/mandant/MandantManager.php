@@ -45,7 +45,11 @@ class MandantManager
             $domain = $_SERVER['HTTP_HOST'];
             $mandant = $this->getDefaultMandant($dbConn, $domain);
             if (null == $mandant) {
-                throw new Exception("There is no default mandant given for the domain $domain.");
+                //Fallback while having only one mandant and switching domains like underwear..
+                $mandant = $this->fallback($dbConn);
+                if (null == $mandant) {
+                    throw new Exception("There is no default mandant given for the domain $domain.");
+                }
             }
         }
 
@@ -111,6 +115,20 @@ class MandantManager
         $segment = $this->sessManager->getMandantSegment();
         $segment->set(self::MANDANT_KEY, serialize($mandant));
         $this->mandant = $mandant;
+    }
+
+    /**
+     * Fallback while having only one mandant and switching
+     * domains like underwear..
+     *
+     * @param \Simplon\Mysql\Mysql $dbConn
+     * @return Mandant|null
+     */
+    private function fallback(\Simplon\Mysql\Mysql $dbConn)
+    {
+        $id = 1;
+        $mandantDAO = new MandantDAO($dbConn);
+        return $mandantDAO->queryMandantForId($id);
     }
 
 
