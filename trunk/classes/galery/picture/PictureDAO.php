@@ -153,7 +153,7 @@ class PictureDAO extends BaseMultiClientDAO
         return $picture;
     }
 
-    public function getPicturesFromCategory($categoryId, $fetchRelatedCategories = false)
+    public function getPicturesFromCategory($categoryId, $fetchRelatedCategories = false, $order = false)
     {
         if ($fetchRelatedCategories) {
             $query = 'SELECT t_cat_map.cat_id, t_pic.pic_id, t_cat_map.pic_id, t_pic.title, t_path.path,t_path.thumb_path,
@@ -168,11 +168,13 @@ class PictureDAO extends BaseMultiClientDAO
                       LEFT JOIN galery_pictures AS t_pic ON t_cat_map.pic_id=t_pic.pic_id
                       LEFT JOIN galery_picture_path AS t_path ON t_pic.path_id=t_path.pic_path_id';
         }
+        $orderBy = ($order) ? " ORDER BY t_pic.title ASC" : "";
+
         // If we fetch all categories, we must set the mandant condition!!
         $where = ' WHERE t_pic.mandant_id = :m_id';
         $where .= ($categoryId != -1) ? ' AND cat_id = :catId' : '';
         $sqlBuilder = $this->getSqlBuilder()
-            ->setQuery($query . $where . ' GROUP BY t_pic.pic_id');
+            ->setQuery($query . $where . ' GROUP BY t_pic.pic_id' . $orderBy);
         $conditions = array("m_id" => $this->mandant->getMandantId());
         if ($categoryId != -1) {
             $conditions["catId"] = $categoryId;

@@ -83,7 +83,7 @@ class BackendController extends BildergalerieController
         }
 
         // fetch all pictures
-        $pictureTableView = $this->picDAO->getPicturesFromCategory(-1, true);
+        $pictureTableView = $this->picDAO->getPicturesFromCategory(-1, true, true);
         $dashboardView->setAllPicturesView(new Dashboard_pic_tableView($pictureTableView));
 
         return $this->getContentFrameView("Dashboard", $dashboardView, false);
