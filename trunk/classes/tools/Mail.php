@@ -10,6 +10,7 @@
  */
 class Mail
 {
+    const DEFAULT_FROM = "Hildes Bildergalerie <noreply@hildes-bildergalerie.de>";
 
     /**
      * @var string
@@ -52,14 +53,18 @@ class Mail
      * @param $subject
      * @param $from
      */
-    public function __construct($to, $subject, $from)
+    public function __construct($to, $subject, $from = null)
     {
         $this->to = $to;
         $this->subject = $subject;
-        $this->from = $from;
+        if (null == $from) {
+            $this->from = self::DEFAULT_FROM;
+        } else {
+            $this->from = $from;
+        }
     }
 
-    public function putLine($line)
+    public function putLine($line = "")
     {
         $this->messageLines[] = $line;
         return $this;

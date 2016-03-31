@@ -10,13 +10,12 @@ class ErrorMailHandler
 {
 
     const ERROR_MAIL_TO = "fehler@hildes-bildergalerie.de";
-    const ERROR_MAIL_FROM = "noreply@hildes-bildergalerie.de";
     const SUBJECT = "Fehler - Bildergalerie";
 
 
     public static function sendErrorMail(Exception $e)
     {
-        $mail = new Mail(self::ERROR_MAIL_TO, self::SUBJECT, self::ERROR_MAIL_FROM);
+        $mail = new Mail(self::ERROR_MAIL_TO, self::SUBJECT);
 
         $mail->putLine("Hallo Admins,")
             ->putLine("")

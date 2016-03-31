@@ -9,7 +9,7 @@
 class ContactController extends BildergalerieController
 {
 
-    const MAILADDRESS = "otting.marc@gmail.com";
+    const MAILADDRESS = "contact@hildes-bildergalerie.de";
 
     /**
      * @var PictureDAO pictureDAO
@@ -20,6 +20,12 @@ class ContactController extends BildergalerieController
      * @var Mandant
      */
     private $mandant;
+
+    public function onCreate(Router $router)
+    {
+        parent::onCreate($router);
+        $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
+    }
 
     /**
      * Default action which will be executed
@@ -34,12 +40,10 @@ class ContactController extends BildergalerieController
     {
         $contactView = new ContactView();
         $get = $this->getRequest()->getGetParam();
-        if(array_key_exists("ref_pic", $get))
-        {
-        $this->mandant = $this->baseFactory->getMandantManager()->getMandant();
-        $this->pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $this->mandant);
-        $picDetails = $this->pictureDAO->getPictureById($get);
-        $contactView->setPicture($picDetails);
+        if(array_key_exists("ref_pic", $get)) {
+            $this->pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $this->mandant);
+            $picDetails = $this->pictureDAO->getPictureById($get);
+            $contactView->setPicture($picDetails);
         }
 
         return $this->getContentFrameView("Kontaktformular", $contactView);
@@ -58,11 +62,8 @@ class ContactController extends BildergalerieController
             $content = $this->getValueOrNull("content", $post);
             $picId = $this->getValueOrNull("edit_id", $post);
 
-            $message = $this->buildMessage($name, $lastName, $mail, $telephone, $subject, $content, $picId);
-
-            $headerFrom = sprintf("FROM: %s %s <%s>", $name, $lastName, $mail);
-
-            mail(self::MAILADDRESS, "Hildes-Bildergalerie - $subject", $message, $headerFrom);
+            $this->sendMailToMandant($name, $lastName, $mail, $telephone, $subject, $content, $picId);
+            $this->sendInfoMailToInquirer($mail, $name, $lastName, $subject, $content);
             $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Vielen Dank. Ihre Anfrage wird umgehend bearbeitet.");
         } catch (Exception $e) {
             $this->getAlertManager()->setErrorMessage("<strong>Fehler:</strong> Ihre Anfrage konnte leider nicht gesendet werden. Bitte versuchen sie es erneut.");
@@ -72,18 +73,55 @@ class ContactController extends BildergalerieController
         return null; // this statement will not be reached...
     }
 
-    private function buildMessage($name, $lastName, $mail, $telephone, $subject, $content, $picId)
+    private function sendMailToMandant($name, $lastName, $mail, $telephone, $subject, $content, $picId)
     {
-        $tel = (null==$telephone) ? ". Die Telefonnummer lautet: ".$telephone : "";
-        $path = (null!=$picId) ?
-            "\r\nDas angefragte Gemälde finden Sie unter: ".
-            MvcConfig::getInstance()->getCompleteBaseUrl() . "pictures/pic/id/".$picId :"";
+        $mailToMandant = new Mail(
+            self::MAILADDRESS,
+            "Hildes-Bildergalerie - $subject",
+            sprintf("%s %s <%s>", $name, $lastName, $mail)
+        );
 
-        $message = "Sehr geehrter Kunde,\r\nSie haben eine Kontaktanfrage von ".$name.
-                    " ".$lastName." erhalten\r\n"."Bitte senden Sie eine Antwortmail an:" .
-                    $mail.$tel."\r\nDer Betreff der E-Mail lautet: ".$subject.$path.
-                    "\r\n und es wurde folgender Inhalt eingetragen:\r\n\r\n".$content;
+        $mailToMandant
+            ->putLine("Sehr geehrter Kunde,")
+            ->putLine()
+            ->putLine("Sie haben eine Kontaktanfrage von $name $lastName erhalten.")
+            ->putLine("Bitte senden Sie eine Antwortmail an: $mail.");
 
-        return $message;
+        if (null != $telephone) {
+            $mailToMandant
+                ->putLine("Alternativ erreichen Sie $name $lastName auch über folgende Telefonnummer: $telephone.");
+        }
+
+        if (null != $picId) {
+            $path = MvcConfig::getInstance()->getCompleteBaseUrl() . "pictures/pic/id/".$picId;
+            $mailToMandant->putLine("Das angefragte Gemälde finden Sie unter: " . $path);
+        }
+
+        $mailToMandant
+            ->putLine()
+            ->putLine("Der Betreff der E-Mail lautet: $subject")
+            ->putLine()
+            ->putLine($content);
+
+        $mailToMandant->send();
+    }
+
+    private function sendInfoMailToInquirer($to, $name, $lastName, $subject, $content)
+    {
+        $mailToInquirer = new Mail($to, "Ihre Anfrage - $subject");
+
+        $mailToInquirer
+            ->putLine("Hallo $name $lastName,")
+            ->putLine()
+            ->putLine("vielen Dank für Ihre Anfrage, wir werden diese umgehend bearbeiten und uns bei Ihnen melden.")
+            ->putLine()
+            ->putLine("Ihre Nachricht lautet:")
+            ->putLine()
+            ->putLine($content)
+            ->putLine()
+            ->putLine("Herzliche Grüße")
+            ->putLine($this->mandant->getPageTitle());
+
+        $mailToInquirer->send();
     }
 }
