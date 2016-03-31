@@ -1,7 +1,42 @@
 <?php
+// The index.php is the single entry point into our application.
+// Via the autoloader all necessary classes will be loaded and we set
+// a exception handler to convert php errors into exceptions.
+//
+// Then we build a Request-Object by the incoming informations like
+// Request_URI, GET- / POST-Parameters, Request-Method, Cookies and Files.
+//
+// With the information of the Request-Object we can start our AppRouter,
+// which is responsible to determine the Controller class (see classes/controller),
+// whose action - depending on the request - will be executed.
+// Each action returns - which does not perform a relocate - returns a View-Object.
+// This can be printed via the "magic" __toString()-Method (see last line of this script).
+//
+// Which action of which controller will be determined by the Request-URI.
+// The default expression ist: /<controller>/<action>.
+// If no action is given or the controller has no such action, the default action
+// (index) of the given controller will be executed
+// If neither a controller nor an action is given the default action of the
+// HomeController will be executed.
+// All further - by /-divided - strings will be interpreted as GET-Parameters.
+//
+// View-Basics:
+// Each View-Class (see /classes/view/*) has a related template-file (see /templates).
+// The base View-Class (see /includes/mvc_base/View.php) is responsible to load the
+// template into the used View. Via the special "$this"-Variable we can access Methods
+// from the View-Class inside the related template-file.
+//
+// Application-Architecture
+// Inside the AppRouter (see /classes/application/AppRouter.php) we instantiate all important
+// classes which should instantiate only be once like the database connection or the session
+// management class. This will be done via a simple BaseFactory-Class (see /classes/core/BaseFactory).
+// The instance of the baseFactory will be passed from the router directly to the currently used
+// Controller-Class.
+//
+
 // include the autoloader-script which is responsible to include all necessary class files
 require __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/config.php'; // include the config-constants for our project
 
 /**
  * Function to convert all php errors

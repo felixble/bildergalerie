@@ -90,11 +90,20 @@ class PicTagMapDAO extends BaseDAO
 
     public function updateEntries($picId, $tags)
     {
-        // delete outdated existing entries
-        $this->deleteTagsForPicId($picId);
+        try {
+            // delete outdated existing entries
+            $this->deleteTagsForPicId($picId);
 
-        // create new entries
-        $this->createEntries($picId, $tags);
+            // create new entries
+            $this->createEntries($picId, $tags);
+        } catch(Exception $e) {
+            // mail exception on error
+            ErrorMailHandler::sendErrorMail($e);
+            // there we have in less than 1% of all cases the strange db error
+            // because of a duplicate entry for the primary key which we cannot
+            // explain because we delete all prior entries of the given pictureId
+            // so hopefully no one looks at this lines of code ;-)
+        }
     }
 
     /**

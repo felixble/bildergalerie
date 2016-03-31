@@ -99,7 +99,6 @@ class PictureDAO extends BaseMultiClientDAO
         $res = $this->sqlManager->update($sqlBuilder); // $res: bool|null, null iff nothing has been updated
 
         if (null == $res || $res) { // data was updated successfully or nothing has been updated
-            //TODO update tag map if necessary...
             $this->picCatMapDAO->updateEntries($picture->getPictureId(), $picture->getCategories());
             $this->picTagMapDAO->updateEntries($picture->getPictureId(), $picture->getTags());
         }
