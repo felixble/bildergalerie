@@ -227,6 +227,19 @@ class PicturesController extends BildergalerieController
         $this->getRouter()->reLocateTo(); // home ?!
     }
 
+    /**
+     * @AuthRequired
+     */
+    public function deleteUnlinkedPictureAction()
+    {
+        $deletePathId = $this->getIdRequestParam("id", /* throw exception if not given */ true);
+
+        $this->pictureDAO->deletePicturePath($deletePathId);
+
+        $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Das lose Gemälde wurde erfolgreich entfernt.");
+        $this->getRouter()->reLocateTo("backend", "", array(), "pictures");
+    }
+
     private function getPictureFormView($createMode = false)
     {
         $picFormView = new Picture_formView($createMode);

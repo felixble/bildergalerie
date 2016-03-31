@@ -15,6 +15,13 @@
             </a>
             <div class="menu-category-name list-group-item">
                 <a href="<?php echo $url; ?>"><?php echo $path->getFileName(); ?></a>
+                <span class="pull-right">
+                    <a class="confirmation" data-confirmation-text="Soll das lose Gemälde wirklich gelöscht werden?"
+                       href="<?php echo $this->url("pictures", "deleteUnlinkedPicture", array("id" => $path->getId())); ?>"
+                       title="Loses Gemälde löschen">
+                        <span class="glyphicon glyphicon-remove "  aria-hidden="true"></span>
+                    </a>
+                </span>
             </div>
         </div>
     <?php endforeach; ?>

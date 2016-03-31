@@ -68,7 +68,7 @@ td.table-no-truncate {
 }
 
 .legal-notice {
-    margin-top: 0px;
+    margin-top: 0;
 }
 
 @media (min-width: 768px) {

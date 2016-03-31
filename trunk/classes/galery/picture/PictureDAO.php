@@ -239,23 +239,8 @@ class PictureDAO extends BaseMultiClientDAO
             $res = $this->deletePictureDetails($picId);
             if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
 
-            // then we delete the picture path entry, but first we fetch the entry to get the path to the files
-            $picPath = $this->picPathDAO->getPicturePathForId($picPathId);
-            $res = $this->picPathDAO->deletePicturePath($picPathId);
-            if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
-
-            // finally we have to delete the files (pic/thumb)
-            $filePath = $picPath->getPath();
-            if (null != $filePath && !empty($filePath)) {
-                $res = unlink($filePath);
-                if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
-            }
-            $thumbFilePath = $picPath->getThumbPath();
-            if (null != $thumbFilePath && !empty($thumbFilePath)) {
-                unlink($thumbFilePath);
-                // TODO: what shall we do if we could not delete the thumb file, at this point we cannot recover the original picture...
-                //if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
-            }
+            // then we delete the picture path entry
+            $this->deletePicturePathInTransaction($picPathId);
 
             $res = $this->dbConn->commitTransaction();
             if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
@@ -264,6 +249,42 @@ class PictureDAO extends BaseMultiClientDAO
             throw $e;
         }
 
+    }
+
+    public function deletePicturePath($picPathId)
+    {
+        $res = $this->dbConn->beginTransaction();
+        if (!$res) throw new SimpleUserErrorException("Loses Gemälde konnte nicht entfernt werden.");
+
+        try {
+            $this->deletePicturePathInTransaction($picPathId);
+
+            $res = $this->dbConn->commitTransaction();
+            if (!$res) throw new SimpleUserErrorException("Loses Gemälde konnte nicht entfernt werden.");
+        } catch (Exception $e) {
+            $this->dbConn->rollbackTransaction();
+            throw $e;
+        }
+    }
+
+    private function deletePicturePathInTransaction($picPathId) {
+        // first we fetch the entry to get the path to the files
+        $picPath = $this->picPathDAO->getPicturePathForId($picPathId);
+        $res = $this->picPathDAO->deletePicturePath($picPathId);
+        if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
+
+        // finally we have to delete the files (pic/thumb)
+        $filePath = $picPath->getPath();
+        if (null != $filePath && !empty($filePath)) {
+            $res = unlink($filePath);
+            if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
+        }
+        $thumbFilePath = $picPath->getThumbPath();
+        if (null != $thumbFilePath && !empty($thumbFilePath)) {
+            unlink($thumbFilePath);
+            // TODO: what shall we do if we could not delete the thumb file, at this point we cannot recover the original picture...
+            //if (!$res) throw new SimpleUserErrorException("Gemälde konnte nicht entfernt werden.");
+        }
     }
 
     private function deletePictureDetails($picId)
