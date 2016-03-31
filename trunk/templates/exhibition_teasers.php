@@ -30,9 +30,11 @@ foreach ($this->getCatTeasers() as $catTeaser): /** @var CategoryTeaser $catTeas
             </p>
         </div>
         <div class="col-md-5 <?php if (($i % 2) != 0) echo "col-md-pull-7"; ?> exhibition_teaser_img">
-            <img class="featurette-image img-responsive center-block" height="500"
-                 src="<?php echo $catTeaser->getPictureThumb(); ?>"
-                 alt="<?php echo $catTeaser->getTitle(); ?>">
+            <a href="<?php echo $this->url("pictures", "exhibition", array("id" => $catTeaser->getCategory()->getCategoryId())) ?>">
+                <img class="featurette-image img-responsive center-block" height="500"
+                     src="<?php echo $catTeaser->getPictureThumb(); ?>"
+                     alt="<?php echo $catTeaser->getTitle(); ?>">
+            </a>
         </div>
     </div>
 <?php $i++; endforeach; ?>
