@@ -1,7 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Felix
+ * Controller for the page to
+ * display the information about
+ * the Artist.
+ *
+ * User: Marc
  * Date: 16.12.2015
  * Time: 16:20
  */

@@ -1,11 +1,13 @@
 <?php
 
 /**
- * Created by PhpStorm.
+ * Controller for the backend (dashboard) Views.
+ *
  * User: felix
  * Date: 20.02.16
  * Time: 15:01
  *
+ * All actions needs authentications:
  * @AuthRequired
  */
 class BackendController extends BildergalerieController

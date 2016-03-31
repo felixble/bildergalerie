@@ -1,6 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Default controller.
+ *
  * User: Felix
  * Date: 15.12.2015
  * Time: 19:30

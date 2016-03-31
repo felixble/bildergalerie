@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Created by PhpStorm.
+ * Controller to hanlde authentication
+ * requests like login or logout.
+ *
  * User: Felix
  * Date: 13.02.2016
  * Time: 23:57
@@ -23,6 +25,13 @@ class AuthController extends BildergalerieController
         return $this->loginAction();
     }
 
+    /**
+     * Displays a login form and a evaluates the
+     * result of the form.
+     *
+     * @return BootstrapView
+     * @throws ReRouteRequestException
+     */
     public function loginAction()
     {
         $failure = false;
@@ -42,6 +51,9 @@ class AuthController extends BildergalerieController
         return $view;
     }
 
+    /**
+     * Performs the logout action.
+     */
     public function logoutAction()
     {
         $this->baseFactory->getAuthenticator()->logout();

@@ -22,7 +22,7 @@ function onSuccessPicForm(id, name, description) {
 
 function onSuccessDashboard(id, name, description) {
     if ($('#row_' + id).length !== 0) {
-        $('#exhibition_name_' + id).html(name);
+        $('#exhibition_name_' + id).html("<a href='pictures/exhibition/id/" + id + "'>" + name + "</a>");
         $('#exhibition_descr_' + id).html(description);
     } else {
         // reload page
@@ -32,7 +32,7 @@ function onSuccessDashboard(id, name, description) {
 
 function getEditValuesDashboard(id) {
     return {
-        name: $('#exhibition_name_' + id).html(),
+        name: $('#exhibition_name_' + id).find('a').html(),
         description: $('#exhibition_descr_' + id).html()
     };
 }

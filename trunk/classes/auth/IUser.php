@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Created by PhpStorm.
+ * Defines all necessary Methods
+ * for a User-Implementation.
+ *
  * User: felix
  * Date: 11.02.16
  * Time: 23:56

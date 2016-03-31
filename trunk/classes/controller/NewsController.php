@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Created by PhpStorm.
+ * Controller to handle all news actions.
+ *
  * User: masolinguist
  * Date: 16.03.2016
  * Time: 16:18

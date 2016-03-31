@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Created by PhpStorm.
+ * Router customization for the bildergalerie-
+ * Project.
+ *
  * User: Felix
  * Date: 15.02.2016
  * Time: 10:54
@@ -10,6 +12,10 @@ class AppRouter extends Router
 {
 
     /**
+     * Application BaseFactory to
+     * get a instance of the SessionManager,
+     * DatabaseConnection or other singletons.
+     *
      * @var BaseFactory
      */
     protected $baseFactory;
@@ -22,12 +28,31 @@ class AppRouter extends Router
         return $this->baseFactory;
     }
 
+    /**
+     * Will be called after the request
+     * has been built.
+     *
+     * @param Request $request
+     */
     protected function onRequestBuilt(Request $request)
     {
         parent::onRequestBuilt($request);
         $this->baseFactory = new BaseFactory($request);
     }
 
+    /**
+     * Will be called immediately before the
+     * controller will be executed.
+     *
+     * At this point we check if a user is
+     * authenticated if necessary.
+     *
+     * @param Controller $controller
+     * @param string $action
+     * @throws IllegalStateException
+     * @throws ReRouteRequestException
+     * @throws SimpleUserErrorException
+     */
     protected function preRunController(Controller $controller, $action)
     {
         parent::preRunController($controller, $action);
@@ -49,6 +74,14 @@ class AppRouter extends Router
         }
     }
 
+    /**
+     * Here we customize the exception-handler.
+     * We show the defaullt page frame if possible.
+     *
+     * @param Exception $e
+     * @param bool $jsonResponse
+     * @return BootstrapView|string
+     */
     protected function exceptionHandler(\Exception $e, $jsonResponse = false)
     {
         $exceptionView = parent::exceptionHandler($e, $jsonResponse);
@@ -75,6 +108,15 @@ class AppRouter extends Router
         return $exceptionView;
     }
 
+    /**
+     * Here we provide the default content frame
+     * which is equal for each page.
+     *
+     * @param $title
+     * @param $content
+     * @param bool $showCarousel
+     * @return BootstrapView
+     */
     public function getContentFrameView($title, $content, $showCarousel = true)
     {
         $mandant = $this->baseFactory->getMandantManager()->getMandant();
@@ -106,11 +148,23 @@ class AppRouter extends Router
         return $view;
     }
 
+    /**
+     * Gets the alert manager to read or write
+     * error or success messages.
+     *
+     * @return AlertManager
+     */
     public function getAlertManager()
     {
         return new AlertManager($this->baseFactory->getSessionManager());;
     }
 
+    /**
+     * Checks if there is currently a user
+     * authenticated.
+     *
+     * @return bool
+     */
     private function isUserLoggedIn()
     {
         $auth = $this->baseFactory->getAuthenticator();

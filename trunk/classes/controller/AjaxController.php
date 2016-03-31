@@ -6,7 +6,7 @@
  * requests.
  * All actions produce responses in json format.
  *
- * User: felix
+ * User: Marc
  * Date: 19.02.16
  * Time: 07:41
  *
@@ -103,6 +103,13 @@ class AjaxController extends BildergalerieController
         return json_encode($resultArray);
     }
 
+    /**
+     * Gets all Tags. Used for the tags
+     * typeahead in the create pictures form
+     * for example.
+     *
+     * @return string
+     */
     public function getTagsAction()
     {
         $tagDAO = new TagDAO(
@@ -120,6 +127,8 @@ class AjaxController extends BildergalerieController
     }
 
     /**
+     * Adds a new category with details.
+     *
      * @return string
      * @AuthRequired
      */
@@ -168,6 +177,8 @@ class AjaxController extends BildergalerieController
     }
 
     /**
+     * Assign a picture into categories.
+     *
      * @return string
      * @AuthRequired
      */
@@ -206,6 +217,12 @@ class AjaxController extends BildergalerieController
         return json_encode($resultArray);
     }
 
+    /**
+     * Performs the rate action.
+     *
+     * @return string
+     * @throws IllegalStateException
+     */
     public function rateAction()
     {
         $resultArray = array(

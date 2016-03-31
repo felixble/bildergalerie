@@ -16,7 +16,7 @@
     <div class="menu row">
         <?php if ($this->showTagCanvas()): ?>
         <div class="menu-category list-group">
-            <div id="myCanvasContainer" style="border: 1px solid #DDDDDD;">
+            <div id="myCanvasContainer">
                 <canvas width="240" height="200" class="center-block" id="myCanvas">
                     <p>In Internet Explorer versions up to 8, things inside the canvas are inaccessible!</p>
                 </canvas>
@@ -27,9 +27,6 @@
                         <li><a href="<?php echo $this->url("pictures", "tag", array("id" => $tag->getTagId())); ?>"><?php echo $tag ?></a></li>
                     <?php endforeach; ?>
                 </ul>
-            </div>
-            <div class="menu-category-name list-group-item">
-                Schlagwörter
             </div>
         </div>
         <?php endif; ?>

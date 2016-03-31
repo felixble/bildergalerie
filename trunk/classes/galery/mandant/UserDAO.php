@@ -22,6 +22,9 @@ class UserDAO extends BaseMultiClientDAO implements IUserDAO
     const COL_LASTLOGIN = "lastlogin";
     const COL_DATE_REGISTERED = "date_registered";
 
+    /**
+     * For more security we use salt and pepper to spice it up
+     */
     const PASSWORD_PEPPER = "G=}W9+=T";
 
     public function __construct(Simplon\Mysql\Mysql $dbConn, Mandant $mandant)
@@ -31,7 +34,7 @@ class UserDAO extends BaseMultiClientDAO implements IUserDAO
 
     /**
      * Returns the user identified by the username
-     * or {@code null} iff the password does not match
+     * or null iff the password does not match
      * or the user does not exists.
      *
      * @param $user string username

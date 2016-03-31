@@ -1,7 +1,10 @@
 <?php
 
 /**
- * Created by PhpStorm.
+ * Authenticator class which is responsible
+ * to verify if a user is authenticated or
+ * authenticates a user.
+ *
  * User: Felix
  * Date: 22.12.2015
  * Time: 18:16

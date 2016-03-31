@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Created by PhpStorm.
+ * Controller for all actions related to the
+ * contact functions.
+ *
  * User: ottinm
  * Date: 23.03.2016
  * Time: 11:14
