@@ -9,6 +9,8 @@
 class UserDAO extends BaseMultiClientDAO implements IUserDAO
 {
 
+    const MYSQL_DATE_TIME_FORMAT = "Y-m-d H:i:s";
+
     const TABLE_NAME = "galery_user";
 
     const COL_MANDANT_ID= "mandant_id";
@@ -51,11 +53,31 @@ class UserDAO extends BaseMultiClientDAO implements IUserDAO
         if ($this->sqlManager->getRowCount()) {
             // we have to validate first because the object representation does not contain the password hash
             if ($this->isValidUser($row[self::COL_PASSWORD], $row[self::COL_SALT], $pass)) {
-                return $this->row2Object($row);
+                $user = $this->row2Object($row);
+                $user->setLastlogin(new DateTime());
+                $this->updateUser($user);
+                return $user;
             }
         }
 
         return null;
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    private function updateUser(User $user)
+    {
+        $data = array(
+            self::COL_LASTLOGIN => $user->getLastlogin()->format(self::MYSQL_DATE_TIME_FORMAT)
+        );
+
+        $sqlBuilder = $this->getSqlBuilder()
+            ->setConditions(array(self::COL_USER_ID => $user->getUserId()))
+            ->setData($data);
+
+        return $this->sqlManager->update($sqlBuilder);
     }
 
     /**
