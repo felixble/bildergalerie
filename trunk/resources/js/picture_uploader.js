@@ -5,7 +5,7 @@
 $("#uploadFile").change(function() {
     setPicPathId("");
 
-    var file_data = $('#uploadFile').prop('files')[0];
+    var file_data = $('#uploadFile').prop('files');
     var formData = new FormData();
     formData.append('uploadFile', file_data);
     var loading = $('#loading');

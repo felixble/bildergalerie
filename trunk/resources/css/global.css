@@ -83,3 +83,25 @@ td.table-no-truncate {
     margin-bottom: 6px;
     margin-top: -8px;
 }
+
+.uploadzone {
+    margin-left: 20px;
+    background-color: white;
+    outline: 2px dashed black;
+    outline-offset: -10px;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+}
+
+.uploadzone.is-dragover {
+    background-color: grey;
+}
+
+.uploadzone_icon {
+    display: block;
+    height: 130px;
+    width: 50px;
+    padding-top: 50px;
+    margin: auto;
+}
