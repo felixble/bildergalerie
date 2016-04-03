@@ -15,10 +15,21 @@ var callback = {
 };
 
 var picUploader = new PictureUploader(callback);
+var uploadzoneObj = $("#uploadzone");
 
-var obj = $("#uploadzone");
+function startUpload(files) {
+    $('#drop_help').hide();
+    $('#drop_text').hide();
+    $('#uploading_text').show();
+    uploadzoneObj.removeClass('is-dragover');
+    picUploader.startUpload(files);
+}
 
-obj.on('dragleave', function (e)
+$('#fileUpload').change(function() {
+    startUpload($(this).prop('files'));
+});
+
+uploadzoneObj.on('dragleave', function (e)
 {
     e.stopPropagation();
     e.preventDefault();
@@ -26,7 +37,7 @@ obj.on('dragleave', function (e)
     $('#drop_text').hide();
     $('#drop_help').show();
 });
-obj.on('dragover', function (e)
+uploadzoneObj.on('dragover', function (e)
 {
     e.stopPropagation();
     e.preventDefault();
@@ -34,16 +45,7 @@ obj.on('dragover', function (e)
     $('#drop_text').show();
     $('#drop_help').hide();
 });
-obj.on('drop', function (e)
-{
-    $('#drop_help').hide();
-    $('#drop_text').hide();
-    $('#uploading_text').show();
-    $(this).removeClass('is-dragover');
+uploadzoneObj.on('drop', function (e) {
     e.preventDefault();
-    var files = e.originalEvent.dataTransfer.files;
-    picUploader.startUpload(files);
-
-    //We need to send dropped files to Server
-    //handleFileUpload(files,obj);
+    startUpload(e.originalEvent.dataTransfer.files);
 });

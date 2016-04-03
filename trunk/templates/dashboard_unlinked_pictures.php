@@ -16,7 +16,13 @@
             1.2-.5l10-11.6c.7-.7.7-1.7 0-2.4s-1.7-.7-2.4 0l-7.1 8.3v-25.3c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7
             1.7v25.3l-7.1-8.3c-.7-.7-1.7-.7-2.4 0s-.7 1.7 0 2.4l10 11.6z"></path>
         </svg>
-        <span id="drop_help">Neue Gemälde hochladen</span>
+        <div id="drop_help">
+            <form>
+                <input style="display: none;" type="file" name="files[]" id="fileUpload" multiple />
+                <label for="fileUpload"><strong>Datei auswählen</strong><span class="box__dragndrop"> oder reinziehen</span>.</label>
+            </form>
+            <span>Neue Gemälde hochladen</span>
+        </div>
         <span id="drop_text" style="display: none">Bilder hier ablegen</span>
         <span id="uploading_text" style="display: none">hochladen...</span>
     </div>
