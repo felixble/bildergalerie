@@ -80,7 +80,7 @@ abstract class BaseDAO
      */
     protected function getValueOrNull($array, $key)
     {
-        if (array_key_exists($key, $array)) return $array[$key];
+        if (array_key_exists($key, $array)) return Text::prepare($array[$key]);
         return null;
     }
 
