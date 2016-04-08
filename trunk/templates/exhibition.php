@@ -23,8 +23,14 @@
             </div>
             <div id="tags" style="display: none;">
                 <ul>
-                    <?php foreach ($this->getTags() as $tag): ?>
-                        <li><a href="<?php echo $this->url("pictures", "tag", array("id" => $tag->getTagId())); ?>"><?php echo $tag ?></a></li>
+                    <?php foreach ($this->getTags() as $tag):
+                        if ($tag->getNumberOccurrences() == 0 || $this->getTagMaxNumberOfOccurrences() == 0) {
+                            $weight = 10;
+                        } else {
+                            $weight = ( $tag->getNumberOccurrences() / $this->getTagMaxNumberOfOccurrences() * 18 ) + 10;
+                        }
+                    ?>
+                        <li><a data-weight="<?php echo $weight; ?>" href="<?php echo $this->url("pictures", "tag", array("id" => $tag->getTagId())); ?>"><?php echo $tag ?></a></li>
                     <?php endforeach; ?>
                 </ul>
             </div>

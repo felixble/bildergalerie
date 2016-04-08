@@ -37,7 +37,7 @@ $news_text = (strlen($news_text) > $max_length) ? substr($news_text, 0, $max_len
         <img class="img-circle" src="resources/img/hilde_news.jpg" alt="Hildes News" width="140" height="140">
         <h2>Aktuelles</h2>
         <p><?php echo $news_text; ?></p>
-        <p><a class="btn btn-default" href="<?php echo $this->url("news"); ?>" role="button">News lesen &raquo;</a></p>
+        <p><a class="btn btn-default" href="<?php echo $this->url("news"); ?>" role="button">Artikel lesen &raquo;</a></p>
     </div><!-- /.col-lg-4 -->
 </div><!-- /.row -->
 

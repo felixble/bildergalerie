@@ -91,9 +91,9 @@ class TagDAO extends BaseMultiClientDAO
     public function queryForLinkedTags()
     {
         $sqlBuilder = $this->getSqlBuilder(false)
-            ->setQuery("SELECT t_tag.*, t_map.pic_id FROM galery_tag AS t_tag
+            ->setQuery("SELECT COUNT(*) AS count, t_tag.*, t_map.pic_id FROM galery_tag AS t_tag
                         LEFT JOIN galery_pic_tag_map AS t_map ON t_tag.tag_id = t_map.tag_id
-                        WHERE mandant_id = 1 AND t_map.pic_id IS NOT NULL
+                        WHERE mandant_id = :mandant AND t_map.pic_id IS NOT NULL
                         GROUP BY t_tag.tag_id")
             ->setConditions(array('mandant' => $this->mandant->getMandantId()));
 
@@ -106,7 +106,11 @@ class TagDAO extends BaseMultiClientDAO
      */
     protected function row2Object($row)
     {
-        return new Tag($this->mandant, $row[self::COL_TAG_ID], $row[self::COL_TAG_NAME]);
+        return new Tag(
+            $this->mandant,
+            $row[self::COL_TAG_ID],
+            $row[self::COL_TAG_NAME],
+            $this->getValueOrNull($row, "count"));
     }
 
     /**

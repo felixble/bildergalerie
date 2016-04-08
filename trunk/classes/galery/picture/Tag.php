@@ -25,16 +25,23 @@ class Tag
     private $tagName;
 
     /**
+     * @var int|null
+     */
+    private $numberOccurrences;
+
+    /**
      * Tag constructor.
      * @param Mandant $mandant
      * @param int|null $tagId
      * @param string $tagName
+     * @param null $numberOccurrences
      */
-    public function __construct(Mandant $mandant = null, $tagId = null, $tagName = null)
+    public function __construct(Mandant $mandant = null, $tagId = null, $tagName = null, $numberOccurrences = null)
     {
         $this->mandant = $mandant;
         $this->tagId = $tagId;
         $this->tagName = $tagName;
+        $this->numberOccurrences = $numberOccurrences;
     }
 
     /**
@@ -94,6 +101,22 @@ class Tag
     public function __toString()
     {
         return $this->getTagName();
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getNumberOccurrences()
+    {
+        return $this->numberOccurrences;
+    }
+
+    /**
+     * @param int|null $numberOccurrences
+     */
+    public function setNumberOccurrences($numberOccurrences)
+    {
+        $this->numberOccurrences = $numberOccurrences;
     }
 
 }

@@ -16,7 +16,11 @@ $(document).ready(function() {
             minSpeed: 0.005,
             maxSpeed: 0.03,
             shuffleTags: true,
-            imageMode: 'text'
+            imageMode: 'text',
+            weight: true,
+            weightFrom: "data-weight",
+            weightSizeMax: 30,
+            weightSizeMin: 10
         }, 'tags')) {
         // TagCanvas failed to load
         $('#myCanvasContainer').hide();

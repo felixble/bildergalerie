@@ -72,6 +72,19 @@ class ExhibitionView extends View
         return $this->tags;
     }
 
+    public function getTagMaxNumberOfOccurrences()
+    {
+        if (null == $this->tags) return 0;
+
+        $max = 0;
+        foreach ($this->tags as $tag) {
+            if ($tag->getNumberOccurrences() > $max)
+                $max = $tag->getNumberOccurrences();
+        }
+
+        return $max;
+    }
+
     public function getPictures()
     {
         return $this->pictures;
