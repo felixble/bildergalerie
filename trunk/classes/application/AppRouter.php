@@ -86,7 +86,7 @@ class AppRouter extends Router
     {
         $exceptionView = parent::exceptionHandler($e, $jsonResponse);
 
-        if (!$jsonResponse || !($e instanceof UserException)) {
+        if (!$jsonResponse && !($e instanceof UserException)) {
             // send ErrorMail
             ErrorMailHandler::sendErrorMail($e);
         }

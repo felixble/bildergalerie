@@ -37,7 +37,7 @@ class NewsDAO extends BaseMultiClientDAO
 
     protected function row2Object($row)
     {
-        $newsArticle = new NewsArticle($this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_CONTENT),($this->userDAO->row2object($row)), $this->getValueOrNull($row,self::COL_ARTICLE_ID));
+        $newsArticle = new NewsArticle($this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_CONTENT, true),($this->userDAO->row2object($row)), $this->getValueOrNull($row,self::COL_ARTICLE_ID));
         $newsArticle->setDate($this->getValueOrNull($row, self::COL_DATE_CREATED));
         return $newsArticle;
     }

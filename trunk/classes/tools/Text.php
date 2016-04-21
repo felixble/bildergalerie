@@ -8,7 +8,7 @@
  */
 class Text
 {
-    const ALLOWED_TAGS = "<br><i><strong><b><hr><h1><h2><h3><h4><h5><h6><div>";
+    const ALLOWED_TAGS = "<br><i><strong><b><hr><h1><h2><h3><h4><h5><h6><div><ul><li><a>";
 
     /**
      * Prepares a text to displays it without

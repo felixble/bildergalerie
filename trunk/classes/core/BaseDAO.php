@@ -76,11 +76,12 @@ abstract class BaseDAO
      *
      * @param $array
      * @param $key
+     * @param bool $tagsAllowed
      * @return null|string
      */
-    protected function getValueOrNull($array, $key)
+    protected function getValueOrNull($array, $key, $tagsAllowed = false)
     {
-        if (array_key_exists($key, $array)) return Text::prepare($array[$key]);
+        if (array_key_exists($key, $array)) return Text::prepare($array[$key], $tagsAllowed);
         return null;
     }
 

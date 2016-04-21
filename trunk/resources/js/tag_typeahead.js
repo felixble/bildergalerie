@@ -22,6 +22,8 @@ $('.tags_typeahead').tagsinput({
         name: 'tags',
         displayKey: 'name',
         valueKey: 'name',
+        confirmKeys: [13, 32, 44],
+        trimValue: true,
         source: tags.ttAdapter()
     }
 });
