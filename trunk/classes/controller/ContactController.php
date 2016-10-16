@@ -54,7 +54,7 @@ class ContactController extends BildergalerieController
 
     public function sendAction()
     {
-        $recaptcha = new GoogleRecaptcha("6LesZQkUAAAAAMM_DGAVNVoz0EgDmpVglQiV50Am");
+        $recaptcha = new GoogleRecaptcha(reCAPTCHA_SECRET_KEY);
 
         try {
             $post = $this->getRequest()->getPostParam();
@@ -69,7 +69,8 @@ class ContactController extends BildergalerieController
 
             $recaptcha->verify($recaptchaResponse);
             if (!$recaptcha->isValid()) {
-                throw new Exception("Fehler recaptcha falsch!");
+                throw new UserException(
+                    "ReCaptcha Fehler: " . $recaptcha->getErrorCode() . ": " . $recaptcha->getErrorDescription());
             }
 
             $this->sendMailToMandant($name, $lastName, $mail, $telephone, $subject, $content, $picId);
@@ -79,6 +80,7 @@ class ContactController extends BildergalerieController
             $error = "<strong>Fehler:</strong> ";
             if (!$recaptcha->isValid()) {
                 $error .= "Wir konnten nicht sicherstellen, dass Sie kein Roboter sind. Bitte versuchen Sie es erneut.";
+                ErrorMailHandler::sendErrorMail($e);
             } else {
                 $error .= "Ihre Anfrage konnte leider nicht gesendet werden. Bitte versuchen Sie es erneut.";
             }

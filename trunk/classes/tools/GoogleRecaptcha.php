@@ -39,7 +39,7 @@ class GoogleRecaptcha
     }
 
     public function verify($responseField) {
-        $verifyResponse = file_get_contents(self::getApiRequestUrl($this->privateKey, $responseField));
+        $verifyResponse = self::curl(self::getApiRequestUrl($this->privateKey, $responseField));
         $this->responseData = json_decode($verifyResponse);
     }
 
@@ -70,6 +70,15 @@ class GoogleRecaptcha
         }
 
         return $url;
+    }
+
+    private static function curl($url) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return $output;
     }
 
 }
