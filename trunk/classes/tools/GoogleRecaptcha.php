@@ -49,16 +49,27 @@ class GoogleRecaptcha
         return $this->responseData->success;
     }
 
-    public function getErrorCode() {
-        if ($this->responseData == null) return false;
+    /**
+     * @return array
+     */
+    public function getErrorCodes() {
+        if ($this->responseData == null) return [];
 
-        return $this->responseData->success;
+        return $this->responseData->{'error-codes'};
     }
 
-    public function getErrorDescription() {
-        if ($this->responseData == null) return false;
+    public function getErrorCodesAsString() {
+        $res = "[";
+        $first = true;
+        foreach ($this->getErrorCodes() as $errorCode) {
+            if ($first) $first = false; else $res .= ', ';
+            $res .= $errorCode . ':' . self::getErrorDescription($errorCode);
+        }
+        return $res . ']';
+    }
 
-        return self::$errorDescription[$this->responseData->success];
+    public static function getErrorDescription($errorCode) {
+        return self::$errorDescription[$errorCode];
     }
 
     private static function getApiRequestUrl($privateKey, $responseField, $remoteip = "") {

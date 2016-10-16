@@ -70,7 +70,7 @@ class ContactController extends BildergalerieController
             $recaptcha->verify($recaptchaResponse);
             if (!$recaptcha->isValid()) {
                 throw new UserException(
-                    "ReCaptcha Fehler: " . $recaptcha->getErrorCode() . ": " . $recaptcha->getErrorDescription());
+                    "ReCaptcha Fehler: " . $recaptcha->getErrorCodesAsString());
             }
 
             $this->sendMailToMandant($name, $lastName, $mail, $telephone, $subject, $content, $picId);
