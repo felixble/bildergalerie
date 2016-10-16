@@ -95,20 +95,20 @@
         },
         {
             "name": "components/bootstrap",
-            "version": "3.3.6",
+            "version": "3.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/bootstrap.git",
-                "reference": "fb4923919c620b8b2aa8a11eda16b49b0a9e8a27"
+                "reference": "fe6e7683be66ba45a725816efdb51d4566733043"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/bootstrap/zipball/fb4923919c620b8b2aa8a11eda16b49b0a9e8a27",
-                "reference": "fb4923919c620b8b2aa8a11eda16b49b0a9e8a27",
+                "url": "https://api.github.com/repos/components/bootstrap/zipball/fe6e7683be66ba45a725816efdb51d4566733043",
+                "reference": "fe6e7683be66ba45a725816efdb51d4566733043",
                 "shasum": ""
             },
             "require": {
-                "components/jquery": "1.9.1 - 2"
+                "components/jquery": "1.9.1 - 3"
             },
             "suggest": {
                 "components/bootstrap-default": "Provide a theme for Bootstrap as components/bootstrap only provides the CSS as file assets"
@@ -159,7 +159,7 @@
                 "responsive",
                 "web"
             ],
-            "time": "2015-11-24 20:19:41"
+            "time": "2016-07-26 05:59:20"
         },
         {
             "name": "components/jquery",
@@ -359,16 +359,16 @@
         },
         {
             "name": "crodas/notoj",
-            "version": "v1.3.2",
+            "version": "v1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crodas/Notoj.git",
-                "reference": "f8aa83724e8eb1e7d9a3685a68cd138e3caa6722"
+                "reference": "8bc8f6d2ba661229090491a838f70ccf558fb4ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crodas/Notoj/zipball/f8aa83724e8eb1e7d9a3685a68cd138e3caa6722",
-                "reference": "f8aa83724e8eb1e7d9a3685a68cd138e3caa6722",
+                "url": "https://api.github.com/repos/crodas/Notoj/zipball/8bc8f6d2ba661229090491a838f70ccf558fb4ef",
+                "reference": "8bc8f6d2ba661229090491a838f70ccf558fb4ef",
                 "shasum": ""
             },
             "require": {
@@ -393,7 +393,7 @@
                 }
             ],
             "description": "Annotation parser. Uses reflection and provides cache out of the box.",
-            "time": "2016-04-01 13:34:09"
+            "time": "2016-04-04 07:51:27"
         },
         {
             "name": "makeusabrew/bootbox",
@@ -401,12 +401,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/makeusabrew/bootbox.git",
-                "reference": "b2671b39f33d0194474060928331742fcf75f776"
+                "reference": "5e1cf59510170cf7c44bb6d93d20842fedc6f8d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/makeusabrew/bootbox/zipball/b2671b39f33d0194474060928331742fcf75f776",
-                "reference": "b2671b39f33d0194474060928331742fcf75f776",
+                "url": "https://api.github.com/repos/makeusabrew/bootbox/zipball/5e1cf59510170cf7c44bb6d93d20842fedc6f8d0",
+                "reference": "5e1cf59510170cf7c44bb6d93d20842fedc6f8d0",
                 "shasum": ""
             },
             "require": {
@@ -431,20 +431,20 @@
                 }
             ],
             "description": "Wrappers for JavaScript alert(), confirm() and other flexible dialogs using the Bootstrap framework",
-            "time": "2015-10-04 19:15:05"
+            "time": "2016-09-29 14:40:55"
         },
         {
             "name": "nikic/php-parser",
-            "version": "v2.0.1",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "ce5be709d59b32dd8a88c80259028759991a4206"
+                "reference": "4dd659edadffdc2143e4753df655d866dbfeedf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/ce5be709d59b32dd8a88c80259028759991a4206",
-                "reference": "ce5be709d59b32dd8a88c80259028759991a4206",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4dd659edadffdc2143e4753df655d866dbfeedf0",
+                "reference": "4dd659edadffdc2143e4753df655d866dbfeedf0",
                 "shasum": ""
             },
             "require": {
@@ -460,7 +460,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "2.1-dev"
                 }
             },
             "autoload": {
@@ -482,7 +482,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2016-02-28 19:48:28"
+            "time": "2016-09-16 12:04:44"
         },
         {
             "name": "simplon/mysql",

@@ -26,10 +26,16 @@ class HtmlHelper {
      * javascript file.
      *
      * @param $path string path to the js file.
+     * @param $prepend string to prepend before the path,
+     *                 iff the path does not start with the string 'http'
      * @return string
      */
-    public static function scriptJS($path)
+    public static function scriptJS($path, $prepend = "")
     {
+        if (!empty($prepend) && substr($path, 0,4) != "http") {
+            $path = $prepend . $path;
+        }
+
         return '<script src="'.$path.'"></script>';
     }
 

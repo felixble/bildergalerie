@@ -54,6 +54,8 @@ class ContactController extends BildergalerieController
 
     public function sendAction()
     {
+        $recaptcha = new GoogleRecaptcha("6LesZQkUAAAAAMM_DGAVNVoz0EgDmpVglQiV50Am");
+
         try {
             $post = $this->getRequest()->getPostParam();
             $name = $this->getValueOrNull("name", $post);
@@ -63,12 +65,24 @@ class ContactController extends BildergalerieController
             $subject = $this->getValueOrNull("subject", $post);
             $content = $this->getValueOrNull("content", $post);
             $picId = $this->getValueOrNull("edit_id", $post);
+            $recaptchaResponse = $this->getValueOrNull("g-recaptcha-response", $post);
+
+            $recaptcha->verify($recaptchaResponse);
+            if (!$recaptcha->isValid()) {
+                throw new Exception("Fehler recaptcha falsch!");
+            }
 
             $this->sendMailToMandant($name, $lastName, $mail, $telephone, $subject, $content, $picId);
             $this->sendInfoMailToInquirer($mail, $name, $lastName, $subject, $content);
             $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Vielen Dank. Ihre Anfrage wird umgehend bearbeitet.");
         } catch (Exception $e) {
-            $this->getAlertManager()->setErrorMessage("<strong>Fehler:</strong> Ihre Anfrage konnte leider nicht gesendet werden. Bitte versuchen sie es erneut.");
+            $error = "<strong>Fehler:</strong> ";
+            if (!$recaptcha->isValid()) {
+                $error .= "Wir konnten nicht sicherstellen, dass Sie kein Roboter sind. Bitte versuchen Sie es erneut.";
+            } else {
+                $error .= "Ihre Anfrage konnte leider nicht gesendet werden. Bitte versuchen Sie es erneut.";
+            }
+            $this->getAlertManager()->setErrorMessage($error);
             return $this->indexAction();
         }
         $this->getRouter()->reLocateTo("home");

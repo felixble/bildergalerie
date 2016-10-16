@@ -70,4 +70,10 @@ class ContactView extends View
         return "Anfrage zum Gemälde " . $this->getPicture()->getTitle();
     }
 
+    public function getCustomJS()
+    {
+        return ["https://www.google.com/recaptcha/api.js", "recaptcha_enable_submit.js"];
+    }
+
+
 }

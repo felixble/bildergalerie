@@ -74,7 +74,7 @@
 <?php
 if (null != $this->getJS() && is_array($this->getJS())) {
     foreach ($this->getJS() as $js) {
-        if (!empty($js)) echo HtmlHelper::scriptJS("resources/js/" . $js);
+        if (!empty($js)) echo HtmlHelper::scriptJS($js, "resources/js/");
     }
 }
 
