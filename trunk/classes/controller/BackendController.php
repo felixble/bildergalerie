@@ -92,7 +92,7 @@ class BackendController extends BildergalerieController
     public function deleteExhibitionAction()
     {
         $get = $this->getRequest()->getGetParam();
-        $catId = $this->getValueOrNull("id", $get);
+        $catId = self::getValueOrNull("id", $get);
         if (null == $catId) {
             throw new SimpleUserErrorException("Die Ausstellung wurde nicht gefunden.");
         }

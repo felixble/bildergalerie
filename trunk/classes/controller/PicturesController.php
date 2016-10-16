@@ -261,14 +261,14 @@ class PicturesController extends BildergalerieController
         $uploadedBy = $this->baseFactory->getAuthenticator()->getLoggedInUser();
         $owner = $uploadedBy;
 
-        $title = $this->getValueOrNull("title", $post);
-        $tags = $this->getValueOrNull("tags", $post);
-        $descr = $this->getValueOrNull("description", $post);
-        $material = $this->getValueOrNull("material", $post);
-        $picPathId = $this->getValueOrNull("picPathId", $post);
-        $picPath = $this->getValueOrNull("uploadFile_path", $post);
-        $picPathThumb = $this->getValueOrNull("uploadFile_thumbPath", $post);
-        $category = $this->getValueOrNull("category", $post);
+        $title = self::getValueOrNull("title", $post);
+        $tags = self::getValueOrNull("tags", $post);
+        $descr = self::getValueOrNull("description", $post);
+        $material = self::getValueOrNull("material", $post);
+        $picPathId = self::getValueOrNull("picPathId", $post);
+        $picPath = self::getValueOrNull("uploadFile_path", $post);
+        $picPathThumb = self::getValueOrNull("uploadFile_thumbPath", $post);
+        $category = self::getValueOrNull("category", $post);
 
         $success = false;
         $picture = null;

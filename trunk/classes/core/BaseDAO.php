@@ -79,7 +79,7 @@ abstract class BaseDAO
      * @param bool $tagsAllowed
      * @return null|string
      */
-    protected function getValueOrNull($array, $key, $tagsAllowed = false)
+    public static function getValueOrNull($array, $key, $tagsAllowed = false)
     {
         if (array_key_exists($key, $array)) return Text::prepare($array[$key], $tagsAllowed);
         return null;

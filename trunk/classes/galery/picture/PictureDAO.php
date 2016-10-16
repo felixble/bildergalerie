@@ -320,21 +320,21 @@ class PictureDAO extends BaseMultiClientDAO
     {
         // simple workaround: if nothing has been selected, fetchRow returns an array with all values set to null
         // so we definite that at least the id value must be set!
-        $id = $this->getValueOrNull($row, self::COL_PICTURE_ID);
+        $id = self::getValueOrNull($row, self::COL_PICTURE_ID);
         if (null == $id) return null;
 
         // create the picture object with all primitive data.
-        $picture = new Picture($this->mandant, $id, $this->getValueOrNull($row, self::COL_TITLE), $this->getValueOrNull($row, self::COL_DESCRIPTION), $this->getValueOrNull($row, self::COL_FORMAT), $this->getValueOrNull($row, self::COL_MATERIAL), $this->getValueOrNull($row, self::COL_PRICE), $this->getValueOrNull($row, self::COL_PRICE_PUBLIC), $this->getValueOrNull($row, self::COL_SALABLE), null, $this->getValueOrNull($row, self::COL_DATE_PRODUCED), $this->getValueOrNull($row, self::COL_DATE_CREATED), null, null, null, null);
+        $picture = new Picture($this->mandant, $id, self::getValueOrNull($row, self::COL_TITLE), self::getValueOrNull($row, self::COL_DESCRIPTION), self::getValueOrNull($row, self::COL_FORMAT), self::getValueOrNull($row, self::COL_MATERIAL), self::getValueOrNull($row, self::COL_PRICE), self::getValueOrNull($row, self::COL_PRICE_PUBLIC), self::getValueOrNull($row, self::COL_SALABLE), null, self::getValueOrNull($row, self::COL_DATE_PRODUCED), self::getValueOrNull($row, self::COL_DATE_CREATED), null, null, null, null);
 
         // set all complex objects now
 
-        $picture->setCategoriesFromStringList($this->getValueOrNull($row, "categories"), "\t");
+        $picture->setCategoriesFromStringList(self::getValueOrNull($row, "categories"), "\t");
 
         $picture->setPath($this->picPathDAO->row2Object($row));
 
-        $picture->setVisitorRatingValue($this->getValueOrNull($row, "rating_value"));
-        $picture->setAverageRatingValue($this->getValueOrNull($row, "average_rating_value"));
-        $picture->setRatingCount($this->getValueOrNull($row, "rating_count"));
+        $picture->setVisitorRatingValue(self::getValueOrNull($row, "rating_value"));
+        $picture->setAverageRatingValue(self::getValueOrNull($row, "average_rating_value"));
+        $picture->setRatingCount(self::getValueOrNull($row, "rating_count"));
 
         return $picture;
     }

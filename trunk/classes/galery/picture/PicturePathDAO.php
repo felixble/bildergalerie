@@ -89,8 +89,8 @@ class PicturePathDAO extends BaseMultiClientDAO
 
     public function row2Object($row)
     {
-        return new PicturePath($this->mandant, $this->getValueOrNull($row, self::COL_PIC_PATH_ID),
-            $this->getValueOrNull($row, self::COL_PATH), $this->getValueOrNull($row, self::COL_THUMB_PATH),
-            /*uploadedby*/ null, $this->getValueOrNull($row, self::COL_DATE_UPLOADED));
+        return new PicturePath($this->mandant, self::getValueOrNull($row, self::COL_PIC_PATH_ID),
+            self::getValueOrNull($row, self::COL_PATH), self::getValueOrNull($row, self::COL_THUMB_PATH),
+            /*uploadedby*/ null, self::getValueOrNull($row, self::COL_DATE_UPLOADED));
     }
 }

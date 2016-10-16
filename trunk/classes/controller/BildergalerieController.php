@@ -58,7 +58,7 @@ abstract class BildergalerieController extends Controller
      * @return null|string value of the key or null if the array
      *                     does not contain such a key.
      */
-    protected function getValueOrNull($key, $search)
+    public static function getValueOrNull($key, $search)
     {
         return (array_key_exists($key, $search)) ? $search[$key] : null;
     }

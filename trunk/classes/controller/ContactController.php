@@ -40,7 +40,7 @@ class ContactController extends BildergalerieController
      */
     public function indexAction()
     {
-        $contactView = new ContactView();
+        $contactView = new ContactView($this->getRequest()->getPostParam());
         $get = $this->getRequest()->getGetParam();
         if(array_key_exists("ref_pic", $get)) {
             $this->pictureDAO = new PictureDAO($this->baseFactory->getDbConnection(), $this->mandant);
@@ -58,14 +58,14 @@ class ContactController extends BildergalerieController
 
         try {
             $post = $this->getRequest()->getPostParam();
-            $name = $this->getValueOrNull("name", $post);
-            $lastName = $this->getValueOrNull("lastName", $post);
-            $mail = $this->getValueOrNull("mail", $post);
-            $telephone = $this->getValueOrNull("tel", $post);
-            $subject = $this->getValueOrNull("subject", $post);
-            $content = $this->getValueOrNull("content", $post);
-            $picId = $this->getValueOrNull("edit_id", $post);
-            $recaptchaResponse = $this->getValueOrNull("g-recaptcha-response", $post);
+            $name = self::getValueOrNull("name", $post);
+            $lastName = self::getValueOrNull("lastName", $post);
+            $mail = self::getValueOrNull("mail", $post);
+            $telephone = self::getValueOrNull("tel", $post);
+            $subject = self::getValueOrNull("subject", $post);
+            $content = self::getValueOrNull("content", $post);
+            $picId = self::getValueOrNull("edit_id", $post);
+            $recaptchaResponse = self::getValueOrNull("g-recaptcha-response", $post);
 
             $recaptcha->verify($recaptchaResponse);
             if (!$recaptcha->isValid()) {

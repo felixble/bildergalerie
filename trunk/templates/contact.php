@@ -13,7 +13,7 @@
                         <label for="name">Vorname</label>
                         <div class="input-group">
                             <span class="input-group-addon" id="name-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="text" class="form-control" id="name" name="name" aria-describedby="name-addon" autofocus/>
+                            <input type="text" class="form-control" id="name" name="name" value="<?php echo $this->getPostOrEmpty('name'); ?>" aria-describedby="name-addon" autofocus/>
                         </div>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                         <label for="lastName">Nachname</label>
                         <div class="input-group">
                             <span class="input-group-addon" id="lastName-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="text" class="form-control" id="lastName" name="lastName" aria-describedby="lastName-addon" required/>
+                            <input type="text" class="form-control" id="lastName" name="lastName" value="<?php echo $this->getPostOrEmpty('lastName'); ?>" aria-describedby="lastName-addon" required/>
                         </div>
                         <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                     </div>
@@ -34,7 +34,7 @@
                 <label for="mail" class="control-label">E-Mail</label>
                 <div class="input-group">
                     <span class="input-group-addon" id="email-addon">@</span>
-                    <input type="email" class="form-control" id="mail" name="mail" placeholder="email@example.com"
+                    <input type="email" class="form-control" id="mail" name="mail" value="<?php echo $this->getPostOrEmpty('mail'); ?>" placeholder="email@example.com"
                            data-error="Bitte geben Sie eine korrekte E-Mail-Adresse an, damit wir Ihnen antworten können." aria-describedby="email-addon" required />
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
@@ -44,7 +44,7 @@
                 <label for="tel">Telefon</label>
                 <div class="input-group">
                     <span class="input-group-addon" id="tel-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                    <input type="text" class="form-control" id="tel" name="tel" aria-describedby="tel-addon"/>
+                    <input type="text" class="form-control" id="tel" name="tel" value="<?php echo $this->getPostOrEmpty('tel'); ?>" aria-describedby="tel-addon"/>
                 </div>
             </div>
             <div class="form-group has-feedback">
@@ -62,7 +62,7 @@
 
             <div class="form-group has-feedback">
                 <label for="content">Inhalt</label>
-                <textarea class="form-control" rows="5" id="content" name="content" required></textarea>
+                <textarea class="form-control" rows="5" id="content" name="content" required><?php echo $this->getPostOrEmpty('content'); ?></textarea>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
             <?php

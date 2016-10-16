@@ -138,10 +138,10 @@ class NewsController extends BildergalerieController
 
     private function buildArticle($post)
     {
-        $title = $this->getValueOrNull("title", $post);
-        $content = $this->getValueOrNull("content", $post);
+        $title = self::getValueOrNull("title", $post);
+        $content = self::getValueOrNull("content", $post);
         $owner = $this->baseFactory->getAuthenticator()->getLoggedInUser();
-        $id = $this->getValueOrNull("edit_id",$post);
+        $id = self::getValueOrNull("edit_id",$post);
 
         return new NewsArticle($title, $content, $owner, $id);
     }

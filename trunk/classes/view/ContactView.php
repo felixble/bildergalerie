@@ -12,6 +12,7 @@ class ContactView extends View
     const PICTUREURL = "/bildergalerie/pictures/pic/id/";
 
 
+    private $post;
 
     /**
      * @var string title
@@ -22,6 +23,17 @@ class ContactView extends View
      * @var Picture
      */
     private $picture;
+
+    /**
+     * ContactView constructor.
+     * @param $post
+     */
+    public function __construct($post = null)
+    {
+        parent::__construct(null);
+        $this->post = $post;
+    }
+
 
     /**
      * @return string
@@ -63,8 +75,19 @@ class ContactView extends View
         return $this->picture;
     }
 
+    public function getPostOrEmpty($key) {
+        if ($this->post == null) return "";
+        $value = BildergalerieController::getValueOrNull($key, $this->post);
+        return ($value == null) ? "" : $value;
+    }
+
     public function getSubjectValue()
     {
+        $postSubject = $this->getPostOrEmpty('subject');
+        if (!empty($postSubject)) {
+            return $postSubject;
+        }
+
         if (null == $this->picture) return "";
 
         return "Anfrage zum Gemälde " . $this->getPicture()->getTitle();

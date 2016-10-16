@@ -96,11 +96,11 @@ class UserDAO extends BaseMultiClientDAO implements IUserDAO
     {
         return new User(
             $this->mandant,
-            $this->getValueOrNull($row, self::COL_USER_ID),
-            $this->getValueOrNull($row, self::COL_USERNAME),
-            $this->getValueOrNull($row, self::COL_LAST_NAME),
-            $this->getValueOrNull($row, self::COL_FIRST_NAME),
-            $this->getValueOrNull($row, self::COL_EMAIL)
+            self::getValueOrNull($row, self::COL_USER_ID),
+            self::getValueOrNull($row, self::COL_USERNAME),
+            self::getValueOrNull($row, self::COL_LAST_NAME),
+            self::getValueOrNull($row, self::COL_FIRST_NAME),
+            self::getValueOrNull($row, self::COL_EMAIL)
         );
     }
 

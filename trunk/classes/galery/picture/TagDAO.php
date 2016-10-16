@@ -110,7 +110,7 @@ class TagDAO extends BaseMultiClientDAO
             $this->mandant,
             $row[self::COL_TAG_ID],
             $row[self::COL_TAG_NAME],
-            $this->getValueOrNull($row, "count"));
+            self::getValueOrNull($row, "count"));
     }
 
     /**

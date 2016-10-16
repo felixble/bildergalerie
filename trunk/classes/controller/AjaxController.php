@@ -191,8 +191,8 @@ class AjaxController extends BildergalerieController
         $post = $this->getRequest()->getPostParam();
 
         // TODO: validate input
-        $picId = $this->getValueOrNull("picId", $post);
-        $categories = $this->getValueOrNull("categories", $post);
+        $picId = self::getValueOrNull("picId", $post);
+        $categories = self::getValueOrNull("categories", $post);
 
         if (null == $picId) {
             throw new InvalidArgumentException("Parameter picId missing.");

@@ -182,13 +182,13 @@ class CategoryDAO extends BaseMultiClientDAO
      */
     protected function row2Object($row)
     {
-        $relatedPictures = $this->getValueOrNull($row, "number_related_pictures");
+        $relatedPictures = self::getValueOrNull($row, "number_related_pictures");
 
         return new Category(
             $this->mandant,
-            $this->getValueOrNull($row, self::COL_CATEGORY_ID),
-            $this->getValueOrNull($row, self::COL_CATEGORY_NAME),
-            $this->getValueOrNull($row, self::COL_CATEGORY_DESCRIPTION),
+            self::getValueOrNull($row, self::COL_CATEGORY_ID),
+            self::getValueOrNull($row, self::COL_CATEGORY_NAME),
+            self::getValueOrNull($row, self::COL_CATEGORY_DESCRIPTION),
             $relatedPictures
         );
     }
