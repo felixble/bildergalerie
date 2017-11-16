@@ -9,7 +9,7 @@
 class ErrorMailHandler
 {
 
-    const ERROR_MAIL_TO = "fehler@hildes-bildergalerie.de";
+    const ERROR_MAIL_TO = ERROR_EMAIL;
     const SUBJECT = "Fehler - Bildergalerie";
 
 

@@ -156,7 +156,7 @@ class AppRouter extends Router
      */
     public function getAlertManager()
     {
-        return new AlertManager($this->baseFactory->getSessionManager());;
+        return new AlertManager($this->baseFactory->getSessionManager());
     }
 
     /**

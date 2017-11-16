@@ -11,7 +11,7 @@
 class ContactController extends BildergalerieController
 {
 
-    const MAILADDRESS = "contact@hildes-bildergalerie.de";
+    const MAILADDRESS = MANDANT_EMAIL;
 
     /**
      * @var PictureDAO pictureDAO

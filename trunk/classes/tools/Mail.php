@@ -10,7 +10,7 @@
  */
 class Mail
 {
-    const DEFAULT_FROM = "Hildes Bildergalerie <noreply@hildes-bildergalerie.de>";
+    const DEFAULT_FROM = SENDER_EMAIL_ADDRESS;
 
     /**
      * @var string
