@@ -1,3 +1,5 @@
 .idea/
 vendor/
 local.php
+docker/data-volume
+.vagrant/
