@@ -13,15 +13,13 @@
     <?php echo new Edit_exhibition_dialogView(/* editMode */
         true); ?>
     <div>
-        <div class='pull-right'>
-            <button type='button' class='open_category_dialog btn btn-success hidden-xs hidden-sm'
-                    data-on-success="onSuccessDashboard">
-                Neue Ausstellung hinzufügen
-            </button>
-            <button class="open_category_dialog btn btn-success visible-xs visible-sm" data-on-success="onSuccessDashboard"
-                    type="button" title="Neue Ausstellung hinzufügen">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            </button>
+        <div class='pull-right'> 
+            <button type='button' class='open_category_dialog btn btn-success' data-on-success="onSuccessDashboard" title="Neue Ausstellung hinzufügen">
+                <span class="visible-xs visible-sm">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </span>
+                <span class="hidden-xs hidden-sm">Neue Ausstellung hinzufügen</span>
+            </button> 
         </div>
         <h2>Übersicht aller Ausstellungen</h2>
     </div>
@@ -57,7 +55,7 @@
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
                     <a href="<?php echo $this->url("backend", "deleteExhibition", array("id" => $id)); ?>"
-                       class="confirmation"
+                       class="confirmation deleteExhibition"
                        data-confirmation-text="Soll die Ausstellung wirklich gelöscht werden?"
                        title="Ausstellung entfernen">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>

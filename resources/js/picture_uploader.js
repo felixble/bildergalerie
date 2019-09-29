@@ -7,7 +7,7 @@ $("#uploadFile").change(function() {
 
     var file_data = $('#uploadFile').prop('files');
     var formData = new FormData();
-    formData.append('uploadFile', file_data);
+    formData.append('uploadFile', file_data[0]);
     var loading = $('#loading');
     loading.show();
     uploadFile(

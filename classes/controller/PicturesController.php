@@ -58,13 +58,17 @@ class PicturesController extends BildergalerieController
      * Shows all exhibitions.
      *
      * @return BootstrapView
+     * @throws \App\Utils\InvalidArgumentException
      */
     public function exhibitionsAction()
     {
-        $categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
-        $teasers = $categoryDAO->getCategoryTeasers(false);
+        $request = new \App\Exhibition\ListAll\Request();
+        $request->mandant = $this->mandant;
 
-        $ausstellungenView = new ExhibitionsView($teasers);
+        $boundary = $this->application->getExhibitionBoundary();
+        $response = $boundary->listAllExhibitions($request);
+
+        $ausstellungenView = new ExhibitionsView($response->exhibitions);
         return $this->getContentFrameView("Ausstellungen", $ausstellungenView);
     }
 
@@ -84,7 +88,12 @@ class PicturesController extends BildergalerieController
             //throw new SimpleUserErrorException("Die Ausstellung wurde nicht gefunden.");
             $exhibitionId = -1; // -1 stands for the special exhibition containing all pictures.
         } else {
-            $exhibition = $this->categoryDAO->getCategoryById($exhibitionId);
+            $request = new \App\Exhibition\Get\Request();
+            $request->id = $exhibitionId;
+
+            $boundary = $this->application->getExhibitionBoundary();
+            $response = $boundary->getExhibition($request);
+            $exhibition = $response->exhibition;
         }
 
         $pictures = $this->pictureDAO->getPicturesFromCategory($exhibitionId);
@@ -259,7 +268,6 @@ class PicturesController extends BildergalerieController
 
         $post = $this->getRequest()->getPostParam();
         $uploadedBy = $this->baseFactory->getAuthenticator()->getLoggedInUser();
-        $owner = $uploadedBy;
 
         $title = self::getValueOrNull("title", $post);
         $tags = self::getValueOrNull("tags", $post);
@@ -270,39 +278,32 @@ class PicturesController extends BildergalerieController
         $picPathThumb = self::getValueOrNull("uploadFile_thumbPath", $post);
         $category = self::getValueOrNull("category", $post);
 
-        $success = false;
-        $picture = null;
-        try {
-            $picture = new Picture($this->mandant, /* null, iff create-new-pic-Mode */ $editPicId, $title, $descr, null, $material, null, null, null, $picPathId, null, null, $uploadedBy, $owner, null, $tags);
-            $picture->getPath()->setPath($picPath)->setThumbPath($picPathThumb);
-            $picture->addCategories($category);
-            $picture->validate();
-            // store/update the new picture in the database
-            if ($edit) {
-                $this->pictureDAO->updatePicture($picture);
-            } else {
-                $this->pictureDAO->createPicture($picture);
-            }
-            $success = true;
-        } catch (UserException $e) {
-            $this->getAlertManager()->setErrorMessage("<strong>Fehler!</strong> " . $e->getMessage());
-            // TODO: Set form values from request!
-            if (null != $picture) {
-                $this->currentPicture = $picture;
-            }
-        }
+        $request = new \App\Picture\Create\Request();
+        $request->title = $title;
+        $request->tags = $tags;
+        $request->descr = $descr;
+        $request->material = $material;
+        $request->picPathId = $picPathId;
+        $request->picPath = $picPath;
+        $request->picPathThumb = $picPathThumb;
+        $request->categoryIds = $category;
+        $request->mandant = $this->mandant;
+        $request->uploadedBy = $uploadedBy;
+        $request->owner = $uploadedBy;
+        $request->edit = $edit;
+        $request->editPicId = $editPicId;
+        $boundary = $this->application->getPictureBoundary();
+        $boundary->createPicture($request);
 
-        if ($success) {
-            $successMsg = ($edit)
-                ? "Die Änderungen wurden erfolgreich gespeichert."
-                : "Das Bild wurde erfolgreich hinzugefügt.";
-            $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> $successMsg");
-            // redirect so the user can reload the page without sending the form again.
-            if ($edit) {
-                $this->getRouter()->reLocateTo("pictures", "pic", array("id" => $editPicId));
-            } else {
-                $this->getRouter()->reLocateTo("pictures", "create");
-            }
+        $successMsg = ($edit)
+            ? "Die Änderungen wurden erfolgreich gespeichert."
+            : "Das Bild wurde erfolgreich hinzugefügt.";
+        $this->getAlertManager()->setSuccessMessage("<strong>Super!</strong> $successMsg");
+        // redirect so the user can reload the page without sending the form again.
+        if ($edit) {
+            $this->getRouter()->reLocateTo("pictures", "pic", array("id" => $editPicId));
+        } else {
+            $this->getRouter()->reLocateTo("pictures", "create");
         }
     }
 

@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<dataset>
+    <galery_categories mandant_id="1" category_id="1" category_name="Updated Exhibition 1" description="Updated description" />
+    <galery_categories mandant_id="1" category_id="2" category_name="Ausstellung 2" description="eschreibung von Ausstellung 2" />
+</dataset>

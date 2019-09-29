@@ -1,0 +1,21 @@
+{
+  "name": "bildergalerie",
+  "version": "0.0.1",
+  "dependencies": {},
+  "devDependencies": {
+    "env-cmd": "^7.0.0",
+    "fs-extra": "^5.0.0",
+    "junit-merge": "^1.2.3",
+    "mysql": "^2.1.x",
+    "testcafe": "^0.18.6"
+  },
+  "scripts": {
+    "reset-db": "env-cmd .env node ./test/util/reset.js",
+    "test:e2e": "env-cmd .env testcafe chrome,firefox test/**/*.test.js -S screenshots -s screenshots",
+    "test:e2e:all": "env-cmd .env testcafe all test/**/*.test.js -S screenshots -s screenshots",
+    "test:e2e:headless": "env-cmd .env testcafe \"chrome:headless\" test/**/*.test.js -S screenshots -s screenshots",
+    "test:unit": "composer test",
+    "test:dbunit": "composer test:dbunit",
+    "merge-test-reports": "junit-merge -o .coverage/_tests.xml .coverage/_dbunit.tests.xml .coverage/_phpunit.tests.xml"
+  }
+}

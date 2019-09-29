@@ -15,6 +15,11 @@ abstract class BildergalerieController extends Controller
      */
     protected $baseFactory;
 
+    /**
+     * @var \App\Application
+     */
+    protected $application;
+
     public function __construct()
     {
         parent::__construct();
@@ -25,6 +30,7 @@ abstract class BildergalerieController extends Controller
         parent::onCreate($router);
         if ($router instanceof AppRouter) {
             $this->baseFactory = $router->getBaseFactory();
+            $this->application = new WebApplication($this->baseFactory);
         } else {
             throw new IllegalStateException("Router must be an instance of AppRouter.");
         }

@@ -97,7 +97,11 @@ $(function() {
     var initDialog = function(edit) {
         var saveBtnTitle = (edit) ? "Änderungen speichern" : "Ausstellung hinzufügen";
         var dialog_buttons = {};
-        dialog_buttons[saveBtnTitle] = addCategory;
+        dialog_buttons[saveBtnTitle] = {
+            text: saveBtnTitle,
+            id: 'dialog-save-ausstellung-btn',
+            click: addCategory
+        };
         dialog_buttons["Abbrechen"] = function() { dialog.dialog( "close" ); };
 
         return dialog_element.dialog({

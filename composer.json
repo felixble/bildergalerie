@@ -1,6 +1,9 @@
 {
     "name" : "blefel/bildergalerie",
-
+    "scripts": {
+        "test": "./vendor/bin/phpunit test/unit --whitelist classes --coverage-clover .coverage/_phpunit.coverage.xml --log-junit .coverage/_phpunit.tests.xml",
+        "test:dbunit": "./vendor/bin/phpunit test/dbunit --whitelist classes --coverage-clover .coverage/_dbunit.coverage.xml --log-junit .coverage/_dbunit.tests.xml"
+    },
     "repositories": [
         {
             "type": "package",
@@ -37,12 +40,18 @@
         "makeusabrew/bootbox": "dev-master",
         "1000hz/bootstrap-validator": "dev-master",
         "callmenick/five-star-rating": "dev-master",
-        "crodas/notoj": "^1.2"
+        "crodas/notoj": "^1.2",
+        "vlucas/phpdotenv": "^2.4"
 
     },
 
     "autoload": {
         "classmap": ["classes/", "includes/"],
         "exclude-from-classmap": ["includes/database"]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0",
+        "phpunit/php-code-coverage": "^6.0",
+        "phpunit/dbunit": "^4.0"
     }
 }

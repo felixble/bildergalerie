@@ -93,11 +93,12 @@ class BackendController extends BildergalerieController
     {
         $get = $this->getRequest()->getGetParam();
         $catId = self::getValueOrNull("id", $get);
-        if (null == $catId) {
-            throw new SimpleUserErrorException("Die Ausstellung wurde nicht gefunden.");
-        }
 
-        $this->categoryDAO->deleteCateogry($catId);
+        $request = new \App\Exhibition\Delete\Request();
+        $request->id = $catId;
+
+        $boundary = $this->application->getExhibitionBoundary();
+        $boundary->deleteExhibition($request);
 
         $this->getAlertManager()->setSuccessMessage("<strong>OK:</strong> Die Ausstellung wurde entfernt.");
 

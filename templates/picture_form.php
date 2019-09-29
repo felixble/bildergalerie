@@ -72,7 +72,7 @@ $picPathId = (null == $pic) ? ":" : $pic->getPath()->getId();
                         ?>
                     </select>
                     <span class="input-group-btn">
-                        <button class="btn btn-success open_category_dialog" data-on-success="onSuccessPicForm"
+                        <button class="btn btn-success open_category_dialog" id="btn_neue_ausstellung" data-on-success="onSuccessPicForm"
                                 type="button" title="Neue Ausstellung hinzufügen">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         </button>

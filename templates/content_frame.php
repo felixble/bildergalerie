@@ -30,7 +30,7 @@
                                 <li class="auto_activate only-on-index" id="nav_exhibition"><a href="<?php echo $this->url("pictures", "exhibition"); ?>">Alle Gemälde</a></li>
                                 <li class="auto_activate only-on-index" id="nav_pictures"><a href="<?php echo $this->url("pictures", "exhibitions"); ?>">Ausstellungen</a></li>
                                 <?php if ($this->isUserLoggedIn()): ?>
-                                <li class="auto_activate" id="nav_pictures/create"><a href="<?php echo $this->url("pictures", "create"); ?>">Hinzufügen</a></li>
+                                <li class="auto_activate" id="nav_pictures_create"><a href="<?php echo $this->url("pictures", "create"); ?>">Hinzufügen</a></li>
                                 <?php endif; ?>
                             </ul>
                         </li>

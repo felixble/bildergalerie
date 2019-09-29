@@ -1,3 +1,11 @@
 .idea/
 vendor/
 local.php
+.env
+.vagrant/
+uploads/
+!uploads/README.md
+node_modules/
+.coverage/
+.scannerwork/
+screenshots/

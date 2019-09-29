@@ -1,4 +1,6 @@
 <?php
+ 
+  
 
 /**
  *
@@ -68,38 +70,22 @@ class AjaxController extends BildergalerieController
 
         $file = $this->getRequest()->getFiles()["uploadFile"];
 
-        $dirName = "uploads/" . $this->mandant->getMandantId();
-        if (!is_dir($dirName)) {
-            mkdir($dirName);
-        }
+        $boundary = $this->application->getPictureBoundary();
+        $request = new \App\Picture\Upload\Request();
+        $request->file = $file;
+        $request->mandant = $this->mandant;
+        $request->loggedInUser = $this->baseFactory->getAuthenticator()->getLoggedInUser();
+        $response = $boundary->uploadPicture($request);
 
-        $picUploader = new PictureUploader($file, $dirName);
-        if (!$picUploader->uploadFile()) {
-            // upload failed so we return the default error message
+        if(!$response->success){
             return json_encode($resultArray);
         }
 
-        // picture upload was successful, now we save the path in our database
-        try {
-            $picPathDAO = new PicturePathDAO($this->baseFactory->getDbConnection(), $this->mandant);
-
-            $picturePath = new PicturePath($this->mandant, /* id will be created */
-                null, $picUploader->getUploadedFilePath(),
-                $picUploader->getThumbFilePath(), $this->baseFactory->getAuthenticator()->getLoggedInUser());
-
-            $picPathId = $picPathDAO->createPicturePath($picturePath);
-        } catch (Exception $e) {
-            // if anything goes wrong, we must delete the uploaded file
-            $picUploader->deleteUploadedFiles();
-            throw $e;
-        }
-
-
         $resultArray["status"] = "OK";
-        $resultArray["picPathId"] = $picPathId;
-        $resultArray["filePath"] = $picUploader->getUploadedFilePath();
+        $resultArray["picPathId"] = $response->picPathId;
+        $resultArray["filePath"] = $response->filePath;
         $resultArray["fileName"] = $file["name"];
-        $resultArray["thumbPath"] = $picUploader->getThumbFilePath();
+        $resultArray["thumbPath"] = $response->thumbPath;
         return json_encode($resultArray);
     }
 
@@ -134,46 +120,35 @@ class AjaxController extends BildergalerieController
      */
     public function addCategoryAction()
     {
+        $get = $this->getRequest()->getGetParam(); 
+
+        // create request object
+        $request = new \App\Exhibition\CreateOrUpdate\Request(); 
+        $request->id = self::getValueOrNull("editId", $get);  
+        if (array_key_exists("name", $get)) {
+            $request->name = $get["name"];
+        } else {
+            throw new InvalidArgumentException("Parameter name missing.");
+        } 
+        if (array_key_exists("description", $get)) {
+            $request->description = $get["description"];
+        } else {
+            throw new InvalidArgumentException("Parameter description missing.");
+        }
+         
+        // do some work
+        $boundary = $this->application->getExhibitionBoundary();
+        $response = $boundary->createOrUpate($request); 
+
+        // result to json
         $resultArray = array(
             "status"    => "OK"
         );
+        $resultArray["category_id"] = $response->id;
+        $resultArray["category_name"] = $request->name;
+        $resultArray["category_description"] = $request->description;
 
-        $get = $this->getRequest()->getGetParam();
-        $descr = null;
-        $editId = null;
-        if (array_key_exists("name", $get)) {
-            $name = $get["name"];
-        } else {
-            throw new InvalidArgumentException("Parameter name missing.");
-        }
-        if (array_key_exists("description", $get)) {
-            $descr = $get["description"];
-        }
-
-        if (array_key_exists("editId", $get)) {
-            $editId = $get["editId"];
-        }
-
-        $category = new Category($this->mandant, $editId, $name, $descr); // editId == null if we should create a new one
-
-        $categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
-
-        if (null != $editId) {
-            $result = $categoryDAO->updateCategory($category);
-            // TODO: what shall we do with the result ?!
-            $catId = $editId;
-        } else {
-            $catId = $categoryDAO->createCategory($category);
-        }
-        if ($catId == false) {
-            return array("status" => "ERR", "errMsg" => "Kategorie konnte nicht angelegt werden");
-        }
-
-        $resultArray["category_id"] = $catId;
-        $resultArray["category_name"] = $name;
-        $resultArray["category_description"] = $descr;
-
-        return json_encode($resultArray);
+        return json_encode($resultArray); 
     }
 
     /**

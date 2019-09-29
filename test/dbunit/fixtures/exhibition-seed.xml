@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<dataset>
+    <galery_categories mandant_id="1" category_id="1" category_name="Ausstellung 1" description="Beschreibung von Ausstellung 1" />
+    <galery_categories mandant_id="1" category_id="2" category_name="Ausstellung 2" description="eschreibung von Ausstellung 2" />
+
+    <galery_picture_path mandant_id="1" pic_path_id="1" path="/path/to/pic/1" thumb_path="/path/to/thumb/1" uid_uploaded_by="1" date_uploaded="2018-02-24 17:17:54" />
+    <galery_picture_path mandant_id="1" pic_path_id="2" path="/path/to/pic/2" thumb_path="/path/to/thumb/2" uid_uploaded_by="1" date_uploaded="2018-02-24 17:17:54" />
+
+    <galery_pictures mandant_id="1" pic_id="1" title="Picture 1" path_id="1" uid_created_by="1" uid_owner="1" />
+    <galery_pictures mandant_id="1" pic_id="2" title="Picture 2" path_id="2" uid_created_by="1" uid_owner="1"  />
+
+    <galery_pic_category_map pic_id="1" cat_id="1" />
+    <galery_pic_category_map pic_id="2" cat_id="2" />
+</dataset>

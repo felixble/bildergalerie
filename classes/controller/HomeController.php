@@ -31,10 +31,13 @@ class HomeController extends BildergalerieController {
         $latestArticle = $newsDAO->getLatestArticle();
         $homeView->setLatestArticle($latestArticle);
 
-        $categoryDAO = new CategoryDAO($this->baseFactory->getDbConnection(), $this->mandant);
-        $catTeasers = $categoryDAO->getCategoryTeasers(3);
+        $request = new \App\Exhibition\ListAll\Request();
+        $request->mandant = $this->mandant;
 
-        $homeView->setCategoryTeaser($catTeasers);
+        $boundary = $this->application->getExhibitionBoundary();
+        $response = $boundary->listAllExhibitions($request);
+
+        $homeView->setCategoryTeaser($response->exhibitions);
 
         return $this->getContentFrameView("Startseite", $homeView);
     }
